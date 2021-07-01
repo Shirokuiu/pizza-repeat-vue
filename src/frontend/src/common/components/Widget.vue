@@ -4,22 +4,6 @@
 
     <div class="sheet__content" :class="classMods">
       <slot />
-      <!--      <label-->
-      <!--        v-for="({ value, name, description }, index) of doughs"-->
-      <!--        :key="index"-->
-      <!--        class="dough__input"-->
-      <!--        :class="`dough__input&#45;&#45;${value}`"-->
-      <!--      >-->
-      <!--        <input-->
-      <!--          type="radio"-->
-      <!--          name="dough"-->
-      <!--          :value="value"-->
-      <!--          class="visually-hidden"-->
-      <!--          :checked="index === 0"-->
-      <!--        />-->
-      <!--        <b>{{ name }}</b>-->
-      <!--        <span>{{ description }}</span>-->
-      <!--      </label>-->
     </div>
   </div>
 </template>
