@@ -137,9 +137,9 @@
 
 <script>
 import pizza from "../static/pizza";
-import ItemCounter from "../common/ItemCounter";
-import RadioButton from "../common/RadioButton";
-import Widget from "../common/Widget";
+import ItemCounter from "../common/components/ItemCounter";
+import RadioButton from "../common/components/RadioButton";
+import Widget from "../common/components/Widget";
 import {
   normalizeDoughs,
   normalizeIngredients,
