@@ -17,11 +17,11 @@ export default {
     },
     value: {
       type: String,
-      isRequired: true,
+      required: true,
     },
     isChecked: {
       type: Boolean,
-      isRequired: true,
+      required: true,
     },
     name: {
       type: String,

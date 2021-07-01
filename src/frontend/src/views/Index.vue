@@ -3,13 +3,12 @@
     <Header />
 
     <main class="content">
-      <Builder :pizza="pizza" />
+      <Builder />
     </main>
   </div>
 </template>
 
 <script>
-import pizza from "../static/pizza";
 import Header from "../modules/header/components/Header";
 import Builder from "../modules/builder/components/Builder";
 
@@ -18,11 +17,6 @@ export default {
   components: {
     Header,
     Builder,
-  },
-  data() {
-    return {
-      pizza,
-    };
   },
 };
 </script>
