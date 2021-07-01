@@ -25,121 +25,81 @@
           <h1 class="title title--big">Конструктор пиццы</h1>
 
           <div class="content__dough">
-            <div class="sheet">
-              <h2 class="title title--small sheet__title">Выберите тесто</h2>
-
-              <div class="sheet__content dough">
-                <label
-                  v-for="({ value, name, description }, index) of doughs"
-                  :key="index"
-                  class="dough__input"
-                  :class="`dough__input--${value}`"
-                >
-                  <input
-                    type="radio"
-                    name="dough"
-                    :value="value"
-                    class="visually-hidden"
-                    :checked="index === 0"
-                  />
-                  <b>{{ name }}</b>
-                  <span>{{ description }}</span>
-                </label>
-              </div>
-            </div>
+            <Widget title="Выберите тесто" :class-mods="['dough']">
+              <label
+                v-for="({ value, name, description }, index) of doughs"
+                :key="index"
+                class="dough__input"
+                :class="`dough__input--${value}`"
+              >
+                <input
+                  type="radio"
+                  name="dough"
+                  :value="value"
+                  class="visually-hidden"
+                  :checked="index === 0"
+                />
+                <b>{{ name }}</b>
+                <span>{{ description }}</span>
+              </label>
+            </Widget>
           </div>
 
           <div class="content__diameter">
-            <div class="sheet">
-              <h2 class="title title--small sheet__title">Выберите размер</h2>
-
-              <div class="sheet__content diameter">
-                <label
-                  v-for="({ value, name }, index) of sizes"
-                  :key="index"
-                  class="diameter__input"
-                  :class="`diameter__input--${value}`"
-                >
-                  <input
-                    type="radio"
-                    name="diameter"
-                    :value="value"
-                    :checked="index === 1"
-                    class="visually-hidden"
-                  />
-                  <span>{{ name }}</span>
-                </label>
-              </div>
-            </div>
+            <Widget title="Выберите размер" :class-mods="['diameter']">
+              <label
+                v-for="({ value, name }, index) of sizes"
+                :key="index"
+                class="diameter__input"
+                :class="`diameter__input--${value}`"
+              >
+                <input
+                  type="radio"
+                  name="diameter"
+                  :value="value"
+                  :checked="index === 1"
+                  class="visually-hidden"
+                />
+                <span>{{ name }}</span>
+              </label>
+            </Widget>
           </div>
 
           <div class="content__ingridients">
-            <div class="sheet">
-              <h2 class="title title--small sheet__title">
-                Выберите ингридиенты
-              </h2>
+            <Widget title="Выберите ингридиенты" :class-mods="['ingridients']">
+              <div class="ingridients__sauce">
+                <p>Основной соус:</p>
+                <RadioButton
+                  v-for="({ value, name }, index) of sauces"
+                  :key="index"
+                  :class-mods="['ingridients__input']"
+                  radio-name="sauce"
+                  :value="value"
+                  :is-checked="index === 0"
+                  :name="name"
+                />
+              </div>
 
-              <div class="sheet__content ingridients">
-                <div class="ingridients__sauce">
-                  <p>Основной соус:</p>
+              <div class="ingridients__filling">
+                <p>Начинка:</p>
 
-                  <label
-                    class="radio ingridients__input"
-                    v-for="({ value, name }, index) of sauces"
+                <ul class="ingridients__list">
+                  <li
+                    class="ingridients__item"
+                    v-for="({ mod, name }, index) of ingredients"
                     :key="index"
                   >
-                    <input
-                      type="radio"
-                      name="sauce"
-                      :value="value"
-                      :checked="index === 0"
+                    <span class="filling" :class="`filling--${mod}`">{{
+                      name
+                    }}</span>
+
+                    <ItemCounter
+                      :class-mods="['counter--orange', 'ingridients__counter']"
                     />
-                    <span>{{ name }}</span>
-                  </label>
-                </div>
-
-                <div class="ingridients__filling">
-                  <p>Начинка:</p>
-
-                  <ul class="ingridients__list">
-                    <li
-                      class="ingridients__item"
-                      v-for="({ mod, name }, index) of ingredients"
-                      :key="index"
-                    >
-                      <span class="filling" :class="`filling--${mod}`">{{
-                        name
-                      }}</span>
-
-                      <div class="counter counter--orange ingridients__counter">
-                        <button
-                          type="button"
-                          class="
-                            counter__button
-                            counter__button--disabled
-                            counter__button--minus
-                          "
-                        >
-                          <span class="visually-hidden">Меньше</span>
-                        </button>
-                        <input
-                          type="text"
-                          name="counter"
-                          class="counter__input"
-                          value="0"
-                        />
-                        <button
-                          type="button"
-                          class="counter__button counter__button--plus"
-                        >
-                          <span class="visually-hidden">Больше</span>
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                  </li>
+                </ul>
               </div>
-            </div>
+            </Widget>
           </div>
 
           <div class="content__pizza">
@@ -177,6 +137,9 @@
 
 <script>
 import pizza from "../static/pizza";
+import ItemCounter from "../common/ItemCounter";
+import RadioButton from "../common/RadioButton";
+import Widget from "../common/Widget";
 import {
   normalizeDoughs,
   normalizeIngredients,
@@ -186,6 +149,11 @@ import {
 
 export default {
   name: "Index",
+  components: {
+    ItemCounter,
+    RadioButton,
+    Widget,
+  },
   data() {
     return {
       doughs: normalizeDoughs(pizza.dough),
