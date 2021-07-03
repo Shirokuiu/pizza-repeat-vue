@@ -1,39 +1,47 @@
 <template>
   <div class="content__dough">
-    <Widget title="Выберите тесто" :class-mods="['dough']">
+    <AppWidget title="Выберите тесто" :class-mods="['dough']">
       <label
-        v-for="({ value, name, description }, index) of doughs"
+        v-for="({ value, name, description, isChecked }, index) of doughs"
         :key="index"
         class="dough__input"
-        :class="`dough__input--${value}`"
+        :class="`dough__input--${value.name}`"
       >
         <input
           type="radio"
           name="dough"
           :value="value"
           class="visually-hidden"
-          :checked="index === 0"
+          :checked="isChecked"
+          @change="onDoughChange(value)"
         />
         <b>{{ name }}</b>
         <span>{{ description }}</span>
       </label>
-    </Widget>
+    </AppWidget>
   </div>
 </template>
 <script>
-import pizza from "../../../static/pizza";
-import Widget from "../../../common/components/Widget";
-import { normalizeDoughs } from "../../../common";
+import AppWidget from "../../../common/components/AppWidget";
 
 export default {
   name: "BuilderDoughSelector",
+
   components: {
-    Widget,
+    AppWidget,
   },
-  data() {
-    return {
-      doughs: normalizeDoughs(pizza.dough),
-    };
+
+  props: {
+    doughs: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  methods: {
+    onDoughChange(currentDough) {
+      this.$emit("onDoughChange", currentDough);
+    },
   },
 };
 </script>

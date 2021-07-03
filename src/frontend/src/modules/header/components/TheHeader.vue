@@ -20,6 +20,7 @@ import HeaderUser from "./HeaderUser";
 
 export default {
   name: "Header",
+
   components: {
     HeaderCart,
     HeaderUser,

@@ -9,12 +9,14 @@
 </template>
 <script>
 export default {
-  name: "Widget",
+  name: "AppWidget",
+
   props: {
     title: {
       type: String,
       default: "Заголовок",
     },
+
     classMods: {
       type: Array,
     },

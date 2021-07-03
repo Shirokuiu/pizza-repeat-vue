@@ -1,41 +1,61 @@
 <template>
   <div class="content__ingridients">
-    <Widget title="Выберите ингридиенты" :class-mods="['ingridients']">
+    <AppWidget title="Выберите ингридиенты" :class-mods="['ingridients']">
       <div class="ingridients__sauce">
         <p>Основной соус:</p>
-        <RadioButton
-          v-for="({ value, name }, index) of sauces"
+        <AppRadioButton
+          v-for="({ value, name, isChecked }, index) of sauces"
           :key="index"
           :class-mods="['ingridients__input']"
           radio-name="sauce"
           :value="value"
-          :is-checked="index === 0"
+          :is-checked="isChecked"
           :name="name"
+          @onRadioChange="onSauceChange($event)"
         />
       </div>
 
-      <BuilderPizzaView />
-    </Widget>
+      <BuilderPizzaView
+        :ingredients="ingredients"
+        @onCountUpdate="onCountUpdate($event)"
+      />
+    </AppWidget>
   </div>
 </template>
 <script>
-import pizza from "../../../static/pizza";
-import Widget from "../../../common/components/Widget";
-import RadioButton from "../../../common/components/RadioButton";
-import { normalizeSauces } from "../../../common";
+import AppWidget from "../../../common/components/AppWidget";
+import AppRadioButton from "../../../common/components/AppRadioButton";
 import BuilderPizzaView from "./BuilderPizzaView";
 
 export default {
   name: "BuilderIngredientsSelector",
+
   components: {
-    Widget,
-    RadioButton,
+    AppWidget,
+    AppRadioButton,
     BuilderPizzaView,
   },
-  data() {
-    return {
-      sauces: normalizeSauces(pizza.sauces),
-    };
+
+  props: {
+    sauces: {
+      type: Array,
+      required: true,
+    },
+
+    ingredients: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  methods: {
+    onSauceChange(currentSauce) {
+      this.$emit("onSauceChange", currentSauce);
+    },
+
+    onCountUpdate(count) {
+      this.$emit("onCountUpdate", count);
+    },
   },
 };
 </script>

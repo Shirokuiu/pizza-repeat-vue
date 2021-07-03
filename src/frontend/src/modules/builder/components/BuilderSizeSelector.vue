@@ -1,38 +1,46 @@
 <template>
   <div class="content__diameter">
-    <Widget title="Выберите размер" :class-mods="['diameter']">
+    <AppWidget title="Выберите размер" :class-mods="['diameter']">
       <label
-        v-for="({ value, name }, index) of sizes"
+        v-for="({ value, name, isChecked }, index) of sizes"
         :key="index"
         class="diameter__input"
-        :class="`diameter__input--${value}`"
+        :class="`diameter__input--${value.name}`"
       >
         <input
           type="radio"
           name="diameter"
           :value="value"
-          :checked="index === 1"
+          :checked="isChecked"
+          @change="onSizeChange(value)"
           class="visually-hidden"
         />
         <span>{{ name }}</span>
       </label>
-    </Widget>
+    </AppWidget>
   </div>
 </template>
 <script>
-import pizza from "../../../static/pizza";
-import Widget from "../../../common/components/Widget";
-import { normalizeSizes } from "../../../common";
+import AppWidget from "../../../common/components/AppWidget";
 
 export default {
   name: "BuilderSizeSelector",
+
   components: {
-    Widget,
+    AppWidget,
   },
-  data() {
-    return {
-      sizes: normalizeSizes(pizza.sizes),
-    };
+
+  props: {
+    sizes: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  methods: {
+    onSizeChange(currentSize) {
+      this.$emit("onSizeChange", currentSize);
+    },
   },
 };
 </script>
