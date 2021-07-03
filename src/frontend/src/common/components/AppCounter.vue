@@ -80,6 +80,7 @@ export default {
 
       if (isNaN(value)) {
         this.count = 0;
+        this.onCountUpdate(this.count);
 
         return;
       }

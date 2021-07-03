@@ -3,30 +3,24 @@
     <p>Начинка:</p>
 
     <ul class="ingridients__list">
-      <li
-        class="ingridients__item"
-        v-for="({ mod, name }, index) of ingredients"
+      <BuilderPizzaViewItem
+        v-for="(ingredient, index) of ingredients"
         :key="index"
+        :ingredient="ingredient"
+        @onCountUpdate="onCountUpdate($event)"
       >
-        <span class="filling" :class="`filling--${mod}`">{{ name }}</span>
-
-        <AppCounter
-          :class-mods="['counter--orange', 'ingridients__counter']"
-          :max-inc="3"
-          @onCountUpdate="onCountUpdate($event, name)"
-        />
-      </li>
+      </BuilderPizzaViewItem>
     </ul>
   </div>
 </template>
 <script>
-import AppCounter from "../../../common/components/AppCounter";
+import BuilderPizzaViewItem from "./BuilderPizzaViewItem";
 
 export default {
   name: "BuilderPizzaView",
 
   components: {
-    AppCounter,
+    BuilderPizzaViewItem,
   },
 
   props: {
@@ -52,8 +46,8 @@ export default {
   },
 
   methods: {
-    onCountUpdate(count, countName) {
-      this.$emit("onCountUpdate", this.getTotalPrice(count, countName));
+    onCountUpdate({ count, name }) {
+      this.$emit("onCountUpdate", this.getTotalPrice(count, name));
     },
 
     getTotalPrice(count, countName) {
