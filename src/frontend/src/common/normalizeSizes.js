@@ -1,6 +1,17 @@
-import { generateMap } from "./helpers";
-
-const valueMap = generateMap(["small", "normal", "big"]);
+const valueMap = [
+  {
+    multiplier: 1,
+    value: "small",
+  },
+  {
+    multiplier: 2,
+    value: "normal",
+  },
+  {
+    multiplier: 3,
+    value: "big",
+  },
+];
 
 export const normalizeSizes = (sizes) =>
   sizes.map(({ name, image, multiplier }, index) => ({
@@ -8,7 +19,9 @@ export const normalizeSizes = (sizes) =>
     value: {
       image,
       multiplier,
-      name: valueMap[index],
+      name: valueMap.find(
+        ({ multiplier: multiplierMap }) => multiplier === multiplierMap
+      ).value,
     },
     isChecked: index === 1,
   }));
