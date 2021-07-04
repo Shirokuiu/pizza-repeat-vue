@@ -6,8 +6,6 @@ const valueMap = generateMap({
   values: ["light", "large"],
 });
 
-console.log(pizza.dough);
-
 export const normalizeDoughs = (doughs) =>
   doughs.map((dough) => {
     return {
