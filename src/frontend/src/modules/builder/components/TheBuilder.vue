@@ -78,8 +78,6 @@ export default {
         name: "",
       },
 
-      ingredientsPrice: 0,
-
       totalPrice: 0,
     };
   },
@@ -108,8 +106,6 @@ export default {
 
     updateIngredientsPrice(ingredientData) {
       const { currentIngredientIndex, actionCountData } = ingredientData;
-
-      console.log(ingredientData);
 
       switch (actionCountData.action) {
         case countAction.INC:
