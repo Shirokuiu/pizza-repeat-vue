@@ -20,7 +20,10 @@
         @onCountUpdate="updateIngredientsPrice($event)"
       />
 
-      <BuilderPriceCounter :total-price="totalPrice" />
+      <BuilderPriceCounter
+        :total-price="totalPrice"
+        @onIngredientDrop="updateIngredientsPrice($event)"
+      />
     </div>
   </form>
 </template>
@@ -106,6 +109,8 @@ export default {
     updateIngredientsPrice(ingredientData) {
       const { currentIngredientIndex, actionCountData } = ingredientData;
 
+      console.log(ingredientData);
+
       switch (actionCountData.action) {
         case countAction.INC:
           this.ingredientInc(currentIngredientIndex);
@@ -115,6 +120,9 @@ export default {
           break;
         case countAction.INPUT_CHANGE:
           this.ingredientInputChange(currentIngredientIndex, actionCountData);
+          break;
+        case countAction.DROP:
+          this.ingredientInc(currentIngredientIndex);
           break;
       }
     },

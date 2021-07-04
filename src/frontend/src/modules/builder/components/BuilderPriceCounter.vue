@@ -47,8 +47,8 @@ export default {
   },
 
   methods: {
-    onIngredientDrop(ingredient) {
-      this.$emit("onIngredientDrop", ingredient);
+    onIngredientDrop(ingredientData) {
+      this.$emit("onIngredientDrop", ingredientData);
     },
   },
 };

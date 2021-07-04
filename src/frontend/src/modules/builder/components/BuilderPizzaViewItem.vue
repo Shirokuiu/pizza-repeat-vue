@@ -1,5 +1,13 @@
 <template>
-  <AppDrag :transfer-data="ingredient">
+  <AppDrag
+    :transfer-data="{
+      currentIngredientIndex: idx,
+      actionCountData: {
+        action: countAction.DROP,
+        value: undefined,
+      },
+    }"
+  >
     <li class="ingridients__item">
       <span class="filling" :class="`filling--${ingredient.mod}`">{{
         ingredient.name
@@ -17,6 +25,7 @@
 <script>
 import AppCounter from "../../../common/components/AppCounter";
 import AppDrag from "../../../common/components/AppDrag";
+import { countAction } from "../../../common/constants";
 
 export default {
   name: "BuilderPizzaViewItem",
@@ -31,6 +40,16 @@ export default {
       type: Object,
       required: true,
     },
+    idx: {
+      type: Number,
+      required: true,
+    },
+  },
+
+  data() {
+    return {
+      countAction,
+    };
   },
 
   methods: {
