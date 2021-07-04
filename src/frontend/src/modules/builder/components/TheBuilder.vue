@@ -36,6 +36,7 @@ import {
   normalizeSauces,
   normalizeSizes,
 } from "../../../common";
+import { countAction } from "../../../common/constants";
 
 export default {
   name: "TheBuilder",
@@ -102,9 +103,20 @@ export default {
       this.totalPrice = this.updateTotalPrice();
     },
 
-    updateIngredientsPrice(totalIngredientsPrice) {
-      this.ingredientsPrice = totalIngredientsPrice;
-      this.totalPrice = this.updateTotalPrice();
+    updateIngredientsPrice(ingredientData) {
+      const { currentIngredientIndex, actionCountData } = ingredientData;
+
+      switch (actionCountData.action) {
+        case countAction.INC:
+          this.ingredientInc(currentIngredientIndex);
+          break;
+        case countAction.DEC:
+          this.ingredientDec(currentIngredientIndex);
+          break;
+        case countAction.INPUT_CHANGE:
+          this.ingredientInputChange(currentIngredientIndex, actionCountData);
+          break;
+      }
     },
 
     getCurrentItem(arr) {
@@ -117,8 +129,84 @@ export default {
       return (
         this.currentDough.price +
         this.currentSauce.price +
-        this.ingredientsPrice
+        this.ingredients.reduce((a, b) => a + (b["totalPrice"] || 0), 0)
       );
+    },
+
+    ingredientInc(currentIngredientIndex) {
+      if (this.canIncOrDec(countAction.INC, currentIngredientIndex)) {
+        this.$set(this.ingredients, currentIngredientIndex, {
+          ...this.ingredients[currentIngredientIndex],
+          count: ++this.ingredients[currentIngredientIndex].count,
+          totalPrice:
+            this.ingredients[currentIngredientIndex].count *
+            this.ingredients[currentIngredientIndex].price,
+        });
+
+        this.totalPrice = this.updateTotalPrice();
+      }
+    },
+
+    ingredientDec(currentIngredientIndex) {
+      if (this.canIncOrDec(countAction.DEC, currentIngredientIndex)) {
+        this.$set(this.ingredients, currentIngredientIndex, {
+          ...this.ingredients[currentIngredientIndex],
+          count: --this.ingredients[currentIngredientIndex].count,
+          totalPrice:
+            this.ingredients[currentIngredientIndex].count *
+            this.ingredients[currentIngredientIndex].price,
+        });
+
+        this.totalPrice = this.updateTotalPrice();
+      }
+    },
+
+    ingredientInputChange(currentIngredientIndex, actionCountData) {
+      const value = parseInt(actionCountData.value, 10);
+
+      if (isNaN(value)) {
+        this.$set(this.ingredients, currentIngredientIndex, {
+          ...this.ingredients[currentIngredientIndex],
+          count: 0,
+          totalPrice: 0,
+        });
+
+        this.totalPrice = this.updateTotalPrice();
+
+        return;
+      }
+
+      this.$set(this.ingredients, currentIngredientIndex, {
+        ...this.ingredients[currentIngredientIndex],
+        count:
+          value > this.ingredients[currentIngredientIndex].maxInc ||
+          value < this.ingredients[currentIngredientIndex].maxDec
+            ? this.ingredients[currentIngredientIndex].count
+            : value,
+        totalPrice:
+          value > this.ingredients[currentIngredientIndex].maxInc ||
+          value < this.ingredients[currentIngredientIndex].maxDec
+            ? this.ingredients[currentIngredientIndex].price *
+              this.ingredients[currentIngredientIndex].count
+            : this.ingredients[currentIngredientIndex].price * value,
+      });
+
+      this.totalPrice = this.updateTotalPrice();
+    },
+
+    canIncOrDec(action, currentIngredientIndex) {
+      switch (action) {
+        case countAction.INC:
+          return (
+            this.ingredients[currentIngredientIndex].count <
+            this.ingredients[currentIngredientIndex].maxInc
+          );
+        case countAction.DEC:
+          return (
+            this.ingredients[currentIngredientIndex].count >
+            this.ingredients[currentIngredientIndex].maxDec
+          );
+      }
     },
   },
 };

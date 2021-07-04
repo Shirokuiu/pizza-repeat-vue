@@ -53,8 +53,8 @@ export default {
       this.$emit("onSauceChange", currentSauce);
     },
 
-    onCountUpdate(count) {
-      this.$emit("onCountUpdate", count);
+    onCountUpdate(ingredientData) {
+      this.$emit("onCountUpdate", ingredientData);
     },
   },
 };

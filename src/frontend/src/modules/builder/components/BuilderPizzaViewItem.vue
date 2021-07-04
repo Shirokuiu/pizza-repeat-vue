@@ -1,25 +1,29 @@
 <template>
-  <li class="ingridients__item">
-    <span class="filling" :class="`filling--${ingredient.mod}`">{{
-      ingredient.name
-    }}</span>
+  <AppDrag :transfer-data="ingredient">
+    <li class="ingridients__item">
+      <span class="filling" :class="`filling--${ingredient.mod}`">{{
+        ingredient.name
+      }}</span>
 
-    <AppCounter
-      :class-mods="['counter--orange', 'ingridients__counter']"
-      :max-inc="3"
-      @onCountUpdate="onCountUpdate($event, ingredient.name)"
-    />
-  </li>
+      <AppCounter
+        :class-mods="['counter--orange', 'ingridients__counter']"
+        :count="ingredient.count"
+        @onCountUpdate="onCountUpdate($event)"
+      />
+    </li>
+  </AppDrag>
 </template>
 
 <script>
 import AppCounter from "../../../common/components/AppCounter";
+import AppDrag from "../../../common/components/AppDrag";
 
 export default {
   name: "BuilderPizzaViewItem",
 
   components: {
     AppCounter,
+    AppDrag,
   },
 
   props: {
@@ -30,8 +34,8 @@ export default {
   },
 
   methods: {
-    onCountUpdate(count, name) {
-      this.$emit("onCountUpdate", { count, name });
+    onCountUpdate(countActionData) {
+      this.$emit("onCountUpdate", countActionData);
     },
   },
 };

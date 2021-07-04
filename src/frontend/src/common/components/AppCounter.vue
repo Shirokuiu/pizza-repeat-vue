@@ -11,7 +11,7 @@
       type="text"
       name="counter"
       class="counter__input"
-      v-model="count"
+      :value="count"
       @change="onInputChange($event)"
     />
     <button
@@ -24,6 +24,8 @@
   </div>
 </template>
 <script>
+import { countAction } from "../constants";
+
 export default {
   name: "AppCounter",
 
@@ -33,66 +35,84 @@ export default {
       required: false,
     },
 
-    predefinedCount: {
+    count: {
       type: Number,
-      default: 0,
+      required: true,
     },
 
-    maxInc: {
-      type: [Number, Infinity],
-      default: Infinity,
-    },
-
-    maxDec: {
-      type: [Number, -Infinity],
-      default: 0,
-    },
+    // predefinedCount: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    //
+    // maxInc: {
+    //   type: [Number, Infinity],
+    //   default: Infinity,
+    // },
+    //
+    // maxDec: {
+    //   type: [Number, -Infinity],
+    //   default: 0,
+    // },
   },
 
-  data() {
-    return {
-      count: 0,
-    };
-  },
-
-  created() {
-    this.count = this.predefinedCount;
-  },
+  // data() {
+  //   return {
+  //     count: 0,
+  //   };
+  // },
+  //
+  // created() {
+  //   this.count = this.predefinedCount;
+  // },
 
   methods: {
     inc() {
-      if (this.maxInc === Infinity || this.count < this.maxInc) {
-        this.count++;
-        this.onCountUpdate(this.count);
-      }
+      this.$emit("onCountUpdate", {
+        action: countAction.INC,
+        value: undefined,
+      });
+      // if (this.maxInc === Infinity || this.count < this.maxInc) {
+      //   this.count++;
+      //   this.onCountUpdate(this.count);
+      // }
     },
 
     dec() {
-      if (this.maxDec === -Infinity || this.count > this.maxDec) {
-        this.count--;
-        this.onCountUpdate(this.count);
-      }
+      this.$emit("onCountUpdate", {
+        action: countAction.DEC,
+        value: undefined,
+      });
+      // if (this.maxDec === -Infinity || this.count > this.maxDec) {
+      //   this.count--;
+      //   this.onCountUpdate(this.count);
+      // }
     },
 
     onInputChange(evt) {
-      const { target } = evt;
-      const value = parseInt(target.value, 10);
+      this.$emit("onCountUpdate", {
+        action: countAction.INPUT_CHANGE,
+        value: evt.target.value,
+      });
 
-      if (isNaN(value)) {
-        this.count = 0;
-        this.onCountUpdate(this.count);
-
-        return;
-      }
-
-      this.count = value > this.maxInc || value < this.maxDec ? 0 : value;
-
-      this.onCountUpdate(this.count);
+      // const { target } = evt;
+      // const value = parseInt(target.value, 10);
+      //
+      // if (isNaN(value)) {
+      //   this.count = 0;
+      //   this.onCountUpdate(this.count);
+      //
+      //   return;
+      // }
+      //
+      // this.count = value > this.maxInc || value < this.maxDec ? 0 : value;
+      //
+      // this.onCountUpdate(this.count);
     },
 
-    onCountUpdate(count) {
-      this.$emit("onCountUpdate", count);
-    },
+    // onCountUpdate(count) {
+    //   this.$emit("onCountUpdate", count);
+    // },
   },
 };
 </script>
