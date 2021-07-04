@@ -1,14 +1,21 @@
-import { generateMap } from "./helpers";
-import pizza from "../static/pizza";
-
-const valueMap = generateMap({
-  keys: pizza.sizes,
-  values: ["small", "normal", "big"],
-  key: "multiplier",
-});
+const valueMap = [
+  {
+    multiplier: 1,
+    value: "small",
+  },
+  {
+    multiplier: 2,
+    value: "normal",
+  },
+  {
+    multiplier: 3,
+    value: "big",
+  },
+];
 
 export const normalizeSizes = (sizes) =>
   sizes.map((size) => ({
     ...size,
-    value: valueMap[size.multiplier],
+    value: valueMap.find(({ multiplier }) => size.multiplier === multiplier)
+      .value,
   }));
