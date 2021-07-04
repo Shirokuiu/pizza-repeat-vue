@@ -39,32 +39,7 @@ export default {
       type: Number,
       required: true,
     },
-
-    // predefinedCount: {
-    //   type: Number,
-    //   default: 0,
-    // },
-    //
-    // maxInc: {
-    //   type: [Number, Infinity],
-    //   default: Infinity,
-    // },
-    //
-    // maxDec: {
-    //   type: [Number, -Infinity],
-    //   default: 0,
-    // },
   },
-
-  // data() {
-  //   return {
-  //     count: 0,
-  //   };
-  // },
-  //
-  // created() {
-  //   this.count = this.predefinedCount;
-  // },
 
   methods: {
     inc() {
@@ -72,10 +47,6 @@ export default {
         action: countAction.INC,
         value: undefined,
       });
-      // if (this.maxInc === Infinity || this.count < this.maxInc) {
-      //   this.count++;
-      //   this.onCountUpdate(this.count);
-      // }
     },
 
     dec() {
@@ -83,10 +54,6 @@ export default {
         action: countAction.DEC,
         value: undefined,
       });
-      // if (this.maxDec === -Infinity || this.count > this.maxDec) {
-      //   this.count--;
-      //   this.onCountUpdate(this.count);
-      // }
     },
 
     onInputChange(evt) {
@@ -94,25 +61,7 @@ export default {
         action: countAction.INPUT_CHANGE,
         value: evt.target.value,
       });
-
-      // const { target } = evt;
-      // const value = parseInt(target.value, 10);
-      //
-      // if (isNaN(value)) {
-      //   this.count = 0;
-      //   this.onCountUpdate(this.count);
-      //
-      //   return;
-      // }
-      //
-      // this.count = value > this.maxInc || value < this.maxDec ? 0 : value;
-      //
-      // this.onCountUpdate(this.count);
     },
-
-    // onCountUpdate(count) {
-    //   this.$emit("onCountUpdate", count);
-    // },
   },
 };
 </script>
