@@ -1,9 +1,14 @@
 import { generateMap } from "./helpers";
+import pizza from "../static/pizza";
 
-const valueMap = generateMap(["small", "normal", "big"]);
+const valueMap = generateMap({
+  keys: pizza.sizes,
+  values: ["small", "normal", "big"],
+  key: "multiplier",
+});
 
 export const normalizeSizes = (sizes) =>
-  sizes.map((size, index) => ({
+  sizes.map((size) => ({
     ...size,
-    value: valueMap[index],
+    value: valueMap[size.multiplier],
   }));

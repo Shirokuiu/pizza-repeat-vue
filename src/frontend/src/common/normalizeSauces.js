@@ -1,9 +1,13 @@
 import { generateMap } from "./helpers";
+import pizza from "../static/pizza";
 
-const valueMap = generateMap(["tomato", "creamy"]);
+const valueMap = generateMap({
+  keys: pizza.sauces,
+  values: ["tomato", "creamy"],
+});
 
 export const normalizeSauces = (sauces) =>
-  sauces.map((sauce, index) => ({
+  sauces.map((sauce) => ({
     ...sauce,
-    value: valueMap[index],
+    value: valueMap[sauce.name],
   }));
