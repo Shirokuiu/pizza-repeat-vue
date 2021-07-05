@@ -1,7 +1,7 @@
 const valueMap = [
   {
     name: "Томатный",
-    value: "creamy",
+    value: "tomato",
   },
   {
     name: "Сливочный",
