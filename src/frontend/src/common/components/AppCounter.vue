@@ -12,7 +12,7 @@
       name="counter"
       class="counter__input"
       :value="count"
-      @change="onInputChange($event)"
+      @change="onInputChange"
     />
     <button
       type="button"

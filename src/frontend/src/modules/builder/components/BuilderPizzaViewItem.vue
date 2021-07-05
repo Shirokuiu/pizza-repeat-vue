@@ -16,7 +16,7 @@
       <AppCounter
         :class-mods="['counter--orange', 'ingridients__counter']"
         :count="ingredient.count"
-        @onCountUpdate="onCountUpdate($event)"
+        @onCountUpdate="onCountUpdate"
       />
     </li>
   </AppDrag>

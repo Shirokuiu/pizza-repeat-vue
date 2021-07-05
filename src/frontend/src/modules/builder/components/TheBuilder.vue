@@ -5,24 +5,21 @@
 
       <BuilderDoughSelector
         :doughs="doughs"
-        @onDoughChange="updateCurrentDough($event)"
+        @onDoughChange="updateCurrentDough"
       />
 
-      <BuilderSizeSelector
-        :sizes="sizes"
-        @onSizeChange="updateCurrentSize($event)"
-      />
+      <BuilderSizeSelector :sizes="sizes" @onSizeChange="updateCurrentSize" />
 
       <BuilderIngredientsSelector
         :sauces="sauces"
         :ingredients="ingredients"
-        @onSauceChange="updateCurrentSauce($event)"
-        @onCountUpdate="updateIngredientsPrice($event)"
+        @onSauceChange="updateCurrentSauce"
+        @onCountUpdate="updateIngredientsPrice"
       />
 
       <BuilderPriceCounter
         :total-price="totalPrice"
-        @onIngredientDrop="updateIngredientsPrice($event)"
+        @onIngredientDrop="updateIngredientsPrice"
       />
     </div>
   </form>

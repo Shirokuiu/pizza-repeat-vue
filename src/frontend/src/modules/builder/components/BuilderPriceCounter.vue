@@ -1,5 +1,5 @@
 <template>
-  <AppDrop @drop="onIngredientDrop($event)">
+  <AppDrop @drop="onIngredientDrop">
     <div class="content__pizza">
       <label class="input">
         <span class="visually-hidden">Название пиццы</span>

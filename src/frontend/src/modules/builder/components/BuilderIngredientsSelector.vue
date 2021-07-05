@@ -11,13 +11,13 @@
           :value="value"
           :is-checked="isChecked"
           :name="name"
-          @onRadioChange="onSauceChange($event)"
+          @onRadioChange="onSauceChange"
         />
       </div>
 
       <BuilderPizzaView
         :ingredients="ingredients"
-        @onCountUpdate="onCountUpdate($event)"
+        @onCountUpdate="onCountUpdate"
       />
     </AppWidget>
   </div>
