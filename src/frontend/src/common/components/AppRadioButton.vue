@@ -17,6 +17,7 @@ export default {
   props: {
     classMods: {
       type: Array,
+      default: () => [],
     },
 
     radioName: {

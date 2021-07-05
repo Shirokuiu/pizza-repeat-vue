@@ -32,7 +32,7 @@ export default {
   props: {
     classMods: {
       type: Array,
-      required: false,
+      default: () => [],
     },
 
     count: {

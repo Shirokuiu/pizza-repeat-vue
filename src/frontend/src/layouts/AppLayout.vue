@@ -11,6 +11,7 @@ import Index from "../views/Index";
 
 export default {
   name: "AppLayout",
+
   components: {
     TheHeader,
     Index,
