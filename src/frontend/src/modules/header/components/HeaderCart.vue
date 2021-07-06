@@ -1,6 +1,6 @@
 <template>
   <div class="header__cart">
-    <a href="cart.html">0 ₽</a>
+    <router-link to="/cart">0 ₽</router-link>
   </div>
 </template>
 <script>

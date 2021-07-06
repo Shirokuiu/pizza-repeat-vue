@@ -142,4 +142,9 @@
     </div>
   </main>
 </template>
-<script></script>
+
+<script>
+export default {
+  name: "Profile",
+};
+</script>

@@ -1,6 +1,6 @@
 <template>
   <div class="sign-form">
-    <a href="#" class="close close--white">
+    <a @click="goBack()" class="close close--white">
       <span class="visually-hidden">Закрыть форму авторизации</span>
     </a>
     <div class="sign-form__title">
@@ -24,4 +24,14 @@
     </form>
   </div>
 </template>
-<script></script>
+<script>
+export default {
+  name: "Login",
+
+  methods: {
+    goBack() {
+      this.$router.back();
+    },
+  },
+};
+</script>

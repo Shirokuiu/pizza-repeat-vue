@@ -294,8 +294,8 @@
     </main>
     <section class="footer">
       <div class="footer__more">
-        <a href="#" class="button button--border button--arrow"
-          >Хочу еще одну</a
+        <router-link to="/" class="button button--border button--arrow"
+          >Хочу еще одну</router-link
         >
       </div>
       <p class="footer__text">
@@ -311,4 +311,9 @@
     </section>
   </form>
 </template>
-<script></script>
+
+<script>
+export default {
+  name: "Cart",
+};
+</script>
