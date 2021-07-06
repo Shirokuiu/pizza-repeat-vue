@@ -1,6 +1,7 @@
 <template>
   <main class="content">
     <TheBuilder />
+    <router-view />
   </main>
 </template>
 
