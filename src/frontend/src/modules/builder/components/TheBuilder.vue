@@ -74,22 +74,28 @@ export default {
         price: 0,
         name: "",
       },
-
-      totalPrice: 0,
     };
+  },
+
+  computed: {
+    totalPrice() {
+      return (
+        this.currentDough.price +
+        this.currentSauce.price +
+        this.ingredients.reduce((a, b) => a + (b["totalPrice"] || 0), 0)
+      );
+    },
   },
 
   created() {
     this.currentDough = this.getCurrentItem(this.doughs);
     this.currentSize = this.getCurrentItem(this.sizes);
     this.currentSauce = this.getCurrentItem(this.sauces);
-    this.totalPrice = this.updateTotalPrice();
   },
 
   methods: {
     updateCurrentDough(currentDough) {
       this.currentDough = currentDough;
-      this.totalPrice = this.updateTotalPrice();
     },
 
     updateCurrentSize(currentSize) {
@@ -98,7 +104,6 @@ export default {
 
     updateCurrentSauce(currentSauce) {
       this.currentSauce = currentSauce;
-      this.totalPrice = this.updateTotalPrice();
     },
 
     updateIngredientsPrice(ingredientData) {
@@ -126,14 +131,6 @@ export default {
         .map(({ value }) => value)[0];
     },
 
-    updateTotalPrice() {
-      return (
-        this.currentDough.price +
-        this.currentSauce.price +
-        this.ingredients.reduce((a, b) => a + (b["totalPrice"] || 0), 0)
-      );
-    },
-
     ingredientInc(currentIngredientIndex) {
       if (this.canIncOrDec(countAction.INC, currentIngredientIndex)) {
         this.$set(this.ingredients, currentIngredientIndex, {
@@ -143,8 +140,6 @@ export default {
             this.ingredients[currentIngredientIndex].count *
             this.ingredients[currentIngredientIndex].price,
         });
-
-        this.totalPrice = this.updateTotalPrice();
       }
     },
 
@@ -157,8 +152,6 @@ export default {
             this.ingredients[currentIngredientIndex].count *
             this.ingredients[currentIngredientIndex].price,
         });
-
-        this.totalPrice = this.updateTotalPrice();
       }
     },
 
@@ -171,8 +164,6 @@ export default {
           count: 0,
           totalPrice: 0,
         });
-
-        this.totalPrice = this.updateTotalPrice();
 
         return;
       }
@@ -191,8 +182,6 @@ export default {
               this.ingredients[currentIngredientIndex].count
             : this.ingredients[currentIngredientIndex].price * value,
       });
-
-      this.totalPrice = this.updateTotalPrice();
     },
 
     canIncOrDec(action, currentIngredientIndex) {
