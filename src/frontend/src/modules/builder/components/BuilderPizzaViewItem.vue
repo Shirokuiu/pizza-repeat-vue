@@ -14,7 +14,7 @@
       }}</span>
 
       <AppCounter
-        :class-mods="['counter--orange', 'ingridients__counter']"
+        class="counter--orange ingridients__counter"
         :count="ingredient.count"
         @onCountUpdate="onCountUpdate"
       />

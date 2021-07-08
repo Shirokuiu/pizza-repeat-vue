@@ -1,5 +1,5 @@
 <template>
-  <label class="radio" :class="classMods">
+  <label class="radio">
     <input
       type="radio"
       :name="radioName"
@@ -15,11 +15,6 @@ export default {
   name: "AppRadioButton",
 
   props: {
-    classMods: {
-      type: Array,
-      default: () => [],
-    },
-
     radioName: {
       type: String,
       default: "AppRadioButton",
