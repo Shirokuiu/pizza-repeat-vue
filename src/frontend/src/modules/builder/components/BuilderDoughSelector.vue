@@ -10,7 +10,7 @@
         <input
           type="radio"
           name="dough"
-          :value="value"
+          :value="value.price"
           class="visually-hidden"
           :checked="isChecked"
           @change="onDoughChange(value)"
