@@ -1,6 +1,6 @@
 <template>
   <div class="content__diameter">
-    <AppWidget title="Выберите размер" :class-mods="['diameter']">
+    <AppWidget title="Выберите размер" class="diameter">
       <label
         v-for="({ value, name, isChecked }, index) of sizes"
         :key="index"

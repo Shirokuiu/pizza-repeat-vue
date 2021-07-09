@@ -2,7 +2,7 @@
   <div class="sheet">
     <h2 class="title title--small sheet__title">{{ title }}</h2>
 
-    <div class="sheet__content" :class="classMods">
+    <div class="sheet__content">
       <slot />
     </div>
   </div>

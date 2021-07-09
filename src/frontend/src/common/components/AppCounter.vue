@@ -1,5 +1,5 @@
 <template>
-  <div class="counter" :class="classMods">
+  <div class="counter">
     <button
       type="button"
       class="counter__button counter__button--disabled counter__button--minus"
@@ -30,11 +30,6 @@ export default {
   name: "AppCounter",
 
   props: {
-    classMods: {
-      type: Array,
-      default: () => [],
-    },
-
     count: {
       type: Number,
       required: true,
@@ -45,14 +40,14 @@ export default {
     inc() {
       this.$emit("onCountUpdate", {
         action: countAction.INC,
-        value: undefined,
+        value: null,
       });
     },
 
     dec() {
       this.$emit("onCountUpdate", {
         action: countAction.DEC,
-        value: undefined,
+        value: null,
       });
     },
 

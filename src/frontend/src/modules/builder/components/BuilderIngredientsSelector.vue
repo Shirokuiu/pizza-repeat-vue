@@ -1,12 +1,12 @@
 <template>
   <div class="content__ingridients">
-    <AppWidget title="Выберите ингридиенты" :class-mods="['ingridients']">
+    <AppWidget title="Выберите ингридиенты" class="ingridients">
       <div class="ingridients__sauce">
         <p>Основной соус:</p>
         <AppRadioButton
           v-for="({ value, name, isChecked }, index) of sauces"
           :key="index"
-          :class-mods="['ingridients__input']"
+          class="ingridients__input"
           radio-name="sauce"
           :value="value"
           :is-checked="isChecked"

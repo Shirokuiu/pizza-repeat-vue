@@ -15,11 +15,11 @@ export default {
       if (!dataTransfer) {
         return;
       }
+
       const payload = dataTransfer.getData(DATA_TRANSFER_PAYLOAD);
+
       if (payload) {
-        const transferData = JSON.parse(
-          dataTransfer.getData(DATA_TRANSFER_PAYLOAD)
-        );
+        const transferData = JSON.parse(payload);
         this.$emit("drop", transferData);
       }
     },

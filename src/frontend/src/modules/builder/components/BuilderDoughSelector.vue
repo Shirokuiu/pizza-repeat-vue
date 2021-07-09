@@ -1,6 +1,6 @@
 <template>
   <div class="content__dough">
-    <AppWidget title="Выберите тесто" :class-mods="['dough']">
+    <AppWidget title="Выберите тесто" class="dough">
       <label
         v-for="({ value, name, description, isChecked }, index) of doughs"
         :key="index"
@@ -10,7 +10,7 @@
         <input
           type="radio"
           name="dough"
-          :value="value"
+          :value="value.price"
           class="visually-hidden"
           :checked="isChecked"
           @change="onDoughChange(value)"
