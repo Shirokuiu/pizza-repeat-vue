@@ -4,7 +4,7 @@
       currentIngredientIndex: idx,
       actionCountData: {
         action: countAction.DROP,
-        value: undefined,
+        value: null,
       },
     }"
   >

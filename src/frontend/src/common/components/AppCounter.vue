@@ -40,14 +40,14 @@ export default {
     inc() {
       this.$emit("onCountUpdate", {
         action: countAction.INC,
-        value: undefined,
+        value: null,
       });
     },
 
     dec() {
       this.$emit("onCountUpdate", {
         action: countAction.DEC,
-        value: undefined,
+        value: null,
       });
     },
 
