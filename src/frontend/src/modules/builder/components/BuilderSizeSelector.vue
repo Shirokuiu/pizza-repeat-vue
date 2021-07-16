@@ -10,7 +10,7 @@
         <input
           type="radio"
           name="diameter"
-          :value="value"
+          :value="value.multiplier"
           :checked="isChecked"
           @change="onSizeChange(value)"
           class="visually-hidden"
