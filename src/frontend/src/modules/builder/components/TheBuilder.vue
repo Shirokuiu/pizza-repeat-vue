@@ -80,9 +80,10 @@ export default {
   computed: {
     totalPrice() {
       return (
-        this.currentDough.price +
-        this.currentSauce.price +
-        this.ingredients.reduce((a, b) => a + (b["totalPrice"] || 0), 0)
+        (this.currentDough.price +
+          this.currentSauce.price +
+          this.ingredients.reduce((a, b) => a + (b["totalPrice"] || 0), 0)) *
+        this.currentSize.multiplier
       );
     },
   },
