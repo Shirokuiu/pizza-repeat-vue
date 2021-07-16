@@ -4,7 +4,7 @@
       "name": "Тонкое",
       "image": "/public/img/dough-light.svg",
       "description": "Из твердых сортов пшеницы",
-      "price": 300
+      "price": 200
     },
     {
       "name": "Толстое",
@@ -33,7 +33,7 @@
   "sauces": [
     {
       "name": "Томатный",
-      "price": 50
+      "price": 40
     },
     {
       "name": "Сливочный",

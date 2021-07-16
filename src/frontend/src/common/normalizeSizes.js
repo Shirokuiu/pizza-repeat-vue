@@ -14,8 +14,14 @@ const valueMap = [
 ];
 
 export const normalizeSizes = (sizes) =>
-  sizes.map((size) => ({
-    ...size,
-    value: valueMap.find(({ multiplier }) => size.multiplier === multiplier)
-      .value,
+  sizes.map(({ name, image, multiplier }, index) => ({
+    name,
+    value: {
+      image,
+      multiplier,
+      name: valueMap.find(
+        ({ multiplier: multiplierMap }) => multiplier === multiplierMap
+      ).value,
+    },
+    isChecked: index === 1,
   }));

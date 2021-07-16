@@ -1,7 +1,7 @@
 const valueMap = [
   {
     name: "Томатный",
-    value: "creamy",
+    value: "tomato",
   },
   {
     name: "Сливочный",
@@ -10,7 +10,11 @@ const valueMap = [
 ];
 
 export const normalizeSauces = (sauces) =>
-  sauces.map((sauce) => ({
-    ...sauce,
-    value: valueMap.find(({ name }) => sauce.name === name).value,
+  sauces.map(({ price, name }, index) => ({
+    name,
+    value: {
+      price,
+      name: valueMap.find(({ name: nameMap }) => name === nameMap).value,
+    },
+    isChecked: index === 0,
   }));
