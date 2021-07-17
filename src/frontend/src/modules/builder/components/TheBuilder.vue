@@ -64,8 +64,6 @@ export default {
 
       pizzaName: "",
 
-      isIngredientsExist: false,
-
       currentDough: {
         price: 0,
         image: "",
@@ -100,11 +98,9 @@ export default {
     totalPriceCart() {
       return this.cartItems.reduce((a, b) => a + (b["price"] || 0), 0);
     },
-  },
 
-  watch: {
-    ingredients(oldIngredients, newIngredients) {
-      this.isIngredientsExist = this.checkIngredientsExist(newIngredients);
+    isIngredientsExist() {
+      return this.ingredients.some(({ count }) => count > 0);
     },
   },
 
@@ -112,7 +108,6 @@ export default {
     this.currentDough = this.getCurrentItem(this.doughs);
     this.currentSize = this.getCurrentItem(this.sizes);
     this.currentSauce = this.getCurrentItem(this.sauces);
-    this.isIngredientsExist = this.checkIngredientsExist(this.ingredients);
   },
 
   methods: {
@@ -232,10 +227,6 @@ export default {
             this.ingredients[currentIngredientIndex].maxDec
           );
       }
-    },
-
-    checkIngredientsExist(ingredients) {
-      return ingredients.some(({ count }) => count > 0);
     },
   },
 };
