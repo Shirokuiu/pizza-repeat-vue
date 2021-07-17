@@ -1,22 +1,17 @@
 <template>
   <main class="content">
-    <component :is="layout" @addToCart="addToCart"><slot /></component>
+    <TheBuilder @addToCart="addToCart" />
     <router-view />
   </main>
 </template>
 
 <script>
-const defaultLayout = "TheBuilder";
+import TheBuilder from "../modules/builder/components/TheBuilder";
 
 export default {
   name: "Index",
-
-  computed: {
-    layout() {
-      const layout = this.$route.meta.layout || defaultLayout;
-
-      return () => import(`../modules/builder/components/${layout}.vue`);
-    },
+  components: {
+    TheBuilder,
   },
 
   methods: {
