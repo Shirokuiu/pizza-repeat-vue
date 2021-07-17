@@ -18,12 +18,16 @@
       />
 
       <BuilderPriceCounter
-        :total-price="totalPrice"
+        :total-price="totalPricePizza"
+        :is-disabled="!this.isIngredientsExist || pizzaName.length === 0"
         @onIngredientDrop="updateIngredientsPrice"
+        @onInputTitle="updateTitle"
+        @addToCart="addToCart"
       />
     </div>
   </form>
 </template>
+
 <script>
 import pizza from "../../../static/pizza";
 import BuilderDoughSelector from "./BuilderDoughSelector";
@@ -58,6 +62,10 @@ export default {
 
       ingredients: normalizeIngredients(pizza.ingredients),
 
+      pizzaName: "",
+
+      isIngredientsExist: false,
+
       currentDough: {
         price: 0,
         image: "",
@@ -74,11 +82,13 @@ export default {
         price: 0,
         name: "",
       },
+
+      cartItems: [],
     };
   },
 
   computed: {
-    totalPrice() {
+    totalPricePizza() {
       return (
         (this.currentDough.price +
           this.currentSauce.price +
@@ -86,15 +96,35 @@ export default {
         this.currentSize.multiplier
       );
     },
+
+    totalPriceCart() {
+      return this.cartItems.reduce((a, b) => a + (b["price"] || 0), 0);
+    },
+  },
+
+  watch: {
+    ingredients(oldIngredients, newIngredients) {
+      this.isIngredientsExist = this.checkIngredientsExist(newIngredients);
+    },
   },
 
   created() {
     this.currentDough = this.getCurrentItem(this.doughs);
     this.currentSize = this.getCurrentItem(this.sizes);
     this.currentSauce = this.getCurrentItem(this.sauces);
+    this.isIngredientsExist = this.checkIngredientsExist(this.ingredients);
   },
 
   methods: {
+    addToCart() {
+      this.cartItems.push({
+        name: this.pizzaName,
+        price: this.totalPricePizza,
+      });
+
+      this.$emit("addToCart", this.totalPriceCart);
+    },
+
     updateCurrentDough(currentDough) {
       this.currentDough = currentDough;
     },
@@ -105,6 +135,10 @@ export default {
 
     updateCurrentSauce(currentSauce) {
       this.currentSauce = currentSauce;
+    },
+
+    updateTitle(value) {
+      this.pizzaName = value.trim();
     },
 
     updateIngredientsPrice(ingredientData) {
@@ -198,6 +232,10 @@ export default {
             this.ingredients[currentIngredientIndex].maxDec
           );
       }
+    },
+
+    checkIngredientsExist(ingredients) {
+      return ingredients.some(({ count }) => count > 0);
     },
   },
 };

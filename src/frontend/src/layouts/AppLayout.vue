@@ -1,8 +1,8 @@
 <template>
   <div>
-    <TheHeader />
+    <TheHeader :total-price-cart="totalPriceCart" />
 
-    <router-view />
+    <router-view @addToCart="addToCart" />
   </div>
 </template>
 <script>
@@ -12,6 +12,18 @@ export default {
 
   components: {
     TheHeader,
+  },
+
+  data() {
+    return {
+      totalPriceCart: 0,
+    };
+  },
+
+  methods: {
+    addToCart(totalPriceCart) {
+      this.totalPriceCart = totalPriceCart;
+    },
   },
 };
 </script>
