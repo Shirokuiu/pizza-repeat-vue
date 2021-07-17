@@ -14,6 +14,7 @@
     <HeaderUser />
   </header>
 </template>
+
 <script>
 import HeaderCart from "./HeaderCart";
 import HeaderUser from "./HeaderUser";
