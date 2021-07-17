@@ -2,7 +2,7 @@
   <div>
     <TheHeader :total-price-cart="totalPriceCart" />
 
-    <router-view @addToCart="addToCart" />
+    <slot />
   </div>
 </template>
 
@@ -16,15 +16,10 @@ export default {
     TheHeader,
   },
 
-  data() {
-    return {
-      totalPriceCart: 0,
-    };
-  },
-
-  methods: {
-    addToCart(totalPriceCart) {
-      this.totalPriceCart = totalPriceCart;
+  props: {
+    totalPriceCart: {
+      type: Number,
+      default: 0,
     },
   },
 };
