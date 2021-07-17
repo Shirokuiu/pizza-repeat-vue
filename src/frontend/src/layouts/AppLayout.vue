@@ -5,8 +5,10 @@
     <router-view @addToCart="addToCart" />
   </div>
 </template>
+
 <script>
 import TheHeader from "../modules/header/components/TheHeader";
+
 export default {
   name: "AppLayout",
 
@@ -27,4 +29,5 @@ export default {
   },
 };
 </script>
+
 <style></style>

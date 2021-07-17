@@ -3,6 +3,9 @@ export default [
     path: "/",
     name: "Index",
     component: () => import("../views/Index"),
+    meta: {
+      layout: "TheBuilder",
+    },
     children: [
       {
         path: "/login",
