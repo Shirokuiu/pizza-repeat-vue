@@ -1,25 +1,33 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <a href="index.html" class="logo">
+      <router-link to="/" class="logo">
         <img
           src="../../../assets/img/logo.svg"
           alt="V!U!E! Pizza logo"
           width="90"
           height="40"
         />
-      </a>
+      </router-link>
     </div>
-    <HeaderCart />
+    <HeaderCart :total-price-cart="totalPriceCart" />
     <HeaderUser />
   </header>
 </template>
+
 <script>
 import HeaderCart from "./HeaderCart";
 import HeaderUser from "./HeaderUser";
 
 export default {
   name: "Header",
+
+  props: {
+    totalPriceCart: {
+      type: Number,
+      default: 0,
+    },
+  },
 
   components: {
     HeaderCart,

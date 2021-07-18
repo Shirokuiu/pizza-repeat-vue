@@ -1,16 +1,31 @@
 <template>
   <div id="app">
-    <AppLayout />
+    <component :is="layout" :total-price-cart="totalPriceCart">
+      <router-view @addToCart="addToCart" />
+    </component>
   </div>
 </template>
 
 <script>
-import AppLayout from "./layouts/AppLayout";
-
 export default {
   name: "App",
-  components: {
-    AppLayout,
+
+  data() {
+    return {
+      totalPriceCart: 0,
+    };
+  },
+
+  computed: {
+    layout() {
+      return () => import("./layouts/AppLayout.vue");
+    },
+  },
+
+  methods: {
+    addToCart(totalPriceCart) {
+      this.totalPriceCart = totalPriceCart;
+    },
   },
 };
 </script>

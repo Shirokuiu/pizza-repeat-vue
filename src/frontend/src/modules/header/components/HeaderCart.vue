@@ -1,10 +1,18 @@
 <template>
   <div class="header__cart">
-    <a href="cart.html">0 ₽</a>
+    <router-link to="/cart">{{ totalPriceCart }} ₽</router-link>
   </div>
 </template>
+
 <script>
 export default {
   name: "HeaderCart",
+
+  props: {
+    totalPriceCart: {
+      type: Number,
+      default: 0,
+    },
+  },
 };
 </script>

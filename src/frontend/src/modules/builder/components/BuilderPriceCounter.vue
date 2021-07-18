@@ -3,10 +3,10 @@
     <div class="content__pizza">
       <label class="input">
         <span class="visually-hidden">Название пиццы</span>
-        <input
-          type="text"
+        <AppInputText
           name="pizza_name"
           placeholder="Введите название пиццы"
+          @onInput="onInputTitle"
         />
       </label>
 
@@ -22,21 +22,29 @@
 
       <div class="content__result">
         <p>Итого: {{ totalPrice }} ₽</p>
-        <button type="button" class="button button--disabled" disabled>
+        <button
+          type="button"
+          class="button button--disabled"
+          :disabled="isDisabled"
+          @click="onCLickBtn"
+        >
           Готовьте!
         </button>
       </div>
     </div>
   </AppDrop>
 </template>
+
 <script>
 import AppDrop from "../../../common/components/AppDrop";
+import AppInputText from "../../../common/components/AppInputText";
 
 export default {
   name: "BuilderPriceCounter",
 
   components: {
     AppDrop,
+    AppInputText,
   },
 
   props: {
@@ -44,11 +52,24 @@ export default {
       type: Number,
       required: true,
     },
+
+    isDisabled: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   methods: {
     onIngredientDrop(ingredientData) {
       this.$emit("onIngredientDrop", ingredientData);
+    },
+
+    onInputTitle(value) {
+      this.$emit("onInputTitle", value);
+    },
+
+    onCLickBtn() {
+      this.$emit("addToCart");
     },
   },
 };

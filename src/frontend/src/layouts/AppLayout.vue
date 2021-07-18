@@ -1,21 +1,28 @@
 <template>
   <div>
-    <TheHeader />
+    <TheHeader :total-price-cart="totalPriceCart" />
 
-    <Index />
+    <slot />
   </div>
 </template>
+
 <script>
 import TheHeader from "../modules/header/components/TheHeader";
-import Index from "../views/Index";
 
 export default {
   name: "AppLayout",
 
   components: {
     TheHeader,
-    Index,
+  },
+
+  props: {
+    totalPriceCart: {
+      type: Number,
+      default: 0,
+    },
   },
 };
 </script>
+
 <style></style>
