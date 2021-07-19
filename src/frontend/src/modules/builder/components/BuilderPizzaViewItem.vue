@@ -17,6 +17,8 @@
         class="counter--orange ingridients__counter"
         :count="ingredient.count"
         @onCountUpdate="onCountUpdate($event, idx)"
+        :disable-inc="ingredient.count === ingredient.maxInc"
+        :disable-dec="ingredient.count === ingredient.maxDec"
       />
     </li>
   </AppDrag>

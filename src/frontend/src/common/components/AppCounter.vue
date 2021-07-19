@@ -4,6 +4,7 @@
       type="button"
       class="counter__button counter__button--disabled counter__button--minus"
       @click="dec"
+      :disabled="disableDec"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -18,6 +19,7 @@
       type="button"
       class="counter__button counter__button--plus"
       @click="inc"
+      :disabled="disableInc"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -33,6 +35,14 @@ export default {
     count: {
       type: Number,
       required: true,
+    },
+    disableInc: {
+      type: Boolean,
+      default: false,
+    },
+    disableDec: {
+      type: Boolean,
+      default: false,
     },
   },
 
