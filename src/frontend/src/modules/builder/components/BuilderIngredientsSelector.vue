@@ -23,6 +23,8 @@
   </div>
 </template>
 <script>
+import { mapState, mapActions } from "vuex";
+
 import AppWidget from "../../../common/components/AppWidget";
 import AppRadioButton from "../../../common/components/AppRadioButton";
 import BuilderPizzaView from "./BuilderPizzaView";
@@ -37,20 +39,23 @@ export default {
   },
 
   props: {
-    sauces: {
-      type: Array,
-      required: true,
-    },
-
     ingredients: {
       type: Array,
       required: true,
     },
   },
 
+  computed: {
+    ...mapState("Builder", ["sauces"]),
+  },
+
   methods: {
+    ...mapActions("Builder", {
+      setCurrentSauce: "setCurrentSauce",
+    }),
+
     onSauceChange(currentSauce) {
-      this.$emit("onSauceChange", currentSauce);
+      this.setCurrentSauce(currentSauce);
     },
 
     onCountUpdate(ingredientData) {

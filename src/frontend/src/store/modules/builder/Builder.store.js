@@ -7,6 +7,7 @@ import {
 import pizza from "src/static/pizza.json";
 import {
   SET_CURRENT_DOUGH,
+  SET_CURRENT_SAUCE,
   SET_CURRENT_SIZE,
 } from "src/store/modules/builder/mutation-types";
 
@@ -49,6 +50,10 @@ export default {
     [SET_CURRENT_SIZE](state, currentSIze) {
       state.currentSize = currentSIze;
     },
+
+    [SET_CURRENT_SAUCE](state, currentSauce) {
+      state.currentSauce = currentSauce;
+    },
   },
 
   actions: {
@@ -58,6 +63,10 @@ export default {
 
     setCurrentSize({ commit }, currentSize) {
       commit(SET_CURRENT_SIZE, currentSize);
+    },
+
+    setCurrentSauce({ commit }, currentSauce) {
+      commit(SET_CURRENT_SAUCE, currentSauce);
     },
   },
 };
