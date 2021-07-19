@@ -18,6 +18,11 @@ import {
 } from "src/store/modules/builder/mutation-types";
 import { countAction } from "src/common/constants";
 
+const doughClassMap = {
+  light: "small",
+  large: "big",
+};
+
 const getCurrentItem = (arr) => {
   return arr.filter(({ isChecked }) => isChecked).map(({ value }) => value)[0];
 };
@@ -74,6 +79,12 @@ export default {
 
     isIngredientsExist(state) {
       return state.ingredients.some(({ count }) => count > 0);
+    },
+
+    currentDoughPizzaMod(state) {
+      return `pizza--foundation--${doughClassMap[state.currentDough.name]}-${
+        state.currentSauce.name
+      }`;
     },
   },
 
