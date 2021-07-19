@@ -21,8 +21,10 @@
     </AppWidget>
   </div>
 </template>
+
 <script>
 import AppWidget from "../../../common/components/AppWidget";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "BuilderDoughSelector",
@@ -31,16 +33,17 @@ export default {
     AppWidget,
   },
 
-  props: {
-    doughs: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapState("Builder", ["doughs"]),
   },
 
   methods: {
+    ...mapActions("Builder", {
+      setCurrentDough: "setCurrentDough",
+    }),
+
     onDoughChange(currentDough) {
-      this.$emit("onDoughChange", currentDough);
+      this.setCurrentDough(currentDough);
     },
   },
 };

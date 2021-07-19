@@ -3,10 +3,7 @@
     <div class="content__wrapper">
       <h1 class="title title--big">Конструктор пиццы</h1>
 
-      <BuilderDoughSelector
-        :doughs="doughs"
-        @onDoughChange="updateCurrentDough"
-      />
+      <BuilderDoughSelector />
 
       <BuilderSizeSelector :sizes="sizes" @onSizeChange="updateCurrentSize" />
 
@@ -35,12 +32,12 @@ import BuilderSizeSelector from "./BuilderSizeSelector";
 import BuilderIngredientsSelector from "./BuilderIngredientsSelector";
 import BuilderPriceCounter from "./BuilderPriceCounter";
 import {
-  normalizeDoughs,
   normalizeIngredients,
   normalizeSauces,
   normalizeSizes,
 } from "../../../common";
 import { countAction } from "../../../common/constants";
+import { mapState } from "vuex";
 
 export default {
   name: "TheBuilder",
@@ -54,8 +51,6 @@ export default {
 
   data() {
     return {
-      doughs: normalizeDoughs(pizza.dough),
-
       sizes: normalizeSizes(pizza.sizes),
 
       sauces: normalizeSauces(pizza.sauces),
@@ -63,12 +58,6 @@ export default {
       ingredients: normalizeIngredients(pizza.ingredients),
 
       pizzaName: "",
-
-      currentDough: {
-        price: 0,
-        image: "",
-        name: "",
-      },
 
       currentSize: {
         multiplier: 0,
@@ -86,6 +75,8 @@ export default {
   },
 
   computed: {
+    ...mapState("Builder", ["currentDough"]),
+
     totalPricePizza() {
       return (
         (this.currentDough.price +
@@ -105,7 +96,6 @@ export default {
   },
 
   created() {
-    this.currentDough = this.getCurrentItem(this.doughs);
     this.currentSize = this.getCurrentItem(this.sizes);
     this.currentSauce = this.getCurrentItem(this.sauces);
   },
@@ -120,9 +110,9 @@ export default {
       this.$emit("addToCart", this.totalPriceCart);
     },
 
-    updateCurrentDough(currentDough) {
-      this.currentDough = currentDough;
-    },
+    // updateCurrentDough(currentDough) {
+    //   this.currentDough = currentDough;
+    // },
 
     updateCurrentSize(currentSize) {
       this.currentSize = currentSize;
