@@ -15,10 +15,7 @@
         />
       </div>
 
-      <BuilderPizzaView
-        :ingredients="ingredients"
-        @onCountUpdate="onCountUpdate"
-      />
+      <BuilderPizzaView />
     </AppWidget>
   </div>
 </template>
@@ -38,13 +35,6 @@ export default {
     BuilderPizzaView,
   },
 
-  props: {
-    ingredients: {
-      type: Array,
-      required: true,
-    },
-  },
-
   computed: {
     ...mapState("Builder", ["sauces"]),
   },
@@ -56,10 +46,6 @@ export default {
 
     onSauceChange(currentSauce) {
       this.setCurrentSauce(currentSauce);
-    },
-
-    onCountUpdate(ingredientData) {
-      this.$emit("onCountUpdate", ingredientData);
     },
   },
 };

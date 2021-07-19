@@ -21,11 +21,11 @@
       </div>
 
       <div class="content__result">
-        <p>Итого: {{ totalPrice }} ₽</p>
+        <p>Итого: {{ totalPricePizza }} ₽</p>
         <button
           type="button"
           class="button button--disabled"
-          :disabled="isDisabled"
+          :disabled="!this.isIngredientsExist || pizzaName.length === 0"
           @click="onCLickBtn"
         >
           Готовьте!
@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapState } from "vuex";
+
 import AppDrop from "../../../common/components/AppDrop";
 import AppInputText from "../../../common/components/AppInputText";
 
@@ -47,25 +49,25 @@ export default {
     AppInputText,
   },
 
-  props: {
-    totalPrice: {
-      type: Number,
-      required: true,
-    },
-
-    isDisabled: {
-      type: Boolean,
-      default: true,
-    },
+  computed: {
+    ...mapGetters("Builder", ["totalPricePizza", "isIngredientsExist"]),
+    ...mapState("Builder", ["pizzaName"]),
   },
 
   methods: {
+    ...mapActions("Builder", {
+      inc: "inc",
+      setPizzaName: "setPizzaName",
+    }),
+
     onIngredientDrop(ingredientData) {
-      this.$emit("onIngredientDrop", ingredientData);
+      const { currentIngredientIndex } = ingredientData;
+
+      this.inc(currentIngredientIndex);
     },
 
     onInputTitle(value) {
-      this.$emit("onInputTitle", value);
+      this.setPizzaName(value);
     },
 
     onCLickBtn() {

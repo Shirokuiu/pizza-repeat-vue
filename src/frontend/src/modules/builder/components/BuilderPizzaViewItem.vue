@@ -16,13 +16,15 @@
       <AppCounter
         class="counter--orange ingridients__counter"
         :count="ingredient.count"
-        @onCountUpdate="onCountUpdate"
+        @onCountUpdate="onCountUpdate($event, idx)"
       />
     </li>
   </AppDrag>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 import AppCounter from "../../../common/components/AppCounter";
 import AppDrag from "../../../common/components/AppDrag";
 import { countAction } from "../../../common/constants";
@@ -53,8 +55,26 @@ export default {
   },
 
   methods: {
-    onCountUpdate(countActionData) {
-      this.$emit("onCountUpdate", countActionData);
+    ...mapActions("Builder", {
+      inc: "inc",
+      dec: "dec",
+      inputChange: "inputChange",
+    }),
+
+    onCountUpdate(countActionData, currentIngredientIndex) {
+      const { action, value } = countActionData;
+
+      switch (action) {
+        case countAction.INC:
+          this.inc(currentIngredientIndex);
+          break;
+        case countAction.DEC:
+          this.dec(currentIngredientIndex);
+          break;
+        case countAction.INPUT_CHANGE:
+          this.inputChange({ currentIngredientIndex, value });
+          break;
+      }
     },
   },
 };

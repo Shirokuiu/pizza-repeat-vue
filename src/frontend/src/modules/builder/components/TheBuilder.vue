@@ -7,30 +7,18 @@
 
       <BuilderSizeSelector />
 
-      <BuilderIngredientsSelector
-        :ingredients="ingredients"
-        @onCountUpdate="updateIngredientsPrice"
-      />
+      <BuilderIngredientsSelector />
 
-      <BuilderPriceCounter
-        :total-price="totalPricePizza"
-        :is-disabled="!this.isIngredientsExist || pizzaName.length === 0"
-        @onIngredientDrop="updateIngredientsPrice"
-        @onInputTitle="updateTitle"
-        @addToCart="addToCart"
-      />
+      <BuilderPriceCounter @addToCart="addToCart" />
     </div>
   </form>
 </template>
 
 <script>
-import pizza from "../../../static/pizza";
 import BuilderDoughSelector from "./BuilderDoughSelector";
 import BuilderSizeSelector from "./BuilderSizeSelector";
 import BuilderIngredientsSelector from "./BuilderIngredientsSelector";
 import BuilderPriceCounter from "./BuilderPriceCounter";
-import { normalizeIngredients } from "../../../common";
-import { countAction } from "../../../common/constants";
 import { mapState } from "vuex";
 
 export default {
@@ -45,10 +33,6 @@ export default {
 
   data() {
     return {
-      ingredients: normalizeIngredients(pizza.ingredients),
-
-      pizzaName: "",
-
       cartItems: [],
     };
   },
@@ -56,21 +40,8 @@ export default {
   computed: {
     ...mapState("Builder", ["currentDough", "currentSize", "currentSauce"]),
 
-    totalPricePizza() {
-      return (
-        (this.currentDough.price +
-          this.currentSauce.price +
-          this.ingredients.reduce((a, b) => a + (b["totalPrice"] || 0), 0)) *
-        this.currentSize.multiplier
-      );
-    },
-
     totalPriceCart() {
       return this.cartItems.reduce((a, b) => a + (b["price"] || 0), 0);
-    },
-
-    isIngredientsExist() {
-      return this.ingredients.some(({ count }) => count > 0);
     },
   },
 
@@ -82,97 +53,6 @@ export default {
       });
 
       this.$emit("addToCart", this.totalPriceCart);
-    },
-
-    updateTitle(value) {
-      this.pizzaName = value.trim();
-    },
-
-    updateIngredientsPrice(ingredientData) {
-      const { currentIngredientIndex, actionCountData } = ingredientData;
-
-      switch (actionCountData.action) {
-        case countAction.INC:
-          this.ingredientInc(currentIngredientIndex);
-          break;
-        case countAction.DEC:
-          this.ingredientDec(currentIngredientIndex);
-          break;
-        case countAction.INPUT_CHANGE:
-          this.ingredientInputChange(currentIngredientIndex, actionCountData);
-          break;
-        case countAction.DROP:
-          this.ingredientInc(currentIngredientIndex);
-          break;
-      }
-    },
-
-    ingredientInc(currentIngredientIndex) {
-      if (this.canIncOrDec(countAction.INC, currentIngredientIndex)) {
-        this.$set(this.ingredients, currentIngredientIndex, {
-          ...this.ingredients[currentIngredientIndex],
-          count: ++this.ingredients[currentIngredientIndex].count,
-          totalPrice:
-            this.ingredients[currentIngredientIndex].count *
-            this.ingredients[currentIngredientIndex].price,
-        });
-      }
-    },
-
-    ingredientDec(currentIngredientIndex) {
-      if (this.canIncOrDec(countAction.DEC, currentIngredientIndex)) {
-        this.$set(this.ingredients, currentIngredientIndex, {
-          ...this.ingredients[currentIngredientIndex],
-          count: --this.ingredients[currentIngredientIndex].count,
-          totalPrice:
-            this.ingredients[currentIngredientIndex].count *
-            this.ingredients[currentIngredientIndex].price,
-        });
-      }
-    },
-
-    ingredientInputChange(currentIngredientIndex, actionCountData) {
-      const value = parseInt(actionCountData.value, 10);
-
-      if (isNaN(value)) {
-        this.$set(this.ingredients, currentIngredientIndex, {
-          ...this.ingredients[currentIngredientIndex],
-          count: 0,
-          totalPrice: 0,
-        });
-
-        return;
-      }
-
-      this.$set(this.ingredients, currentIngredientIndex, {
-        ...this.ingredients[currentIngredientIndex],
-        count:
-          value > this.ingredients[currentIngredientIndex].maxInc ||
-          value < this.ingredients[currentIngredientIndex].maxDec
-            ? this.ingredients[currentIngredientIndex].count
-            : value,
-        totalPrice:
-          value > this.ingredients[currentIngredientIndex].maxInc ||
-          value < this.ingredients[currentIngredientIndex].maxDec
-            ? this.ingredients[currentIngredientIndex].price *
-              this.ingredients[currentIngredientIndex].count
-            : this.ingredients[currentIngredientIndex].price * value,
-      });
-    },
-
-    canIncOrDec(action, currentIngredientIndex) {
-      switch (action) {
-        case countAction.INC:
-          return (
-            this.ingredients[currentIngredientIndex].count <
-            this.ingredients[currentIngredientIndex].maxInc
-          );
-        case countAction.DEC:
-          return (
-            this.ingredients[currentIngredientIndex].count >
-            this.ingredients[currentIngredientIndex].maxDec
-          );
-      }
     },
   },
 };
