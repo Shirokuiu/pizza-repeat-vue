@@ -5,7 +5,10 @@ import {
   normalizeSauces,
 } from "src/common";
 import pizza from "src/static/pizza.json";
-import { SET_CURRENT_DOUGH } from "src/store/modules/builder/mutation-types";
+import {
+  SET_CURRENT_DOUGH,
+  SET_CURRENT_SIZE,
+} from "src/store/modules/builder/mutation-types";
 
 const getCurrentItem = (arr) => {
   return arr.filter(({ isChecked }) => isChecked).map(({ value }) => value)[0];
@@ -42,11 +45,19 @@ export default {
     [SET_CURRENT_DOUGH](state, currentDough) {
       state.currentDough = currentDough;
     },
+
+    [SET_CURRENT_SIZE](state, currentSIze) {
+      state.currentSize = currentSIze;
+    },
   },
 
   actions: {
     setCurrentDough({ commit }, currentDough) {
       commit(SET_CURRENT_DOUGH, currentDough);
+    },
+
+    setCurrentSize({ commit }, currentSize) {
+      commit(SET_CURRENT_SIZE, currentSize);
     },
   },
 };

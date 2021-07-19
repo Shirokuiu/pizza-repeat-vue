@@ -22,6 +22,7 @@
 </template>
 <script>
 import AppWidget from "../../../common/components/AppWidget";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "BuilderSizeSelector",
@@ -30,16 +31,17 @@ export default {
     AppWidget,
   },
 
-  props: {
-    sizes: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapState("Builder", ["sizes"]),
   },
 
   methods: {
+    ...mapActions("Builder", {
+      setCurrentSize: "setCurrentSize",
+    }),
+
     onSizeChange(currentSize) {
-      this.$emit("onSizeChange", currentSize);
+      this.setCurrentSize(currentSize);
     },
   },
 };

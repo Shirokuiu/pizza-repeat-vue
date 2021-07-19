@@ -1,1 +1,2 @@
 export const SET_CURRENT_DOUGH = "SET_CURRENT_DOUGH";
+export const SET_CURRENT_SIZE = "SET_CURRENT_SIZE";

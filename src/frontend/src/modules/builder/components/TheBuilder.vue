@@ -5,7 +5,7 @@
 
       <BuilderDoughSelector />
 
-      <BuilderSizeSelector :sizes="sizes" @onSizeChange="updateCurrentSize" />
+      <BuilderSizeSelector />
 
       <BuilderIngredientsSelector
         :sauces="sauces"
@@ -31,11 +31,7 @@ import BuilderDoughSelector from "./BuilderDoughSelector";
 import BuilderSizeSelector from "./BuilderSizeSelector";
 import BuilderIngredientsSelector from "./BuilderIngredientsSelector";
 import BuilderPriceCounter from "./BuilderPriceCounter";
-import {
-  normalizeIngredients,
-  normalizeSauces,
-  normalizeSizes,
-} from "../../../common";
+import { normalizeIngredients, normalizeSauces } from "../../../common";
 import { countAction } from "../../../common/constants";
 import { mapState } from "vuex";
 
@@ -51,19 +47,11 @@ export default {
 
   data() {
     return {
-      sizes: normalizeSizes(pizza.sizes),
-
       sauces: normalizeSauces(pizza.sauces),
 
       ingredients: normalizeIngredients(pizza.ingredients),
 
       pizzaName: "",
-
-      currentSize: {
-        multiplier: 0,
-        image: "",
-        name: "",
-      },
 
       currentSauce: {
         price: 0,
@@ -75,7 +63,7 @@ export default {
   },
 
   computed: {
-    ...mapState("Builder", ["currentDough"]),
+    ...mapState("Builder", ["currentDough", "currentSize"]),
 
     totalPricePizza() {
       return (
@@ -96,7 +84,6 @@ export default {
   },
 
   created() {
-    this.currentSize = this.getCurrentItem(this.sizes);
     this.currentSauce = this.getCurrentItem(this.sauces);
   },
 
@@ -108,14 +95,6 @@ export default {
       });
 
       this.$emit("addToCart", this.totalPriceCart);
-    },
-
-    // updateCurrentDough(currentDough) {
-    //   this.currentDough = currentDough;
-    // },
-
-    updateCurrentSize(currentSize) {
-      this.currentSize = currentSize;
     },
 
     updateCurrentSauce(currentSauce) {
