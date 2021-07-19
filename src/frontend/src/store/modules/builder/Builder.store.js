@@ -86,6 +86,35 @@ export default {
         state.currentSauce.name
       }`;
     },
+
+    filling(state) {
+      let fillingItems = [];
+      let fillingItemsMap = {};
+
+      state.ingredients.forEach((ingredient) => {
+        if (ingredient.count > 0) {
+          fillingItemsMap = {
+            ...fillingItemsMap,
+            [ingredient.mod]: ingredient.count,
+          };
+        }
+      });
+
+      Object.keys(fillingItemsMap).forEach((key) => {
+        fillingItems.push({
+          id: key,
+          mod: key,
+          multipleMod:
+            fillingItemsMap[key] === 2
+              ? "second"
+              : fillingItemsMap[key] === 3
+              ? "third"
+              : undefined,
+        });
+      });
+
+      return fillingItems;
+    },
   },
 
   mutations: {

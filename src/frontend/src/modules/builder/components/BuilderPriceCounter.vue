@@ -13,9 +13,17 @@
       <div class="content__constructor">
         <div :class="['pizza', `${currentDoughPizzaMod}`]">
           <div class="pizza__wrapper">
-            <div class="pizza__filling pizza__filling--ananas"></div>
-            <div class="pizza__filling pizza__filling--bacon"></div>
-            <div class="pizza__filling pizza__filling--cheddar"></div>
+            <div
+              v-for="fillingItem of filling"
+              :key="fillingItem.id"
+              :class="[
+                'pizza__filling',
+                `pizza__filling--${fillingItem.mod}`,
+                fillingItem.multipleMod
+                  ? `pizza__filling--${fillingItem.multipleMod}`
+                  : undefined,
+              ]"
+            ></div>
           </div>
         </div>
       </div>
@@ -53,6 +61,7 @@ export default {
       "totalPricePizza",
       "isIngredientsExist",
       "currentDoughPizzaMod",
+      "filling",
     ]),
     ...mapState("Builder", ["pizzaName"]),
   },
