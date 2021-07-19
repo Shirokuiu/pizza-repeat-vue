@@ -58,6 +58,9 @@ export default {
       inc: "inc",
       setPizzaName: "setPizzaName",
     }),
+    ...mapActions("Cart", {
+      addToCart: "addToCart",
+    }),
 
     onIngredientDrop(ingredientData) {
       const { currentIngredientIndex } = ingredientData;
@@ -70,7 +73,10 @@ export default {
     },
 
     onCLickBtn() {
-      this.$emit("addToCart");
+      this.addToCart({
+        name: this.pizzaName,
+        price: this.totalPricePizza,
+      });
     },
   },
 };

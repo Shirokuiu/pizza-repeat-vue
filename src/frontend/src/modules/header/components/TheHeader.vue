@@ -10,7 +10,7 @@
         />
       </router-link>
     </div>
-    <HeaderCart :total-price-cart="totalPriceCart" />
+    <HeaderCart />
     <HeaderUser />
   </header>
 </template>
@@ -21,13 +21,6 @@ import HeaderUser from "src/modules/header/components/HeaderUser";
 
 export default {
   name: "Header",
-
-  props: {
-    totalPriceCart: {
-      type: Number,
-      default: 0,
-    },
-  },
 
   components: {
     HeaderCart,

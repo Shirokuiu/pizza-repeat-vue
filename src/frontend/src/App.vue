@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <component :is="layout" :total-price-cart="totalPriceCart">
-      <router-view @addToCart="addToCart" />
+    <component :is="layout">
+      <router-view />
     </component>
   </div>
 </template>
@@ -10,21 +10,9 @@
 export default {
   name: "App",
 
-  data() {
-    return {
-      totalPriceCart: 0,
-    };
-  },
-
   computed: {
     layout() {
       return () => import("./layouts/AppLayout.vue");
-    },
-  },
-
-  methods: {
-    addToCart(totalPriceCart) {
-      this.totalPriceCart = totalPriceCart;
     },
   },
 };

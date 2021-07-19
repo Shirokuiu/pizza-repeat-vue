@@ -5,14 +5,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "HeaderCart",
 
-  props: {
-    totalPriceCart: {
-      type: Number,
-      default: 0,
-    },
+  computed: {
+    ...mapGetters("Cart", ["totalPriceCart"]),
   },
 };
 </script>

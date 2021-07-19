@@ -9,7 +9,7 @@
 
       <BuilderIngredientsSelector />
 
-      <BuilderPriceCounter @addToCart="addToCart" />
+      <BuilderPriceCounter />
     </div>
   </form>
 </template>
@@ -39,21 +39,6 @@ export default {
 
   computed: {
     ...mapState("Builder", ["currentDough", "currentSize", "currentSauce"]),
-
-    totalPriceCart() {
-      return this.cartItems.reduce((a, b) => a + (b["price"] || 0), 0);
-    },
-  },
-
-  methods: {
-    addToCart() {
-      this.cartItems.push({
-        name: this.pizzaName,
-        price: this.totalPricePizza,
-      });
-
-      this.$emit("addToCart", this.totalPriceCart);
-    },
   },
 };
 </script>

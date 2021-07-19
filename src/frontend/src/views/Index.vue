@@ -1,6 +1,6 @@
 <template>
   <main class="content">
-    <TheBuilder @addToCart="addToCart" />
+    <TheBuilder />
     <router-view />
   </main>
 </template>
@@ -12,12 +12,6 @@ export default {
   name: "Index",
   components: {
     TheBuilder,
-  },
-
-  methods: {
-    addToCart(totalPriceCart) {
-      this.$emit("addToCart", totalPriceCart);
-    },
   },
 };
 </script>
