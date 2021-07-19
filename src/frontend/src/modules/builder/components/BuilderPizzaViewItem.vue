@@ -24,10 +24,9 @@
 
 <script>
 import { mapActions } from "vuex";
-
-import AppCounter from "../../../common/components/AppCounter";
-import AppDrag from "../../../common/components/AppDrag";
-import { countAction } from "../../../common/constants";
+import AppCounter from "src/common/components/AppCounter";
+import AppDrag from "src/common/components/AppDrag";
+import { countAction } from "src/common/constants";
 
 export default {
   name: "BuilderPizzaViewItem",

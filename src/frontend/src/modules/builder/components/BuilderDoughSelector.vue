@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import AppWidget from "../../../common/components/AppWidget";
+import AppWidget from "src/common/components/AppWidget";
 import { mapActions, mapState } from "vuex";
 
 export default {

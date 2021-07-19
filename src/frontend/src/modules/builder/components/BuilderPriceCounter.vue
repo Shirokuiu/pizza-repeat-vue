@@ -37,9 +37,8 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-
-import AppDrop from "../../../common/components/AppDrop";
-import AppInputText from "../../../common/components/AppInputText";
+import AppDrop from "src/common/components/AppDrop";
+import AppInputText from "src/common/components/AppInputText";
 
 export default {
   name: "BuilderPriceCounter",

@@ -15,11 +15,11 @@
 </template>
 
 <script>
-import BuilderDoughSelector from "./BuilderDoughSelector";
-import BuilderSizeSelector from "./BuilderSizeSelector";
-import BuilderIngredientsSelector from "./BuilderIngredientsSelector";
-import BuilderPriceCounter from "./BuilderPriceCounter";
 import { mapState } from "vuex";
+import BuilderDoughSelector from "src/modules/builder/components/BuilderDoughSelector";
+import BuilderSizeSelector from "src/modules/builder/components/BuilderSizeSelector";
+import BuilderIngredientsSelector from "src/modules/builder/components/BuilderIngredientsSelector";
+import BuilderPriceCounter from "src/modules/builder/components/BuilderPriceCounter";
 
 export default {
   name: "TheBuilder",

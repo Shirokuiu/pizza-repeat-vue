@@ -16,8 +16,7 @@
 
 <script>
 import { mapState } from "vuex";
-
-import BuilderPizzaViewItem from "./BuilderPizzaViewItem";
+import BuilderPizzaViewItem from "src/modules/builder/components/BuilderPizzaViewItem";
 
 export default {
   name: "BuilderPizzaView",

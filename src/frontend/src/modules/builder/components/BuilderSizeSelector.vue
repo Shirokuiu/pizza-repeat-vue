@@ -20,9 +20,10 @@
     </AppWidget>
   </div>
 </template>
+
 <script>
-import AppWidget from "../../../common/components/AppWidget";
 import { mapActions, mapState } from "vuex";
+import AppWidget from "src/common/components/AppWidget";
 
 export default {
   name: "BuilderSizeSelector",

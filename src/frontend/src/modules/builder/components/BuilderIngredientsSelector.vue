@@ -21,10 +21,9 @@
 </template>
 <script>
 import { mapState, mapActions } from "vuex";
-
-import AppWidget from "../../../common/components/AppWidget";
-import AppRadioButton from "../../../common/components/AppRadioButton";
-import BuilderPizzaView from "./BuilderPizzaView";
+import AppWidget from "src/common/components/AppWidget";
+import AppRadioButton from "src/common/components/AppRadioButton";
+import BuilderPizzaView from "src/modules/builder/components/BuilderPizzaView";
 
 export default {
   name: "BuilderIngredientsSelector",

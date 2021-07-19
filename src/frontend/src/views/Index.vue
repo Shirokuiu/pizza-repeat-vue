@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import TheBuilder from "../modules/builder/components/TheBuilder";
+import TheBuilder from "src/modules/builder/components/TheBuilder";
 
 export default {
   name: "Index",

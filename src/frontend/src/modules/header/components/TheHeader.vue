@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import HeaderCart from "./HeaderCart";
-import HeaderUser from "./HeaderUser";
+import HeaderCart from "src/modules/header/components/HeaderCart";
+import HeaderUser from "src/modules/header/components/HeaderUser";
 
 export default {
   name: "Header",
