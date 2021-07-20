@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { uniqueId } from "lodash";
 import { mapActions, mapGetters, mapState } from "vuex";
 import AppDrop from "src/common/components/AppDrop";
 import AppInputText from "src/common/components/AppInputText";
@@ -63,7 +64,12 @@ export default {
       "currentDoughPizzaMod",
       "filling",
     ]),
-    ...mapState("Builder", ["pizzaName"]),
+    ...mapState("Builder", [
+      "pizzaName",
+      "currentDough",
+      "currentSize",
+      "currentSauce",
+    ]),
   },
 
   methods: {
@@ -86,10 +92,20 @@ export default {
     },
 
     onCLickBtn() {
-      this.addToCart({
+      this.addToCart(this.buildCart());
+    },
+
+    buildCart() {
+      return {
+        id: uniqueId(),
         name: this.pizzaName,
         price: this.totalPricePizza,
-      });
+        count: 1,
+        dough: this.currentDough.name,
+        size: this.currentSize.name,
+        sauce: this.currentSauce.name,
+        filling: this.filling,
+      };
     },
   },
 };

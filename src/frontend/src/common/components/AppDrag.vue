@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { MOVE, DATA_TRANSFER_PAYLOAD } from "./constants";
+import { MOVE, DATA_TRANSFER_PAYLOAD } from "src/common/constants";
 
 export default {
   name: "AppDrag",

@@ -7,6 +7,7 @@
         </div>
 
         <CartContentEmpty v-if="!cartItems.length"></CartContentEmpty>
+
         <CartContent v-if="cartItems.length" />
       </div>
     </main>

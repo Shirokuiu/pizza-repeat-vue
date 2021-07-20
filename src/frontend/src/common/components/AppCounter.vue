@@ -17,7 +17,11 @@
     />
     <button
       type="button"
-      class="counter__button counter__button--plus"
+      :class="[
+        'counter__button',
+        'counter__button--plus',
+        incMod ? `counter__button--${incMod}` : undefined,
+      ]"
       @click="inc"
       :disabled="disableInc"
     >
@@ -25,13 +29,21 @@
     </button>
   </div>
 </template>
+
 <script>
-import { countAction } from "../constants";
+import { appCounterIncMod, countAction } from "src/common/constants";
+
+const AppCounterIncMod = appCounterIncMod;
 
 export default {
   name: "AppCounter",
 
   props: {
+    incMod: {
+      type: String,
+      default: AppCounterIncMod.none,
+      validator: (v) => AppCounterIncMod[v],
+    },
     count: {
       type: Number,
       required: true,
@@ -44,6 +56,12 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+
+  data() {
+    return {
+      DEFAULT_INC_MODE: "none",
+    };
   },
 
   methods: {
