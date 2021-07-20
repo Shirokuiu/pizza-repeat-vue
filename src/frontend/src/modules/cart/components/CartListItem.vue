@@ -25,10 +25,13 @@
       :count="cartItem.count"
       class="cart-list__counter"
       :inc-mod="appCounterIncMod.orange"
+      :disable-inc="cartItem.count === cartItem.maxInc"
+      :disable-dec="cartItem.count === cartItem.maxDec"
+      @onCountUpdate="$emit('onCountUpdate', $event)"
     />
 
     <div class="cart-list__price">
-      <b>{{ cartItem.price }} ₽</b>
+      <b>{{ cartItem.totalPrice }} ₽</b>
     </div>
 
     <div class="cart-list__button">

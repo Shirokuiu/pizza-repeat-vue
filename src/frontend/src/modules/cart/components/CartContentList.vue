@@ -1,16 +1,18 @@
 <template>
   <ul class="cart-list sheet">
     <CartListItem
-      v-for="cartItem of cartItems"
+      v-for="(cartItem, idx) of cartItems"
       :key="cartItem.id"
       :cart-item="cartItem"
+      @onCountUpdate="onCountUpdate($event, idx)"
     />
   </ul>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import CartListItem from "src/modules/cart/components/CartListItem";
+import { countAction } from "src/common/constants";
 
 export default {
   name: "CartContentList",
@@ -21,6 +23,30 @@ export default {
 
   computed: {
     ...mapState("Cart", ["cartItems"]),
+  },
+
+  methods: {
+    ...mapActions("Cart", {
+      inc: "inc",
+      dec: "dec",
+      inputChange: "inputChange",
+    }),
+
+    onCountUpdate(countActionData, currentCartIndex) {
+      const { action, value } = countActionData;
+
+      switch (action) {
+        case countAction.INC:
+          this.inc(currentCartIndex);
+          break;
+        case countAction.DEC:
+          this.dec(currentCartIndex);
+          break;
+        case countAction.INPUT_CHANGE:
+          this.inputChange({ currentCartIndex, value });
+          break;
+      }
+    },
   },
 };
 </script>
