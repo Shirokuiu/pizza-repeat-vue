@@ -1,52 +1,15 @@
 <template>
   <ul class="cart-list sheet">
-    <CartListItem />
-    <!--    <li class="cart-list__item">-->
-    <!--      <div class="product cart-list__product">-->
-    <!--        <img-->
-    <!--          src="../../../assets/img/product.svg"-->
-    <!--          class="product__img"-->
-    <!--          width="56"-->
-    <!--          height="56"-->
-    <!--          alt="Любимая пицца"-->
-    <!--        />-->
-    <!--        <div class="product__text">-->
-    <!--          <h2>Любимая пицца</h2>-->
-    <!--          <ul>-->
-    <!--            <li>30 см, на тонком тесте</li>-->
-    <!--            <li>Соус: томатный</li>-->
-    <!--            <li>-->
-    <!--              Начинка: грибы, лук, ветчина, пармезан, ананас, бекон, блю чиз-->
-    <!--            </li>-->
-    <!--          </ul>-->
-    <!--        </div>-->
-    <!--      </div>-->
-
-    <!--      <div class="counter cart-list__counter">-->
-    <!--        <button type="button" class="counter__button counter__button&#45;&#45;minus">-->
-    <!--          <span class="visually-hidden">Меньше</span>-->
-    <!--        </button>-->
-    <!--        <input type="text" name="counter" class="counter__input" value="2" />-->
-    <!--        <button-->
-    <!--          type="button"-->
-    <!--          class="counter__button counter__button&#45;&#45;plus counter__button&#45;&#45;orange"-->
-    <!--        >-->
-    <!--          <span class="visually-hidden">Больше</span>-->
-    <!--        </button>-->
-    <!--      </div>-->
-
-    <!--      <div class="cart-list__price">-->
-    <!--        <b>782 ₽</b>-->
-    <!--      </div>-->
-
-    <!--      <div class="cart-list__button">-->
-    <!--        <button type="button" class="cart-list__edit">Изменить</button>-->
-    <!--      </div>-->
-    <!--    </li>-->
+    <CartListItem
+      v-for="cartItem of cartItems"
+      :key="cartItem.id"
+      :cart-item="cartItem"
+    />
   </ul>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CartListItem from "src/modules/cart/components/CartListItem";
 
 export default {
@@ -54,6 +17,10 @@ export default {
 
   components: {
     CartListItem,
+  },
+
+  computed: {
+    ...mapState("Cart", ["cartItems"]),
   },
 };
 </script>

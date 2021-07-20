@@ -9,23 +9,26 @@
         alt="Капричоза"
       />
       <div class="product__text">
-        <h2>Капричоза</h2>
+        <h2>{{ cartItem.name }}</h2>
         <ul>
-          <li>30 см, на тонком тесте</li>
-          <li>Соус: томатный</li>
-          <li>Начинка: грибы, лук, ветчина, пармезан, ананас</li>
+          <li
+            v-for="(description, idx) of cartItem.descriptionsFilling"
+            :key="idx"
+          >
+            {{ description }}
+          </li>
         </ul>
       </div>
     </div>
 
     <AppCounter
-      :count="1"
+      :count="cartItem.count"
       class="cart-list__counter"
       :inc-mod="appCounterIncMod.orange"
     />
 
     <div class="cart-list__price">
-      <b>782 ₽</b>
+      <b>{{ cartItem.price }} ₽</b>
     </div>
 
     <div class="cart-list__button">
@@ -43,6 +46,13 @@ export default {
 
   components: {
     AppCounter,
+  },
+
+  props: {
+    cartItem: {
+      type: Object,
+      required: true,
+    },
   },
 
   data() {
