@@ -17,6 +17,7 @@ import {
   SET_PIZZA_NAME,
 } from "src/store/modules/builder/mutation-types";
 import { countAction } from "src/common/constants";
+import { canIncOrDec } from "src/common/helpers";
 
 const doughClassMap = {
   light: "small",
@@ -30,19 +31,6 @@ const multipleModMap = {
 
 const getCurrentItem = (arr) => {
   return arr.filter(({ isChecked }) => isChecked).map(({ value }) => value)[0];
-};
-
-const canIncOrDec = (action, currentIngredientIndex, arr) => {
-  switch (action) {
-    case countAction.INC:
-      return (
-        arr[currentIngredientIndex].count < arr[currentIngredientIndex].maxInc
-      );
-    case countAction.DEC:
-      return (
-        arr[currentIngredientIndex].count > arr[currentIngredientIndex].maxDec
-      );
-  }
 };
 
 const initialState = () => {

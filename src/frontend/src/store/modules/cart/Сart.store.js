@@ -1,3 +1,4 @@
+import Vue from "vue";
 import {
   ADD_TO_CART,
   DEC,
@@ -5,7 +6,7 @@ import {
   INPUT_CHANGE,
 } from "src/store/modules/cart/mutation-types";
 import { countAction, modIngredientMap } from "src/common/constants";
-import Vue from "vue";
+import { canIncOrDec } from "src/common/helpers";
 
 const sizeMap = {
   small: "23 см",
@@ -33,15 +34,6 @@ const buildDescriptionsFilling = (cartItem) => [
     .join(", ")}`,
 ];
 
-const canIncOrDec = (action, currentCartIndex, arr) => {
-  switch (action) {
-    case countAction.INC:
-      return arr[currentCartIndex].count < arr[currentCartIndex].maxInc;
-    case countAction.DEC:
-      return arr[currentCartIndex].count > arr[currentCartIndex].maxDec;
-  }
-};
-
 const initialState = () => ({
   cartItems: [],
 });
@@ -63,7 +55,7 @@ export default {
         ...cartItem,
         descriptionsFilling: buildDescriptionsFilling(cartItem),
         maxInc: 3,
-        maxDec: 0,
+        maxDec: 1,
         totalPrice: cartItem.price * cartItem.count,
       });
     },
