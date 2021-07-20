@@ -23,6 +23,11 @@ const doughClassMap = {
   large: "big",
 };
 
+const multipleModMap = {
+  2: "second",
+  3: "third",
+};
+
 const getCurrentItem = (arr) => {
   return arr.filter(({ isChecked }) => isChecked).map(({ value }) => value)[0];
 };
@@ -104,12 +109,7 @@ export default {
         fillingItems.push({
           id: key,
           mod: key,
-          multipleMod:
-            fillingItemsMap[key] === 2
-              ? "second"
-              : fillingItemsMap[key] === 3
-              ? "third"
-              : undefined,
+          multipleMod: multipleModMap[fillingItemsMap[key]],
         });
       });
 
