@@ -6,7 +6,7 @@ import {
   INPUT_CHANGE,
 } from "src/store/modules/cart/mutation-types";
 import { countAction, modIngredientMap } from "src/common/constants";
-import { canIncOrDec } from "src/common/helpers";
+import { canIncOrDec, inc, dec } from "src/common/helpers";
 
 const sizeMap = {
   small: "23 см",
@@ -62,25 +62,13 @@ export default {
 
     [INC](state, currentCartIndex) {
       if (canIncOrDec(countAction.INC, currentCartIndex, state.cartItems)) {
-        Vue.set(state.cartItems, currentCartIndex, {
-          ...state.cartItems[currentCartIndex],
-          count: ++state.cartItems[currentCartIndex].count,
-          totalPrice:
-            state.cartItems[currentCartIndex].count *
-            state.cartItems[currentCartIndex].price,
-        });
+        inc(state.cartItems, currentCartIndex);
       }
     },
 
     [DEC](state, currentCartIndex) {
       if (canIncOrDec(countAction.DEC, currentCartIndex, state.cartItems)) {
-        Vue.set(state.cartItems, currentCartIndex, {
-          ...state.cartItems[currentCartIndex],
-          count: --state.cartItems[currentCartIndex].count,
-          totalPrice:
-            state.cartItems[currentCartIndex].count *
-            state.cartItems[currentCartIndex].price,
-        });
+        dec(state.cartItems, currentCartIndex);
       }
     },
 

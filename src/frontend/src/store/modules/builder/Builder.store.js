@@ -17,7 +17,7 @@ import {
   SET_PIZZA_NAME,
 } from "src/store/modules/builder/mutation-types";
 import { countAction } from "src/common/constants";
-import { canIncOrDec } from "src/common/helpers";
+import { canIncOrDec, inc, dec } from "src/common/helpers";
 
 const doughClassMap = {
   light: "small",
@@ -126,13 +126,7 @@ export default {
       if (
         canIncOrDec(countAction.INC, currentIngredientIndex, state.ingredients)
       ) {
-        Vue.set(state.ingredients, currentIngredientIndex, {
-          ...state.ingredients[currentIngredientIndex],
-          count: ++state.ingredients[currentIngredientIndex].count,
-          totalPrice:
-            state.ingredients[currentIngredientIndex].count *
-            state.ingredients[currentIngredientIndex].price,
-        });
+        inc(state.ingredients, currentIngredientIndex);
       }
     },
 
@@ -140,13 +134,7 @@ export default {
       if (
         canIncOrDec(countAction.DEC, currentIngredientIndex, state.ingredients)
       ) {
-        Vue.set(state.ingredients, currentIngredientIndex, {
-          ...state.ingredients[currentIngredientIndex],
-          count: --state.ingredients[currentIngredientIndex].count,
-          totalPrice:
-            state.ingredients[currentIngredientIndex].count *
-            state.ingredients[currentIngredientIndex].price,
-        });
+        dec(state.ingredients, currentIngredientIndex);
       }
     },
 
