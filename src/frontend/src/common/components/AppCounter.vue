@@ -84,6 +84,10 @@ export default {
         action: countAction.INPUT_CHANGE,
         value: evt.target.value,
       });
+
+      // NOTE Если этого не сделать, то vue не перерендерит this.count, когда родитель выставляет
+      // то же состояние переменной, но при этом value останется новым
+      this.$forceUpdate();
     },
   },
 };
