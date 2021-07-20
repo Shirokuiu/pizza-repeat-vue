@@ -25,3 +25,29 @@ export const dec = (arr, currentArrIndex) => {
     totalPrice: arr[currentArrIndex].count * arr[currentArrIndex].price,
   });
 };
+
+export const incDecInputChange = (arr, currentArrIndex, inputValue) => {
+  const value = parseInt(inputValue, 10);
+
+  if (isNaN(value)) {
+    Vue.set(arr, currentArrIndex, {
+      ...arr[currentArrIndex],
+      count: 0,
+      totalPrice: 0,
+    });
+
+    return;
+  }
+
+  Vue.set(arr, currentArrIndex, {
+    ...arr[currentArrIndex],
+    count:
+      value > arr[currentArrIndex].maxInc || value < arr[currentArrIndex].maxDec
+        ? arr[currentArrIndex].count
+        : value,
+    totalPrice:
+      value > arr[currentArrIndex].maxInc || value < arr[currentArrIndex].maxDec
+        ? arr[currentArrIndex].price * arr[currentArrIndex].count
+        : arr[currentArrIndex].price * value,
+  });
+};

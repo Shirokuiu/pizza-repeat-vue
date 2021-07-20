@@ -1,5 +1,3 @@
-import Vue from "vue";
-
 import {
   normalizeIngredients,
   normalizeDoughs,
@@ -17,7 +15,7 @@ import {
   SET_PIZZA_NAME,
 } from "src/store/modules/builder/mutation-types";
 import { countAction } from "src/common/constants";
-import { canIncOrDec, inc, dec } from "src/common/helpers";
+import { canIncOrDec, inc, dec, incDecInputChange } from "src/common/helpers";
 
 const doughClassMap = {
   light: "small",
@@ -138,33 +136,8 @@ export default {
       }
     },
 
-    [INPUT_CHANGE](state, { currentIngredientIndex, value: inputValue }) {
-      const value = parseInt(inputValue, 10);
-
-      if (isNaN(value)) {
-        Vue.set(state.ingredients, currentIngredientIndex, {
-          ...state.ingredients[currentIngredientIndex],
-          count: 0,
-          totalPrice: 0,
-        });
-
-        return;
-      }
-
-      Vue.set(state.ingredients, currentIngredientIndex, {
-        ...state.ingredients[currentIngredientIndex],
-        count:
-          value > state.ingredients[currentIngredientIndex].maxInc ||
-          value < state.ingredients[currentIngredientIndex].maxDec
-            ? state.ingredients[currentIngredientIndex].count
-            : value,
-        totalPrice:
-          value > state.ingredients[currentIngredientIndex].maxInc ||
-          value < state.ingredients[currentIngredientIndex].maxDec
-            ? state.ingredients[currentIngredientIndex].price *
-              state.ingredients[currentIngredientIndex].count
-            : state.ingredients[currentIngredientIndex].price * value,
-      });
+    [INPUT_CHANGE](state, { currentIngredientIndex, value }) {
+      incDecInputChange(state.ingredients, currentIngredientIndex, value);
     },
   },
 

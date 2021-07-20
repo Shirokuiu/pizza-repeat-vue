@@ -1,4 +1,3 @@
-import Vue from "vue";
 import {
   ADD_TO_CART,
   DEC,
@@ -6,7 +5,7 @@ import {
   INPUT_CHANGE,
 } from "src/store/modules/cart/mutation-types";
 import { countAction, modIngredientMap } from "src/common/constants";
-import { canIncOrDec, inc, dec } from "src/common/helpers";
+import { canIncOrDec, inc, dec, incDecInputChange } from "src/common/helpers";
 
 const sizeMap = {
   small: "23 см",
@@ -72,33 +71,8 @@ export default {
       }
     },
 
-    [INPUT_CHANGE](state, { currentCartIndex, value: inputValue }) {
-      const value = parseInt(inputValue, 10);
-
-      if (isNaN(value)) {
-        Vue.set(state.cartItems, currentCartIndex, {
-          ...state.cartItems[currentCartIndex],
-          count: 0,
-          totalPrice: 0,
-        });
-
-        return;
-      }
-
-      Vue.set(state.cartItems, currentCartIndex, {
-        ...state.cartItems[currentCartIndex],
-        count:
-          value > state.cartItems[currentCartIndex].maxInc ||
-          value < state.cartItems[currentCartIndex].maxDec
-            ? state.cartItems[currentCartIndex].count
-            : value,
-        totalPrice:
-          value > state.cartItems[currentCartIndex].maxInc ||
-          value < state.cartItems[currentCartIndex].maxDec
-            ? state.cartItems[currentCartIndex].price *
-              state.cartItems[currentCartIndex].count
-            : state.cartItems[currentCartIndex].price * value,
-      });
+    [INPUT_CHANGE](state, { currentCartIndex, value }) {
+      incDecInputChange(state.cartItems, currentCartIndex, value);
     },
   },
 
