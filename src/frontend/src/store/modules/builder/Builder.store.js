@@ -122,6 +122,10 @@ export default {
 
     [SET_CURRENT_SAUCE](state, currentSauce) {
       state.currentSauce = currentSauce;
+      state.sauces = state.sauces.map((sauce) => ({
+        ...sauce,
+        isChecked: sauce.value.name === currentSauce.name,
+      }));
     },
 
     [SET_PIZZA_NAME](state, pizzaName) {
