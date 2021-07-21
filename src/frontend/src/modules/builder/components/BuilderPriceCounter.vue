@@ -6,6 +6,7 @@
         <AppInputText
           name="pizza_name"
           placeholder="Введите название пиццы"
+          :value="pizzaName"
           @onInput="onInputTitle"
         />
       </label>
