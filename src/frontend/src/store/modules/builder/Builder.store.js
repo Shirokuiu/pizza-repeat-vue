@@ -112,8 +112,12 @@ export default {
       }));
     },
 
-    [SET_CURRENT_SIZE](state, currentSIze) {
-      state.currentSize = currentSIze;
+    [SET_CURRENT_SIZE](state, currentSize) {
+      state.currentSize = currentSize;
+      state.sizes = state.sizes.map((size) => ({
+        ...size,
+        isChecked: size.value.name === currentSize.name,
+      }));
     },
 
     [SET_CURRENT_SAUCE](state, currentSauce) {
