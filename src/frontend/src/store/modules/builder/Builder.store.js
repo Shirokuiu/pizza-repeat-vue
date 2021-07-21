@@ -27,9 +27,14 @@ const multipleModMap = {
   3: "third",
 };
 
-const getCurrentItem = (arr) => {
-  return arr.filter(({ isChecked }) => isChecked).map(({ value }) => value)[0];
-};
+const getCurrentItem = (arr) =>
+  arr.filter(({ isChecked }) => isChecked).map(({ value }) => value)[0];
+
+const setCurrentAdditional = (arr, currentAdditional) =>
+  arr.map((item) => ({
+    ...item,
+    isChecked: item.value.name === currentAdditional.name,
+  }));
 
 const initialState = () => {
   const doughs = normalizeDoughs(pizza.dough);
@@ -106,26 +111,17 @@ export default {
   mutations: {
     [SET_CURRENT_DOUGH](state, currentDough) {
       state.currentDough = currentDough;
-      state.doughs = state.doughs.map((dough) => ({
-        ...dough,
-        isChecked: dough.value.name === currentDough.name,
-      }));
+      state.doughs = setCurrentAdditional(state.doughs, currentDough);
     },
 
     [SET_CURRENT_SIZE](state, currentSize) {
       state.currentSize = currentSize;
-      state.sizes = state.sizes.map((size) => ({
-        ...size,
-        isChecked: size.value.name === currentSize.name,
-      }));
+      state.sizes = setCurrentAdditional(state.sizes, currentSize);
     },
 
     [SET_CURRENT_SAUCE](state, currentSauce) {
       state.currentSauce = currentSauce;
-      state.sauces = state.sauces.map((sauce) => ({
-        ...sauce,
-        isChecked: sauce.value.name === currentSauce.name,
-      }));
+      state.sauces = setCurrentAdditional(state.sauces, currentSauce);
     },
 
     [SET_PIZZA_NAME](state, pizzaName) {
