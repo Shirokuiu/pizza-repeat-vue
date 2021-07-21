@@ -106,6 +106,10 @@ export default {
   mutations: {
     [SET_CURRENT_DOUGH](state, currentDough) {
       state.currentDough = currentDough;
+      state.doughs = state.doughs.map((dough) => ({
+        ...dough,
+        isChecked: dough.value.name === currentDough.name,
+      }));
     },
 
     [SET_CURRENT_SIZE](state, currentSIze) {
