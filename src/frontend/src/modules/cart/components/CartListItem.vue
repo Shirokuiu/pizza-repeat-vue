@@ -35,12 +35,15 @@
     </div>
 
     <div class="cart-list__button">
-      <button type="button" class="cart-list__edit">Изменить</button>
+      <button type="button" class="cart-list__edit" @click="onEditClick">
+        Изменить
+      </button>
     </div>
   </li>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import AppCounter from "src/common/components/AppCounter";
 import { appCounterIncMod } from "src/common/constants";
 
@@ -56,12 +59,26 @@ export default {
       type: Object,
       required: true,
     },
+    currentIndex: {
+      type: Number,
+      required: true,
+    },
   },
 
   data() {
     return {
       appCounterIncMod,
     };
+  },
+
+  methods: {
+    ...mapActions("Cart", {
+      editCartItem: "editCartItem",
+    }),
+
+    onEditClick() {
+      this.editCartItem(this.currentIndex);
+    },
   },
 };
 </script>

@@ -7,6 +7,8 @@ import {
 import pizza from "src/static/pizza.json";
 import {
   DEC,
+  EDIT,
+  EDIT_INGREDIENTS,
   INC,
   INPUT_CHANGE,
   SET_CURRENT_DOUGH,
@@ -101,6 +103,7 @@ export default {
           id: key,
           mod: key,
           multipleMod: multipleModMap[fillingItemsMap[key]],
+          count: fillingItemsMap[key],
         });
       });
 
@@ -128,6 +131,10 @@ export default {
       state.pizzaName = pizzaName;
     },
 
+    [EDIT_INGREDIENTS](state, ingredients) {
+      state.ingredients = ingredients;
+    },
+
     [INC](state, currentIngredientIndex) {
       if (
         canIncOrDec(countAction.INC, currentIngredientIndex, state.ingredients)
@@ -142,6 +149,10 @@ export default {
       ) {
         dec(state.ingredients, currentIngredientIndex);
       }
+    },
+
+    [EDIT](state, cartItem) {
+      console.log(cartItem);
     },
 
     [INPUT_CHANGE](state, { currentIngredientIndex, value }) {
@@ -166,12 +177,24 @@ export default {
       commit(SET_PIZZA_NAME, pizzaName);
     },
 
+    editIngredients({ commit }, ingredients) {
+      commit(EDIT_INGREDIENTS, ingredients);
+    },
+
     inc({ commit }, currentIngredientIndex) {
       commit(INC, currentIngredientIndex);
     },
 
     dec({ commit }, currentIngredientIndex) {
       commit(DEC, currentIngredientIndex);
+    },
+
+    edit({ dispatch }, cartItem) {
+      dispatch("setCurrentDough", cartItem.dough);
+      dispatch("setCurrentSize", cartItem.size);
+      dispatch("setCurrentSauce", cartItem.sauce);
+      dispatch("setPizzaName", cartItem.name);
+      dispatch("editIngredients", cartItem.ingredients);
     },
 
     inputChange({ commit }, { currentIngredientIndex, value }) {

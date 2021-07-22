@@ -4,6 +4,7 @@
       v-for="(cartItem, idx) of cartItems"
       :key="cartItem.id"
       :cart-item="cartItem"
+      :current-index="idx"
       @onCountUpdate="onCountUpdate($event, idx)"
     />
   </ul>
@@ -25,11 +26,16 @@ export default {
     ...mapState("Cart", ["cartItems"]),
   },
 
+  created() {
+    this.toggleEditMode({ isEdit: false });
+  },
+
   methods: {
     ...mapActions("Cart", {
       inc: "inc",
       dec: "dec",
       inputChange: "inputChange",
+      toggleEditMode: "toggleEditMode",
     }),
 
     onCountUpdate(countActionData, currentCartIndex) {
