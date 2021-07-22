@@ -4,7 +4,6 @@ import router from "src/router";
 import {
   ADD_TO_CART,
   EDIT_CART_ITEM,
-  DEC,
   INC,
   INPUT_CHANGE,
   TOGGLE_EDIT_MODE,
@@ -12,7 +11,8 @@ import {
 import { normalizeMisc } from "src/common";
 import misc from "src/static/misc";
 import { countAction, modIngredientMap } from "src/common/constants";
-import { canIncOrDec, inc, dec, incDecInputChange } from "src/common/helpers";
+import { canIncOrDec, inc, incDecInputChange } from "src/common/helpers";
+import { DEC } from "src/store/mutation-types";
 
 const sizeMap = {
   small: "23 см",
@@ -116,12 +116,6 @@ export default {
       }
     },
 
-    [DEC](state, currentCartIndex) {
-      if (canIncOrDec(countAction.DEC, currentCartIndex, state.cartItems)) {
-        dec(state.cartItems, currentCartIndex);
-      }
-    },
-
     [INPUT_CHANGE](state, { currentCartIndex, value }) {
       incDecInputChange(state.cartItems, currentCartIndex, value);
     },
@@ -165,7 +159,15 @@ export default {
     },
 
     dec({ commit }, currentCartIndex) {
-      commit(DEC, currentCartIndex);
+      commit(
+        DEC,
+        {
+          module: "Cart",
+          entity: "cartItems",
+          value: currentCartIndex,
+        },
+        { root: true }
+      );
     },
 
     inputChange({ commit }, { currentCartIndex, value }) {
