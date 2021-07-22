@@ -11,6 +11,7 @@ import {
   EDIT_INGREDIENTS,
   INC,
   INPUT_CHANGE,
+  RESET_STATE,
   SET_CURRENT_DOUGH,
   SET_CURRENT_SAUCE,
   SET_CURRENT_SIZE,
@@ -112,6 +113,12 @@ export default {
   },
 
   mutations: {
+    // NOTE ESLint глючит
+    // eslint-disable-next-line no-unused-vars
+    [RESET_STATE](state) {
+      state = Object.assign(state, initialState());
+    },
+
     [SET_CURRENT_DOUGH](state, currentDough) {
       state.currentDough = currentDough;
       state.doughs = setCurrentAdditional(state.doughs, currentDough);
@@ -161,6 +168,10 @@ export default {
   },
 
   actions: {
+    resetState({ commit }) {
+      commit(RESET_STATE);
+    },
+
     setCurrentDough({ commit }, currentDough) {
       commit(SET_CURRENT_DOUGH, currentDough);
     },

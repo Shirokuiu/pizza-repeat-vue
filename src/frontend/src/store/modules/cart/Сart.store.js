@@ -132,11 +132,12 @@ export default {
   },
 
   actions: {
-    addToCart({ commit, state, rootState, rootGetters }) {
+    addToCart({ commit, dispatch, state, rootState, rootGetters }) {
       const cartItem = buildNewCartItem(rootState, rootGetters);
 
       if (!state.editMode.isEdit) {
         commit(ADD_TO_CART, cartItem);
+        dispatch("Builder/resetState", undefined, { root: true });
 
         return;
       }
