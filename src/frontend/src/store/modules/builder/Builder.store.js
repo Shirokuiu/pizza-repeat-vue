@@ -6,7 +6,6 @@ import {
 } from "src/common";
 import pizza from "src/static/pizza.json";
 import {
-  EDIT,
   EDIT_INGREDIENTS,
   RESET_STATE,
   SET_CURRENT_DOUGH,
@@ -136,10 +135,6 @@ export default {
 
     [EDIT_INGREDIENTS](state, ingredients) {
       state.ingredients = ingredients;
-    },
-
-    [EDIT](state, cartItem) {
-      console.log(cartItem);
     },
   },
 
