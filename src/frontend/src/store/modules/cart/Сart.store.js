@@ -109,12 +109,6 @@ export default {
       });
     },
 
-    // [INC](state, currentCartIndex) {
-    //   if (canIncOrDec(countAction.INC, currentCartIndex, state.cartItems)) {
-    //     inc(state.cartItems, currentCartIndex);
-    //   }
-    // },
-
     [INPUT_CHANGE](state, { currentCartIndex, value }) {
       incDecInputChange(state.cartItems, currentCartIndex, value);
     },
