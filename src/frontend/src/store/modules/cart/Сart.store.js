@@ -9,6 +9,8 @@ import {
   INPUT_CHANGE,
   TOGGLE_EDIT_MODE,
 } from "src/store/modules/cart/mutation-types";
+import { normalizeMisc } from "src/common";
+import misc from "src/static/misc";
 import { countAction, modIngredientMap } from "src/common/constants";
 import { canIncOrDec, inc, dec, incDecInputChange } from "src/common/helpers";
 
@@ -78,6 +80,7 @@ const buildNewCartItem = (rootState, rootGetters) => {
 
 const initialState = () => ({
   cartItems: [],
+  additionalItems: normalizeMisc(misc),
   editMode: {
     isEdit: false,
     currentEditableItemIndex: undefined,
