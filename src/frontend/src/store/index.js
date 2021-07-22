@@ -32,4 +32,18 @@ export default new Vuex.Store({
       incDecInputChange(state[module][entity], currentIndex, valueInputData);
     },
   },
+
+  actions: {
+    countAction({ commit }, { module, entity, actionType, value }) {
+      commit(
+        actionType,
+        {
+          entity,
+          module,
+          value,
+        },
+        { root: true }
+      );
+    },
+  },
 });

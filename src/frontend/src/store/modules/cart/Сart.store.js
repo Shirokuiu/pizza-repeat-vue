@@ -141,18 +141,6 @@ export default {
       dispatch("Builder/resetState", undefined, { root: true });
     },
 
-    countAction({ commit }, { entity, actionType, value }) {
-      commit(
-        actionType,
-        {
-          entity,
-          module: "Cart",
-          value,
-        },
-        { root: true }
-      );
-    },
-
     toggleEditMode(
       { commit },
       { isEdit, currentEditableItemIndex } = {

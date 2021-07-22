@@ -5,7 +5,9 @@
       :key="cartItem.id"
       :cart-item="cartItem"
       :current-index="idx"
-      @onCountUpdate="onCountUpdate($event, idx, 'cartItems', countAction)"
+      @onCountUpdate="
+        onCountUpdate($event, idx, 'Cart', 'cartItems', countAction)
+      "
     />
   </ul>
 </template>
@@ -31,13 +33,13 @@ export default {
   },
 
   methods: {
+    ...mapActions(["countAction"]),
     ...mapActions("Cart", {
-      countAction: "countAction",
       toggleEditMode: "toggleEditMode",
     }),
 
-    onCountUpdate(countActionData, currentIndex, entity, action) {
-      onCountUpdate(countActionData, currentIndex, entity, action);
+    onCountUpdate(countActionData, currentIndex, module, entity, action) {
+      onCountUpdate(countActionData, currentIndex, module, entity, action);
     },
   },
 };

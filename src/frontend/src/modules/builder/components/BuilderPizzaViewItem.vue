@@ -16,7 +16,9 @@
       <AppCounter
         class="counter--orange ingridients__counter"
         :count="ingredient.count"
-        @onCountUpdate="onCountUpdate($event, idx, 'ingredients', countAction)"
+        @onCountUpdate="
+          onCountUpdate($event, idx, 'Builder', 'ingredients', countAction)
+        "
         :disable-inc="ingredient.count === ingredient.maxInc"
         :disable-dec="ingredient.count === ingredient.maxDec"
       />
@@ -50,12 +52,22 @@ export default {
   },
 
   methods: {
-    ...mapActions("Builder", {
-      countAction: "countAction",
-    }),
+    ...mapActions(["countAction"]),
 
-    onCountUpdate(countActionData, currentIngredientIndex, entity, action) {
-      onCountUpdate(countActionData, currentIngredientIndex, entity, action);
+    onCountUpdate(
+      countActionData,
+      currentIngredientIndex,
+      module,
+      entity,
+      action
+    ) {
+      onCountUpdate(
+        countActionData,
+        currentIngredientIndex,
+        module,
+        entity,
+        action
+      );
     },
   },
 };

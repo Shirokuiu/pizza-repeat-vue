@@ -162,18 +162,6 @@ export default {
       commit(EDIT_INGREDIENTS, ingredients);
     },
 
-    countAction({ commit }, { entity, actionType, value }) {
-      commit(
-        actionType,
-        {
-          entity,
-          module: "Builder",
-          value,
-        },
-        { root: true }
-      );
-    },
-
     edit({ dispatch }, cartItem) {
       dispatch("setCurrentDough", cartItem.dough);
       dispatch("setCurrentSize", cartItem.size);

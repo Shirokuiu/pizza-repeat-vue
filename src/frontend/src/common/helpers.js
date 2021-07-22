@@ -61,6 +61,7 @@ export const incDecInputChange = (arr, currentArrIndex, inputValue) => {
 export const onCountUpdate = (
   countActionData,
   currentCartIndex,
+  module,
   entity,
   action
 ) => {
@@ -68,6 +69,7 @@ export const onCountUpdate = (
 
   action({
     actionType,
+    module,
     entity,
     value: { currentIndex: currentCartIndex, valueInputData: value },
   });
