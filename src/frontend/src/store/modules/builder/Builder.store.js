@@ -138,14 +138,6 @@ export default {
       state.ingredients = ingredients;
     },
 
-    // [INC](state, currentIngredientIndex) {
-    //   if (
-    //     canIncOrDec(countAction.INC, currentIngredientIndex, state.ingredients)
-    //   ) {
-    //     inc(state.ingredients, currentIngredientIndex);
-    //   }
-    // },
-
     [EDIT](state, cartItem) {
       console.log(cartItem);
     },
