@@ -14,6 +14,8 @@
       <AppCounter
         :count="additionalItem.count"
         inc-mod="orange"
+        :disable-dec="additionalItem.count === additionalItem.maxDec"
+        :disable-inc="additionalItem.count === additionalItem.maxInc"
         class="additional-list__counter"
       />
       <div class="additional-list__price">

@@ -81,7 +81,7 @@ export default {
 
     onInputChange(evt) {
       this.$emit("onCountUpdate", {
-        action: countAction.INPUT_CHANGE,
+        action: countAction.INC_DEC_INPUT_CHANGE,
         value: evt.target.value,
       });
 

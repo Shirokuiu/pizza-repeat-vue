@@ -9,7 +9,6 @@ import {
 import { normalizeMisc } from "src/common";
 import misc from "src/static/misc";
 import { modIngredientMap } from "src/common/constants";
-import { DEC, INC, INC_DEC_INPUT_CHANGE } from "src/store/mutation-types";
 
 const sizeMap = {
   small: "23 см",
@@ -141,36 +140,13 @@ export default {
       router.push("/cart");
     },
 
-    inc({ commit }, currentCartIndex) {
+    countAction({ commit }, { entity, actionType, value }) {
       commit(
-        INC,
-        { module: "Cart", entity: "cartItems", value: currentCartIndex },
-        { root: true }
-      );
-    },
-
-    dec({ commit }, currentCartIndex) {
-      commit(
-        DEC,
+        actionType,
         {
+          entity,
           module: "Cart",
-          entity: "cartItems",
-          value: currentCartIndex,
-        },
-        { root: true }
-      );
-    },
-
-    inputChange({ commit }, { currentCartIndex, value }) {
-      commit(
-        INC_DEC_INPUT_CHANGE,
-        {
-          module: "Cart",
-          entity: "cartItems",
-          value: {
-            value,
-            currentIndex: currentCartIndex,
-          },
+          value,
         },
         { root: true }
       );

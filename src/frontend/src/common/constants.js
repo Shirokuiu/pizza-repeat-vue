@@ -1,10 +1,10 @@
 export const MOVE = "move";
 export const DATA_TRANSFER_PAYLOAD = "payload";
 export const countAction = {
-  INC: "inc",
-  DEC: "dec",
-  INPUT_CHANGE: "inputChange",
-  DROP: "drop",
+  INC: "INC",
+  DEC: "DEC",
+  INC_DEC_INPUT_CHANGE: "INC_DEC_INPUT_CHANGE",
+  DROP: "DROP",
 };
 export const appCounterIncMod = {
   none: undefined,

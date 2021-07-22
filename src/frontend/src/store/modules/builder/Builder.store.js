@@ -13,7 +13,6 @@ import {
   SET_CURRENT_SIZE,
   SET_PIZZA_NAME,
 } from "src/store/modules/builder/mutation-types";
-import { DEC, INC, INC_DEC_INPUT_CHANGE } from "src/store/mutation-types";
 
 const doughClassMap = {
   light: "small",
@@ -163,25 +162,13 @@ export default {
       commit(EDIT_INGREDIENTS, ingredients);
     },
 
-    inc({ commit }, currentIngredientIndex) {
+    countAction({ commit }, { entity, actionType, value }) {
       commit(
-        INC,
+        actionType,
         {
+          entity,
           module: "Builder",
-          entity: "ingredients",
-          value: currentIngredientIndex,
-        },
-        { root: true }
-      );
-    },
-
-    dec({ commit }, currentIngredientIndex) {
-      commit(
-        DEC,
-        {
-          module: "Builder",
-          entity: "ingredients",
-          value: currentIngredientIndex,
+          value,
         },
         { root: true }
       );
@@ -193,21 +180,6 @@ export default {
       dispatch("setCurrentSauce", cartItem.sauce);
       dispatch("setPizzaName", cartItem.name);
       dispatch("editIngredients", cartItem.ingredients);
-    },
-
-    inputChange({ commit }, { currentIngredientIndex, value }) {
-      commit(
-        INC_DEC_INPUT_CHANGE,
-        {
-          module: "Builder",
-          entity: "ingredients",
-          value: {
-            value,
-            currentIndex: currentIngredientIndex,
-          },
-        },
-        { root: true }
-      );
     },
   },
 };

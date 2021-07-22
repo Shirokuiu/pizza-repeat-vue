@@ -5,15 +5,15 @@
       :key="cartItem.id"
       :cart-item="cartItem"
       :current-index="idx"
-      @onCountUpdate="onCountUpdate($event, idx)"
+      @onCountUpdate="onCountUpdate($event, idx, 'cartItems', countAction)"
     />
   </ul>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import { onCountUpdate } from "src/common/helpers";
 import CartListItem from "src/modules/cart/components/CartListItem";
-import { countAction } from "src/common/constants";
 
 export default {
   name: "CartContentList",
@@ -34,24 +34,13 @@ export default {
     ...mapActions("Cart", {
       inc: "inc",
       dec: "dec",
+      countAction: "countAction",
       inputChange: "inputChange",
       toggleEditMode: "toggleEditMode",
     }),
 
-    onCountUpdate(countActionData, currentCartIndex) {
-      const { action, value } = countActionData;
-
-      switch (action) {
-        case countAction.INC:
-          this.inc(currentCartIndex);
-          break;
-        case countAction.DEC:
-          this.dec(currentCartIndex);
-          break;
-        case countAction.INPUT_CHANGE:
-          this.inputChange({ currentCartIndex, value });
-          break;
-      }
+    onCountUpdate(countActionData, currentIndex, entity, action) {
+      onCountUpdate(countActionData, currentIndex, entity, action);
     },
   },
 };

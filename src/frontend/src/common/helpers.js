@@ -57,3 +57,18 @@ export const incDecInputChange = (arr, currentArrIndex, inputValue) => {
         : arr[currentArrIndex].price * value,
   });
 };
+
+export const onCountUpdate = (
+  countActionData,
+  currentCartIndex,
+  entity,
+  action
+) => {
+  const { action: actionType, value } = countActionData;
+
+  action({
+    actionType,
+    entity,
+    value: { currentIndex: currentCartIndex, valueInputData: value },
+  });
+};

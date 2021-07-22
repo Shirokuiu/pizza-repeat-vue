@@ -11,21 +11,25 @@ export default new Vuex.Store({
   modules,
   mutations: {
     [DEC](state, { module, entity, value }) {
-      if (canIncOrDec(countAction.DEC, value, state[module][entity])) {
-        dec(state[module][entity], value);
+      const { currentIndex } = value;
+
+      if (canIncOrDec(countAction.DEC, currentIndex, state[module][entity])) {
+        dec(state[module][entity], currentIndex);
       }
     },
 
     [INC](state, { module, entity, value }) {
-      if (canIncOrDec(countAction.INC, value, state[module][entity])) {
-        inc(state[module][entity], value);
+      const { currentIndex } = value;
+
+      if (canIncOrDec(countAction.INC, currentIndex, state[module][entity])) {
+        inc(state[module][entity], currentIndex);
       }
     },
 
     [INC_DEC_INPUT_CHANGE](state, { module, entity, value }) {
-      const { currentIndex, value: changeValue } = value;
+      const { currentIndex, valueInputData } = value;
 
-      incDecInputChange(state[module][entity], currentIndex, changeValue);
+      incDecInputChange(state[module][entity], currentIndex, valueInputData);
     },
   },
 });
