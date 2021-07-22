@@ -71,7 +71,7 @@ const buildNewCartItem = (rootState, rootGetters) => {
     ...updatedCartItem(rootState, rootGetters),
     id: uniqueId(),
     count: 1,
-    maxInc: 3,
+    maxInc: undefined,
     maxDec: 1,
   };
 };
