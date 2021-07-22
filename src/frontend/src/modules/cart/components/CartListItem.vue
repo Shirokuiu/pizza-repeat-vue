@@ -31,7 +31,7 @@
     />
 
     <div class="cart-list__price">
-      <b>{{ cartItem.totalPrice }} ₽</b>
+      <b>{{ normalizedTotalPrice }} ₽</b>
     </div>
 
     <div class="cart-list__button">
@@ -44,6 +44,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { numberWithSpace } from "src/common/helpers";
 import AppCounter from "src/common/components/AppCounter";
 import { appCounterIncMod } from "src/common/constants";
 
@@ -69,6 +70,12 @@ export default {
     return {
       appCounterIncMod,
     };
+  },
+
+  computed: {
+    normalizedTotalPrice() {
+      return numberWithSpace(this.cartItem.totalPrice);
+    },
   },
 
   methods: {

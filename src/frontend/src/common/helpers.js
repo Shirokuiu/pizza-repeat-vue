@@ -1,6 +1,9 @@
 import Vue from "vue";
 import { countAction } from "src/common/constants";
 
+export const numberWithSpace = (num) =>
+  num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
 export const canIncOrDec = (action, currentArrIndex, arr) => {
   switch (action) {
     case countAction.INC:

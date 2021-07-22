@@ -30,7 +30,7 @@
       </div>
 
       <div class="content__result">
-        <p>Итого: {{ totalPricePizza }} ₽</p>
+        <p>Итого: {{ normalizedTotalPrice }} ₽</p>
         <button
           type="button"
           class="button button--disabled"
@@ -46,6 +46,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import { numberWithSpace } from "src/common/helpers";
 import AppDrop from "src/common/components/AppDrop";
 import AppInputText from "src/common/components/AppInputText";
 
@@ -70,6 +71,10 @@ export default {
       "currentSize",
       "currentSauce",
     ]),
+
+    normalizedTotalPrice() {
+      return numberWithSpace(this.totalPricePizza);
+    },
   },
 
   methods: {

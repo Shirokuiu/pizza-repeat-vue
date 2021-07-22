@@ -9,7 +9,7 @@
       Перейти к конструктору<br />чтоб собрать ещё одну пиццу
     </p>
     <div class="footer__price">
-      <b>Итого: 2 228 ₽</b>
+      <b>Итого: {{ normalizedTotalPriceCart }} ₽</b>
     </div>
 
     <div class="footer__submit">
@@ -19,7 +19,18 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { numberWithSpace } from "src/common/helpers";
+
 export default {
   name: "CartFooter",
+
+  computed: {
+    ...mapGetters("Cart", ["totalPriceCart"]),
+
+    normalizedTotalPriceCart() {
+      return numberWithSpace(this.totalPriceCart);
+    },
+  },
 };
 </script>
