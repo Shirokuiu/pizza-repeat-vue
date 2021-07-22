@@ -35,15 +35,11 @@ export default new Vuex.Store({
 
   actions: {
     countAction({ commit }, { module, entity, actionType, value }) {
-      commit(
-        actionType,
-        {
-          entity,
-          module,
-          value,
-        },
-        { root: true }
-      );
+      commit(actionType, {
+        entity,
+        module,
+        value,
+      });
     },
   },
 });
