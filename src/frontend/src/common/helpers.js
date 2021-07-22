@@ -38,8 +38,8 @@ export const incDecInputChange = (arr, currentArrIndex, inputValue) => {
   if (isNaN(value)) {
     Vue.set(arr, currentArrIndex, {
       ...arr[currentArrIndex],
-      count: 0,
-      totalPrice: 0,
+      count: arr[currentArrIndex].count,
+      totalPrice: arr[currentArrIndex].totalPrice,
     });
 
     return;
