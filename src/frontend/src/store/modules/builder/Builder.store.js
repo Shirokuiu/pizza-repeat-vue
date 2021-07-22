@@ -8,15 +8,13 @@ import pizza from "src/static/pizza.json";
 import {
   EDIT,
   EDIT_INGREDIENTS,
-  INPUT_CHANGE,
   RESET_STATE,
   SET_CURRENT_DOUGH,
   SET_CURRENT_SAUCE,
   SET_CURRENT_SIZE,
   SET_PIZZA_NAME,
 } from "src/store/modules/builder/mutation-types";
-import { incDecInputChange } from "src/common/helpers";
-import { DEC, INC } from "src/store/mutation-types";
+import { DEC, INC, INC_DEC_INPUT_CHANGE } from "src/store/mutation-types";
 
 const doughClassMap = {
   light: "small",
@@ -151,10 +149,6 @@ export default {
     [EDIT](state, cartItem) {
       console.log(cartItem);
     },
-
-    [INPUT_CHANGE](state, { currentIngredientIndex, value }) {
-      incDecInputChange(state.ingredients, currentIngredientIndex, value);
-    },
   },
 
   actions: {
@@ -215,10 +209,18 @@ export default {
     },
 
     inputChange({ commit }, { currentIngredientIndex, value }) {
-      commit(INPUT_CHANGE, {
-        currentIngredientIndex,
-        value,
-      });
+      commit(
+        INC_DEC_INPUT_CHANGE,
+        {
+          module: "Builder",
+          entity: "ingredients",
+          value: {
+            value,
+            currentIndex: currentIngredientIndex,
+          },
+        },
+        { root: true }
+      );
     },
   },
 };

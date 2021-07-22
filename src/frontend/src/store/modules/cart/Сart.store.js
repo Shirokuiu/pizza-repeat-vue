@@ -4,14 +4,12 @@ import router from "src/router";
 import {
   ADD_TO_CART,
   EDIT_CART_ITEM,
-  INPUT_CHANGE,
   TOGGLE_EDIT_MODE,
 } from "src/store/modules/cart/mutation-types";
 import { normalizeMisc } from "src/common";
 import misc from "src/static/misc";
 import { modIngredientMap } from "src/common/constants";
-import { incDecInputChange } from "src/common/helpers";
-import { DEC, INC } from "src/store/mutation-types";
+import { DEC, INC, INC_DEC_INPUT_CHANGE } from "src/store/mutation-types";
 
 const sizeMap = {
   small: "23 см",
@@ -109,10 +107,6 @@ export default {
       });
     },
 
-    [INPUT_CHANGE](state, { currentCartIndex, value }) {
-      incDecInputChange(state.cartItems, currentCartIndex, value);
-    },
-
     [TOGGLE_EDIT_MODE](state, { isEdit, currentEditableItemIndex }) {
       state.editMode = {
         isEdit,
@@ -168,10 +162,18 @@ export default {
     },
 
     inputChange({ commit }, { currentCartIndex, value }) {
-      commit(INPUT_CHANGE, {
-        currentCartIndex,
-        value,
-      });
+      commit(
+        INC_DEC_INPUT_CHANGE,
+        {
+          module: "Cart",
+          entity: "cartItems",
+          value: {
+            value,
+            currentIndex: currentCartIndex,
+          },
+        },
+        { root: true }
+      );
     },
 
     toggleEditMode(
