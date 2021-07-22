@@ -8,7 +8,6 @@ import pizza from "src/static/pizza.json";
 import {
   EDIT,
   EDIT_INGREDIENTS,
-  INC,
   INPUT_CHANGE,
   RESET_STATE,
   SET_CURRENT_DOUGH,
@@ -16,9 +15,8 @@ import {
   SET_CURRENT_SIZE,
   SET_PIZZA_NAME,
 } from "src/store/modules/builder/mutation-types";
-import { countAction } from "src/common/constants";
-import { canIncOrDec, inc, incDecInputChange } from "src/common/helpers";
-import { DEC } from "src/store/mutation-types";
+import { incDecInputChange } from "src/common/helpers";
+import { DEC, INC } from "src/store/mutation-types";
 
 const doughClassMap = {
   light: "small",
@@ -142,13 +140,13 @@ export default {
       state.ingredients = ingredients;
     },
 
-    [INC](state, currentIngredientIndex) {
-      if (
-        canIncOrDec(countAction.INC, currentIngredientIndex, state.ingredients)
-      ) {
-        inc(state.ingredients, currentIngredientIndex);
-      }
-    },
+    // [INC](state, currentIngredientIndex) {
+    //   if (
+    //     canIncOrDec(countAction.INC, currentIngredientIndex, state.ingredients)
+    //   ) {
+    //     inc(state.ingredients, currentIngredientIndex);
+    //   }
+    // },
 
     [EDIT](state, cartItem) {
       console.log(cartItem);
@@ -185,15 +183,23 @@ export default {
     },
 
     inc({ commit }, currentIngredientIndex) {
-      commit(INC, currentIngredientIndex);
+      commit(
+        INC,
+        {
+          module: "Builder",
+          entity: "ingredients",
+          value: currentIngredientIndex,
+        },
+        { root: true }
+      );
     },
 
     dec({ commit }, currentIngredientIndex) {
       commit(
         DEC,
         {
-          entity: "ingredients",
           module: "Builder",
+          entity: "ingredients",
           value: currentIngredientIndex,
         },
         { root: true }

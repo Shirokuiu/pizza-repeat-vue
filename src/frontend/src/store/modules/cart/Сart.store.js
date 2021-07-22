@@ -4,15 +4,14 @@ import router from "src/router";
 import {
   ADD_TO_CART,
   EDIT_CART_ITEM,
-  INC,
   INPUT_CHANGE,
   TOGGLE_EDIT_MODE,
 } from "src/store/modules/cart/mutation-types";
 import { normalizeMisc } from "src/common";
 import misc from "src/static/misc";
-import { countAction, modIngredientMap } from "src/common/constants";
-import { canIncOrDec, inc, incDecInputChange } from "src/common/helpers";
-import { DEC } from "src/store/mutation-types";
+import { modIngredientMap } from "src/common/constants";
+import { incDecInputChange } from "src/common/helpers";
+import { DEC, INC } from "src/store/mutation-types";
 
 const sizeMap = {
   small: "23 см",
@@ -110,11 +109,11 @@ export default {
       });
     },
 
-    [INC](state, currentCartIndex) {
-      if (canIncOrDec(countAction.INC, currentCartIndex, state.cartItems)) {
-        inc(state.cartItems, currentCartIndex);
-      }
-    },
+    // [INC](state, currentCartIndex) {
+    //   if (canIncOrDec(countAction.INC, currentCartIndex, state.cartItems)) {
+    //     inc(state.cartItems, currentCartIndex);
+    //   }
+    // },
 
     [INPUT_CHANGE](state, { currentCartIndex, value }) {
       incDecInputChange(state.cartItems, currentCartIndex, value);
@@ -155,7 +154,11 @@ export default {
     },
 
     inc({ commit }, currentCartIndex) {
-      commit(INC, currentCartIndex);
+      commit(
+        INC,
+        { module: "Cart", entity: "cartItems", value: currentCartIndex },
+        { root: true }
+      );
     },
 
     dec({ commit }, currentCartIndex) {
