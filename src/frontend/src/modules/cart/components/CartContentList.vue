@@ -32,10 +32,7 @@ export default {
 
   methods: {
     ...mapActions("Cart", {
-      inc: "inc",
-      dec: "dec",
       countAction: "countAction",
-      inputChange: "inputChange",
       toggleEditMode: "toggleEditMode",
     }),
 

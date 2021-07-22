@@ -51,10 +51,7 @@ export default {
 
   methods: {
     ...mapActions("Builder", {
-      inc: "inc",
-      dec: "dec",
       countAction: "countAction",
-      inputChange: "inputChange",
     }),
 
     onCountUpdate(countActionData, currentIngredientIndex, entity, action) {

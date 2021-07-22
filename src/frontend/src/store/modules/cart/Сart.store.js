@@ -138,6 +138,7 @@ export default {
       // "что будет после нажатия на кнопку - Готово, в режиме редактирования"
       // делаю редирект в корзину
       router.push("/cart");
+      dispatch("Builder/resetState", undefined, { root: true });
     },
 
     countAction({ commit }, { entity, actionType, value }) {
