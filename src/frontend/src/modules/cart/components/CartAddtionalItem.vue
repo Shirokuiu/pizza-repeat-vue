@@ -16,10 +16,11 @@
         inc-mod="orange"
         :disable-dec="additionalItem.count === additionalItem.maxDec"
         :disable-inc="additionalItem.count === additionalItem.maxInc"
+        @onCountUpdate="$emit('onCountUpdate', $event)"
         class="additional-list__counter"
       />
       <div class="additional-list__price">
-        <b>56 ₽</b>
+        <b>{{ normalizedTotalPrice }} ₽</b>
       </div>
     </div>
   </li>
@@ -27,6 +28,7 @@
 
 <script>
 import AppCounter from "src/common/components/AppCounter";
+import { numberWithSpace } from "src/common/helpers";
 
 export default {
   name: "CartAdditionalItem",
@@ -39,6 +41,12 @@ export default {
     additionalItem: {
       type: Object,
       required: true,
+    },
+  },
+
+  computed: {
+    normalizedTotalPrice() {
+      return numberWithSpace(this.additionalItem.totalPrice);
     },
   },
 };

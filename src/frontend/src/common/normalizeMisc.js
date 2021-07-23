@@ -4,5 +4,5 @@ export const normalizeMisc = (misc) =>
     count: 0,
     maxInc: undefined,
     maxDec: 0,
-    totalPrice: miscItem.price,
+    totalPrice: 0,
   }));

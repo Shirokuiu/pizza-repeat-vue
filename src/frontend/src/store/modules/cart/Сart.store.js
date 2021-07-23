@@ -90,7 +90,10 @@ export default {
 
   getters: {
     totalPriceCart(state) {
-      return state.cartItems.reduce((a, b) => a + (b["totalPrice"] || 0), 0);
+      return (
+        state.cartItems.reduce((a, b) => a + (b["totalPrice"] || 0), 0) +
+        state.additionalItems.reduce((a, b) => a + (b["totalPrice"] || 0), 0)
+      );
     },
   },
 
