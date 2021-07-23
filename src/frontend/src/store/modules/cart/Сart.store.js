@@ -4,6 +4,7 @@ import router from "src/router";
 import {
   ADD_TO_CART,
   EDIT_CART_ITEM,
+  RESET_STATE,
   TOGGLE_EDIT_MODE,
 } from "src/store/modules/cart/mutation-types";
 import { normalizeMisc } from "src/common";
@@ -98,6 +99,12 @@ export default {
   },
 
   mutations: {
+    // NOTE ESLint глючит :(
+    // eslint-disable-next-line no-unused-vars
+    [RESET_STATE](state) {
+      state = Object.assign(state, initialState());
+    },
+
     [ADD_TO_CART](state, cartItem) {
       state.cartItems.push(cartItem);
     },
@@ -118,6 +125,10 @@ export default {
   },
 
   actions: {
+    resetState({ commit }) {
+      commit(RESET_STATE);
+    },
+
     addToCart({ commit, dispatch, state, rootState, rootGetters }) {
       const cartItem = buildNewCartItem(rootState, rootGetters);
 
@@ -142,6 +153,11 @@ export default {
       // делаю редирект в корзину
       router.push("/cart");
       dispatch("Builder/resetState", undefined, { root: true });
+    },
+
+    submitOrder({ dispatch }) {
+      dispatch("resetState");
+      router.push("/");
     },
 
     toggleEditMode(

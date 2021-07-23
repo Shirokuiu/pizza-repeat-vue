@@ -13,7 +13,9 @@
     </div>
 
     <div class="footer__submit">
-      <button type="submit" class="button">Оформить заказ</button>
+      <button type="button" class="button" @click="$emit('openPopup')">
+        Оформить заказ
+      </button>
     </div>
   </section>
 </template>
