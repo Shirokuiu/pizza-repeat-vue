@@ -79,9 +79,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("Cart", {
-      editCartItem: "editCartItem",
-    }),
+    ...mapActions("Cart", ["editCartItem"]),
 
     onEditClick() {
       this.editCartItem(this.currentIndex);
