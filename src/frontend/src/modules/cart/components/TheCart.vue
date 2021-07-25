@@ -44,9 +44,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("Cart", {
-      submitOrder: "submitOrder",
-    }),
+    ...mapActions("Cart", ["submitOrder"]),
 
     openSuccessPopup() {
       this.isSuccessPopupShow = true;
