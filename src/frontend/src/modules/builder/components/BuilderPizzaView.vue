@@ -8,14 +8,15 @@
         :key="index"
         :ingredient="ingredient"
         :idx="index"
-        @onCountUpdate="onCountUpdate($event, index)"
       >
       </BuilderPizzaViewItem>
     </ul>
   </div>
 </template>
+
 <script>
-import BuilderPizzaViewItem from "./BuilderPizzaViewItem";
+import { mapState } from "vuex";
+import BuilderPizzaViewItem from "src/modules/builder/components/BuilderPizzaViewItem";
 
 export default {
   name: "BuilderPizzaView",
@@ -24,17 +25,8 @@ export default {
     BuilderPizzaViewItem,
   },
 
-  props: {
-    ingredients: {
-      type: Array,
-      required: true,
-    },
-  },
-
-  methods: {
-    onCountUpdate(actionCountData, currentIngredientIndex) {
-      this.$emit("onCountUpdate", { actionCountData, currentIngredientIndex });
-    },
+  computed: {
+    ...mapState("Builder", ["ingredients"]),
   },
 };
 </script>

@@ -15,17 +15,15 @@
         />
       </div>
 
-      <BuilderPizzaView
-        :ingredients="ingredients"
-        @onCountUpdate="onCountUpdate"
-      />
+      <BuilderPizzaView />
     </AppWidget>
   </div>
 </template>
 <script>
-import AppWidget from "../../../common/components/AppWidget";
-import AppRadioButton from "../../../common/components/AppRadioButton";
-import BuilderPizzaView from "./BuilderPizzaView";
+import { mapState, mapActions } from "vuex";
+import AppWidget from "src/common/components/AppWidget";
+import AppRadioButton from "src/common/components/AppRadioButton";
+import BuilderPizzaView from "src/modules/builder/components/BuilderPizzaView";
 
 export default {
   name: "BuilderIngredientsSelector",
@@ -36,25 +34,17 @@ export default {
     BuilderPizzaView,
   },
 
-  props: {
-    sauces: {
-      type: Array,
-      required: true,
-    },
-
-    ingredients: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapState("Builder", ["sauces"]),
   },
 
   methods: {
-    onSauceChange(currentSauce) {
-      this.$emit("onSauceChange", currentSauce);
-    },
+    ...mapActions("Builder", {
+      setCurrentSauce: "setCurrentSauce",
+    }),
 
-    onCountUpdate(ingredientData) {
-      this.$emit("onCountUpdate", ingredientData);
+    onSauceChange(currentSauce) {
+      this.setCurrentSauce(currentSauce);
     },
   },
 };

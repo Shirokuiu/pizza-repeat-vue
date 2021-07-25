@@ -142,6 +142,7 @@
     </div>
   </main>
 </template>
+
 <script>
 export default {
   name: "TheProfile",

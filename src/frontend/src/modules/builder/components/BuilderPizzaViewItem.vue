@@ -16,16 +16,21 @@
       <AppCounter
         class="counter--orange ingridients__counter"
         :count="ingredient.count"
-        @onCountUpdate="onCountUpdate"
+        @onCountUpdate="
+          onCountUpdate($event, idx, 'Builder', 'ingredients', countAction)
+        "
+        :disable-inc="ingredient.count === ingredient.maxInc"
+        :disable-dec="ingredient.count === ingredient.maxDec"
       />
     </li>
   </AppDrag>
 </template>
 
 <script>
-import AppCounter from "../../../common/components/AppCounter";
-import AppDrag from "../../../common/components/AppDrag";
-import { countAction } from "../../../common/constants";
+import { mapActions } from "vuex";
+import { onCountUpdate } from "src/common/helpers";
+import AppCounter from "src/common/components/AppCounter";
+import AppDrag from "src/common/components/AppDrag";
 
 export default {
   name: "BuilderPizzaViewItem",
@@ -46,15 +51,23 @@ export default {
     },
   },
 
-  data() {
-    return {
-      countAction,
-    };
-  },
-
   methods: {
-    onCountUpdate(countActionData) {
-      this.$emit("onCountUpdate", countActionData);
+    ...mapActions(["countAction"]),
+
+    onCountUpdate(
+      countActionData,
+      currentIngredientIndex,
+      module,
+      entity,
+      action
+    ) {
+      onCountUpdate(
+        countActionData,
+        currentIngredientIndex,
+        module,
+        entity,
+        action
+      );
     },
   },
 };

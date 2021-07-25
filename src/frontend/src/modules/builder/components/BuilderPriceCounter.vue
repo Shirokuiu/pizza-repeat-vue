@@ -6,26 +6,35 @@
         <AppInputText
           name="pizza_name"
           placeholder="Введите название пиццы"
+          :value="pizzaName"
           @onInput="onInputTitle"
         />
       </label>
 
       <div class="content__constructor">
-        <div class="pizza pizza--foundation--big-tomato">
+        <div :class="['pizza', `${currentDoughPizzaMod}`]">
           <div class="pizza__wrapper">
-            <div class="pizza__filling pizza__filling--ananas"></div>
-            <div class="pizza__filling pizza__filling--bacon"></div>
-            <div class="pizza__filling pizza__filling--cheddar"></div>
+            <div
+              v-for="fillingItem of filling"
+              :key="fillingItem.id"
+              :class="[
+                'pizza__filling',
+                `pizza__filling--${fillingItem.mod}`,
+                fillingItem.multipleMod
+                  ? `pizza__filling--${fillingItem.multipleMod}`
+                  : undefined,
+              ]"
+            ></div>
           </div>
         </div>
       </div>
 
       <div class="content__result">
-        <p>Итого: {{ totalPrice }} ₽</p>
+        <p>Итого: {{ normalizedTotalPrice }} ₽</p>
         <button
           type="button"
           class="button button--disabled"
-          :disabled="isDisabled"
+          :disabled="!this.isIngredientsExist || pizzaName.length === 0"
           @click="onCLickBtn"
         >
           Готовьте!
@@ -36,8 +45,10 @@
 </template>
 
 <script>
-import AppDrop from "../../../common/components/AppDrop";
-import AppInputText from "../../../common/components/AppInputText";
+import { mapActions, mapGetters, mapState } from "vuex";
+import { numberWithSpace } from "src/common/helpers";
+import AppDrop from "src/common/components/AppDrop";
+import AppInputText from "src/common/components/AppInputText";
 
 export default {
   name: "BuilderPriceCounter",
@@ -47,29 +58,46 @@ export default {
     AppInputText,
   },
 
-  props: {
-    totalPrice: {
-      type: Number,
-      required: true,
-    },
+  computed: {
+    ...mapGetters("Builder", [
+      "totalPricePizza",
+      "isIngredientsExist",
+      "currentDoughPizzaMod",
+      "filling",
+    ]),
+    ...mapState("Builder", [
+      "pizzaName",
+      "currentDough",
+      "currentSize",
+      "currentSauce",
+    ]),
 
-    isDisabled: {
-      type: Boolean,
-      default: true,
+    normalizedTotalPrice() {
+      return numberWithSpace(this.totalPricePizza);
     },
   },
 
   methods: {
+    ...mapActions("Builder", {
+      inc: "inc",
+      setPizzaName: "setPizzaName",
+    }),
+    ...mapActions("Cart", {
+      addToCart: "addToCart",
+    }),
+
     onIngredientDrop(ingredientData) {
-      this.$emit("onIngredientDrop", ingredientData);
+      const { currentIngredientIndex } = ingredientData;
+
+      this.inc(currentIngredientIndex);
     },
 
     onInputTitle(value) {
-      this.$emit("onInputTitle", value);
+      this.setPizzaName(value);
     },
 
     onCLickBtn() {
-      this.$emit("addToCart");
+      this.addToCart();
     },
   },
 };

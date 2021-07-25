@@ -4,6 +4,7 @@
       type="button"
       class="counter__button counter__button--disabled counter__button--minus"
       @click="dec"
+      :disabled="disableDec"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -16,24 +17,51 @@
     />
     <button
       type="button"
-      class="counter__button counter__button--plus"
+      :class="[
+        'counter__button',
+        'counter__button--plus',
+        incMod ? `counter__button--${incMod}` : undefined,
+      ]"
       @click="inc"
+      :disabled="disableInc"
     >
       <span class="visually-hidden">Больше</span>
     </button>
   </div>
 </template>
+
 <script>
-import { countAction } from "../constants";
+import { appCounterIncMod, countAction } from "src/common/constants";
+
+const AppCounterIncMod = appCounterIncMod;
 
 export default {
   name: "AppCounter",
 
   props: {
+    incMod: {
+      type: String,
+      default: AppCounterIncMod.none,
+      validator: (v) => AppCounterIncMod[v],
+    },
     count: {
       type: Number,
       required: true,
     },
+    disableInc: {
+      type: Boolean,
+      default: false,
+    },
+    disableDec: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  data() {
+    return {
+      DEFAULT_INC_MODE: "none",
+    };
   },
 
   methods: {
@@ -53,9 +81,15 @@ export default {
 
     onInputChange(evt) {
       this.$emit("onCountUpdate", {
-        action: countAction.INPUT_CHANGE,
+        action: countAction.INC_DEC_INPUT_CHANGE,
         value: evt.target.value,
       });
+
+      // NOTE Если этого не сделать, то vue не перерендерит this.count,
+      // потому что родитель при валидации может выставить пердыдущее значение,
+      // предыдущее значение может не изменить пропс,
+      // в следствии чего не будет перерендера
+      this.$forceUpdate();
     },
   },
 };

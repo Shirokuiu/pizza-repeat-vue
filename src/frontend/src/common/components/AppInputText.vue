@@ -9,6 +9,10 @@
 </template>
 
 <script>
+import { debounce } from "lodash";
+
+const DEFAULT_DEBOUNCE = 300;
+
 export default {
   name: "AppInputText",
 
@@ -30,9 +34,9 @@ export default {
   },
 
   methods: {
-    onInput(evt) {
+    onInput: debounce(function (evt) {
       this.$emit("onInput", evt.target.value);
-    },
+    }, DEFAULT_DEBOUNCE),
   },
 };
 </script>

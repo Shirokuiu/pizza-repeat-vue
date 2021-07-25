@@ -7,6 +7,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: "AppWidget",
@@ -15,10 +16,6 @@ export default {
     title: {
       type: String,
       default: "Заголовок",
-    },
-
-    classMods: {
-      type: Array,
     },
   },
 };
