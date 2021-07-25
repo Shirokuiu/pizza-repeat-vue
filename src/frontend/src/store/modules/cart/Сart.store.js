@@ -152,11 +152,9 @@ export default {
       // "что будет после нажатия на кнопку - Готово, в режиме редактирования"
       // делаю редирект в корзину
       router.push("/cart");
-      dispatch("Builder/resetState", undefined, { root: true });
     },
 
-    submitOrder({ dispatch }) {
-      dispatch("resetState");
+    submitOrder() {
       router.push("/");
     },
 

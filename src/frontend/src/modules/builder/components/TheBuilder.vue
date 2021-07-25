@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import BuilderDoughSelector from "src/modules/builder/components/BuilderDoughSelector";
 import BuilderSizeSelector from "src/modules/builder/components/BuilderSizeSelector";
 import BuilderIngredientsSelector from "src/modules/builder/components/BuilderIngredientsSelector";
@@ -39,6 +39,14 @@ export default {
 
   computed: {
     ...mapState("Builder", ["currentDough", "currentSize", "currentSauce"]),
+  },
+
+  destroyed() {
+    this.resetState();
+  },
+
+  methods: {
+    ...mapActions("Builder", ["resetState"]),
   },
 };
 </script>
