@@ -34,9 +34,7 @@ export default {
 
   methods: {
     ...mapActions(["countAction"]),
-    ...mapActions("Cart", {
-      toggleEditMode: "toggleEditMode",
-    }),
+    ...mapActions("Cart", ["toggleEditMode"]),
 
     onCountUpdate(countActionData, currentIndex, module, entity, action) {
       onCountUpdate(countActionData, currentIndex, module, entity, action);
