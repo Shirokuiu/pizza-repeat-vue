@@ -1,19 +1,14 @@
 <template>
-  <div id="app">
-    <component :is="layout">
-      <router-view />
-    </component>
-  </div>
+  <Index></Index>
 </template>
 
 <script>
+import Index from "./views/Index";
+
 export default {
   name: "App",
-
-  computed: {
-    layout() {
-      return () => import("./layouts/AppLayout.vue");
-    },
+  components: {
+    Index,
   },
 };
 </script>
