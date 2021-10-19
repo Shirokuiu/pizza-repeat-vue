@@ -1,31 +1,3 @@
-const doughClassMap = [
-  {
-    name: "Тонкое",
-    value: "light",
-  },
-  {
-    name: "Толстое",
-    value: "large",
-  },
-];
-
-const sizeClassMap = {
-  1: "small",
-  2: "normal",
-  3: "big",
-};
-
-const sauceValueMap = [
-  {
-    name: "Томатный",
-    value: "tomato",
-  },
-  {
-    name: "Сливочный",
-    value: "creamy",
-  },
-];
-
 const ingredientClassMap = [
   {
     name: "Грибы",
@@ -93,30 +65,16 @@ const ingredientClassMap = [
   },
 ];
 
-export const normalizeDougs = (doughs) =>
-  doughs.map((dough, index) => ({
-    ...dough,
-    classMod: doughClassMap.find(({ name }) => name === dough.name).value,
-    isChecked: index === 0,
-  }));
-
-export const normalizeSizes = (sizes) =>
-  sizes.map((size, index) => ({
-    ...size,
-    classMod: sizeClassMap[size.multiplier],
-    isChecked: index === 1,
-  }));
-
-export const normalizeSauces = (sauces) =>
-  sauces.map((sauce, index) => ({
-    ...sauce,
-    value: sauceValueMap.find(({ name }) => name === sauce.name).value,
-    isChecked: index === 0,
-  }));
-
 export const normalizeIngredients = (ingredients) =>
-  ingredients.map((ingredient) => ({
+  ingredients.map((ingredient, index) => ({
     ...ingredient,
+    id: index + 1,
     classMod: ingredientClassMap.find(({ name }) => name === ingredient.name)
       .value,
+    counter: {
+      value: 0,
+      maxDec: 0,
+      maxInc: 3,
+    },
+    totalPrice: 0,
   }));
