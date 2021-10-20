@@ -1,22 +1,17 @@
 <template>
-  <div>
-    <TheHeader />
-
-    <main class="content">
-      <TheBuilder />
-    </main>
-  </div>
+  <main class="content">
+    <TheBuilder />
+    <router-view></router-view>
+  </main>
 </template>
 
 <script>
-import TheHeader from "@/modules/header/components/TheHeader";
 import TheBuilder from "@/modules/builder/components/TheBuilder";
 
 export default {
   name: "Index",
 
   components: {
-    TheHeader,
     TheBuilder,
   },
 };
