@@ -1,17 +1,14 @@
-import {
-  repository,
-} from '@loopback/repository';
+import {repository} from '@loopback/repository';
 import {
   param,
   get,
-  getModelSchemaRef, oas, OperationVisibility
-} from '@loopback/rest'
-import {
-  Pizza,
-  Dough,
-} from '../models';
+  getModelSchemaRef,
+  oas,
+  OperationVisibility,
+} from '@loopback/rest';
+import {Pizza, Dough} from '../models';
 import {PizzaRepository} from '../repositories';
-import {authenticate} from "@loopback/authentication";
+import {authenticate} from '@loopback/authentication';
 
 @authenticate('jwt')
 @oas.visibility(OperationVisibility.UNDOCUMENTED)
@@ -19,9 +16,9 @@ export class PizzaDoughController {
   constructor(
     @repository(PizzaRepository)
     public pizzaRepository: PizzaRepository,
-  ) { }
+  ) {}
 
-  @get('/pizzas/{id}/dough', {
+  @get('/pizzas/{id}/doughs', {
     responses: {
       '200': {
         description: 'Dough belonging to Pizza',

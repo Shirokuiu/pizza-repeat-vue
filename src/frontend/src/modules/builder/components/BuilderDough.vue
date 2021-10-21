@@ -3,10 +3,10 @@
     <AppWidget title="Выберите тесто">
       <div class="sheet__content dough">
         <label
-          v-for="dough in dougs"
+          v-for="dough in doughs"
           class="dough__input"
           :class="`dough__input--${dough.classMod}`"
-          :key="dough.price"
+          :key="dough.id"
         >
           <input
             type="radio"
@@ -14,6 +14,7 @@
             :value="dough.classMod"
             class="visually-hidden"
             :checked="dough.isChecked"
+            @change="onDoughChange(dough.id)"
           />
           <b>{{ dough.name }}</b>
           <span>{{ dough.description }}</span>
@@ -25,6 +26,7 @@
 
 <script>
 import AppWidget from "@/common/components/AppWidget";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "BuilderDough",
@@ -33,10 +35,19 @@ export default {
     AppWidget,
   },
 
-  props: {
-    dougs: {
-      type: Array,
-      default: () => [],
+  computed: {
+    ...mapState("Doughs", ["doughs"]),
+  },
+
+  created() {
+    this.fetchDoughs();
+  },
+
+  methods: {
+    ...mapActions("Doughs", ["fetchDoughs", "changeDough"]),
+
+    onDoughChange(id) {
+      this.changeDough(id);
     },
   },
 };

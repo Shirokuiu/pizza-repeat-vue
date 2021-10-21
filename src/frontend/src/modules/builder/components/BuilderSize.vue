@@ -14,6 +14,7 @@
             :value="size.classMod"
             class="visually-hidden"
             :checked="size.isChecked"
+            @change="onChange(size.id)"
           />
           <span>{{ size.name }}</span>
         </label>
@@ -24,6 +25,7 @@
 
 <script>
 import AppWidget from "@/common/components/AppWidget";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "BuilderSize",
@@ -32,10 +34,19 @@ export default {
     AppWidget,
   },
 
-  props: {
-    sizes: {
-      type: Array,
-      default: () => [],
+  computed: {
+    ...mapState("Sizes", ["sizes"]),
+  },
+
+  created() {
+    this.fetchSizes();
+  },
+
+  methods: {
+    ...mapActions("Sizes", ["changeSize", "fetchSizes"]),
+
+    onChange(id) {
+      this.changeSize(id);
     },
   },
 };

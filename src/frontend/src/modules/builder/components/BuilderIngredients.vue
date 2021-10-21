@@ -2,23 +2,7 @@
   <div class="content__ingridients">
     <AppWidget title="Выберите ингридиенты">
       <div class="sheet__content ingridients">
-        <div class="ingridients__sauce">
-          <p>Основной соус:</p>
-
-          <label
-            v-for="sauce in sauces"
-            :key="sauce.value"
-            class="radio ingridients__input"
-          >
-            <input
-              type="radio"
-              name="sauce"
-              :value="sauce.value"
-              :checked="sauce.isChecked"
-            />
-            <span>{{ sauce.name }}</span>
-          </label>
-        </div>
+        <BuilderSauce :sauces="sauces" @onSauceChange="onSauceChange" />
 
         <div class="ingridients__filling">
           <p>Начинка:</p>
@@ -39,7 +23,9 @@
 
 <script>
 import AppWidget from "@/common/components/AppWidget";
+import BuilderSauce from "@/modules/builder/components/BuilderSauce";
 import IngredientItem from "@/modules/builder/components/IngredientItem";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "BuilderIngredients",
@@ -47,26 +33,32 @@ export default {
   components: {
     AppWidget,
     IngredientItem,
+    BuilderSauce,
   },
 
-  props: {
-    sauces: {
-      type: Array,
-      default: () => [],
-    },
-    ingredients: {
-      type: Array,
-      default: () => [],
-    },
+  computed: {
+    ...mapState("Ingredients", ["sauces", "ingredients"]),
+  },
+
+  created() {
+    this.fetchSauces();
+    this.fetchIngredients();
   },
 
   methods: {
-    onCountChange({ evtType, value }, ingredientId) {
-      this.$emit("onCountChange", {
-        evtType,
-        ingredientId,
-        value,
-      });
+    ...mapActions("Ingredients", [
+      "fetchIngredients",
+      "fetchSauces",
+      "sauceChange",
+      "countChange",
+    ]),
+
+    onSauceChange(id) {
+      this.sauceChange(id);
+    },
+
+    onCountChange(evtData, ingredientId) {
+      this.countChange({ evtData, ingredientId });
     },
   },
 };

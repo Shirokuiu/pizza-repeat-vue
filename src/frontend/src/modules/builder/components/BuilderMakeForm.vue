@@ -21,7 +21,7 @@
       </div>
 
       <div class="content__result">
-        <p>Итого: 0 ₽</p>
+        <p>Итого: {{ totalPrice }} ₽</p>
         <AppBtn description="Готовьте!" is-disabled></AppBtn>
       </div>
     </div>
@@ -31,6 +31,8 @@
 <script>
 import AppBtn from "@/common/components/AppBtn";
 import AppDrop from "@/common/components/AppDrop";
+import { mapGetters, mapActions } from "vuex";
+import { CountEvent } from "@/common/constants";
 
 export default {
   name: "BuilderMakeForm",
@@ -40,9 +42,23 @@ export default {
     AppDrop,
   },
 
+  computed: {
+    ...mapGetters("Builder", ["totalPrice"]),
+  },
+
   methods: {
+    ...mapActions("Ingredients", ["countChange"]),
+
     drop(ingredient) {
-      this.$emit("onDrop", ingredient);
+      const dropData = {
+        evtData: {
+          evtType: CountEvent.DROP,
+          value: ingredient.counter.value,
+        },
+        ingredientId: ingredient.id,
+      };
+
+      this.countChange(dropData);
     },
   },
 };
