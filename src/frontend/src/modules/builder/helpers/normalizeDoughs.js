@@ -15,4 +15,5 @@ export const normalizeDougs = (doughs) =>
     id: index + 1,
     classMod: doughClassMap.find(({ name }) => name === dough.name).value,
     isChecked: index === 0,
+    radioName: "dough",
   }));

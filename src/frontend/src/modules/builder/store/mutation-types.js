@@ -1,3 +1,9 @@
+export const RESET_STATE = "RESET_STATE";
+export const SET_DOUGHS = "SET_DOUGHS";
+export const CHANGE_DOUGH = "CHANGE_DOUGH";
+export const SET_SIZES = "SET_SIZES";
+export const CHANGE_SIZE = "CHANGE_SIZE";
+export const SET_PIZZA_NAME = "SET_PIZZA_NAME";
 export const SET_SAUCES = "SET_SAUCES";
 export const SET_INGREDIENTS = "SET_INGREDIENTS";
 export const SAUCE_CHANGE = "SAUCE_CHANGE";

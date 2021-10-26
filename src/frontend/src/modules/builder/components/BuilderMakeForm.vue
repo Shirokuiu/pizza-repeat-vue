@@ -7,22 +7,31 @@
           type="text"
           name="pizza_name"
           placeholder="Введите название пиццы"
+          :value="pizzaName"
+          @input="onPizzaNameInput"
         />
       </label>
 
       <div class="content__constructor">
         <div :class="`pizza pizza--foundation--${sizeClass}`">
           <div class="pizza__wrapper">
-            <div class="pizza__filling pizza__filling--ananas"></div>
-            <div class="pizza__filling pizza__filling--bacon"></div>
-            <div class="pizza__filling pizza__filling--cheddar"></div>
+            <div
+              v-for="fillingClass in fillingClasses"
+              class="pizza__filling"
+              :class="fillingClass"
+              :key="fillingClass"
+            ></div>
           </div>
         </div>
       </div>
 
       <div class="content__result">
         <p>Итого: {{ totalPrice }} ₽</p>
-        <AppBtn description="Готовьте!" is-disabled></AppBtn>
+        <AppBtn
+          description="Готовьте!"
+          :is-disabled="!isMakeEnabled"
+          @onBtnClick="onMakePizzaClick"
+        ></AppBtn>
       </div>
     </div>
   </AppDrop>
@@ -31,7 +40,7 @@
 <script>
 import AppBtn from "@/common/components/AppBtn";
 import AppDrop from "@/common/components/AppDrop";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 import { CountEvent } from "@/common/constants";
 
 export default {
@@ -44,11 +53,18 @@ export default {
 
   computed: {
     ...mapGetters("Builder", ["totalPrice"]),
-    ...mapGetters("BuilderMakeForm", ["sizeClass"]),
+    ...mapGetters("Builder/BuilderMakeForm", [
+      "sizeClass",
+      "fillingClasses",
+      "isMakeEnabled",
+    ]),
+    ...mapState("Builder/BuilderMakeForm", ["pizzaName"]),
   },
 
   methods: {
+    ...mapActions("Builder", ["makePizza"]),
     ...mapActions("Ingredients", ["countChange"]),
+    ...mapActions("Builder/BuilderMakeForm", ["setPizzaName"]),
 
     drop(ingredient) {
       const dropData = {
@@ -60,6 +76,14 @@ export default {
       };
 
       this.countChange(dropData);
+    },
+
+    onPizzaNameInput(evt) {
+      this.setPizzaName(evt.target.value);
+    },
+
+    onMakePizzaClick() {
+      this.makePizza();
     },
   },
 };

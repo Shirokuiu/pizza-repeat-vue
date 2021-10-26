@@ -37,7 +37,7 @@ export default {
   },
 
   computed: {
-    ...mapState("Ingredients", ["sauces", "ingredients"]),
+    ...mapState("Builder/BuilderIngredients", ["sauces", "ingredients"]),
   },
 
   created() {
@@ -46,7 +46,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("Ingredients", [
+    ...mapActions("Builder/BuilderIngredients", [
       "fetchIngredients",
       "fetchSauces",
       "sauceChange",

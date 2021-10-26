@@ -1,23 +1,31 @@
-import { CHANGE_SIZE, SET_SIZES } from "@/store/modules/sizes/mutatins-types";
-import pizza from "@/static/pizza.json";
+import {
+  RESET_STATE,
+  CHANGE_SIZE,
+  SET_SIZES,
+} from "@/modules/builder/store/mutation-types";
 import { normalizeSizes } from "@/modules/builder/helpers";
+import pizza from "@/static/pizza.json";
 
-const initialState = () => ({
-  sizes: [],
-});
+let cacheSizes = [];
 
 export default {
   namespaced: true,
 
-  state: initialState(),
+  state: () => ({
+    sizes: [],
+  }),
 
   getters: {
     currentMultiplier(state) {
-      return state.sizes.find(({ isChecked }) => isChecked).multiplier;
+      return state.sizes.find(({ isChecked }) => isChecked)?.multiplier;
     },
   },
 
   mutations: {
+    [RESET_STATE](state, payload) {
+      state.sizes = payload;
+    },
+
     [SET_SIZES](state, payload) {
       state.sizes = payload;
     },
@@ -32,13 +40,17 @@ export default {
 
   actions: {
     fetchSizes({ commit }) {
-      const sizes = normalizeSizes(pizza.sizes);
+      cacheSizes = normalizeSizes(pizza.sizes);
 
-      commit(SET_SIZES, sizes);
+      commit(SET_SIZES, cacheSizes);
     },
 
     changeSize({ commit }, id) {
       commit(CHANGE_SIZE, id);
+    },
+
+    resetState({ commit }) {
+      commit(RESET_STATE, cacheSizes);
     },
   },
 };

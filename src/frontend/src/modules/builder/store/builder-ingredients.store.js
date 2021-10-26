@@ -1,3 +1,4 @@
+import { cloneDeep } from "lodash";
 import {
   INGREDIENT_INC,
   SAUCE_CHANGE,
@@ -6,7 +7,8 @@ import {
   INGREDIENT_DEC,
   INGREDIENT_CHANGE,
   INGREDIENT_DROP,
-} from "@/store/modules/ingredients/mutation-types";
+  RESET_STATE,
+} from "@/modules/builder/store/mutation-types";
 import pizza from "@/static/pizza.json";
 import {
   normalizeIngredients,
@@ -14,11 +16,14 @@ import {
 } from "@/modules/builder/helpers";
 import { CountEvent } from "@/common/constants";
 import Count from "@/modules/builder/helpers/count";
-import { EventTypeMap } from "@/store/modules/ingredients/constants";
+import { EventTypeMap } from "@/modules/builder/constants";
+
+let cacheSauces = [];
+let cacheIngredients = [];
 
 const initialState = () => ({
-  sauces: [],
-  ingredients: [],
+  sauces: cloneDeep(cacheSauces),
+  ingredients: cloneDeep(cacheIngredients),
 });
 
 export default {
@@ -41,6 +46,11 @@ export default {
   },
 
   mutations: {
+    // eslint-disable-next-line no-unused-vars
+    [RESET_STATE](state) {
+      state = Object.assign(state, initialState());
+    },
+
     [SET_SAUCES](state, payload) {
       state.sauces = payload;
     },
@@ -75,14 +85,20 @@ export default {
   },
 
   actions: {
+    resetState({ commit }) {
+      commit(RESET_STATE);
+    },
+
     fetchSauces({ commit }) {
       const sauces = normalizeSauces(pizza.sauces);
+      cacheSauces = cloneDeep(sauces);
 
       commit(SET_SAUCES, sauces);
     },
 
     fetchIngredients({ commit }) {
       const ingredients = normalizeIngredients(pizza.ingredients);
+      cacheIngredients = cloneDeep(ingredients);
 
       commit(SET_INGREDIENTS, ingredients);
     },

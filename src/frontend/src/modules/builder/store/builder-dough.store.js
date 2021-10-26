@@ -1,26 +1,31 @@
 import { normalizeDougs } from "@/modules/builder/helpers";
 import pizza from "@/static/pizza.json";
 import {
-  CHANGE_DOUGH,
+  RESET_STATE,
   SET_DOUGHS,
-} from "@/store/modules/doughs/mutation-types";
+  CHANGE_DOUGH,
+} from "@/modules/builder/store/mutation-types";
 
-const initialState = () => ({
-  doughs: [],
-});
+let cacheDoughs = [];
 
 export default {
   namespaced: true,
 
-  state: initialState(),
+  state: () => ({
+    doughs: [],
+  }),
 
   getters: {
     totalPrice(state) {
-      return state.doughs.find(({ isChecked }) => isChecked).price;
+      return state.doughs.find(({ isChecked }) => isChecked)?.price;
     },
   },
 
   mutations: {
+    [RESET_STATE](state, payload) {
+      state.doughs = payload;
+    },
+
     [SET_DOUGHS](state, payload) {
       state.doughs = payload;
     },
@@ -35,13 +40,17 @@ export default {
 
   actions: {
     fetchDoughs({ commit }) {
-      const doughs = normalizeDougs(pizza.dough);
+      cacheDoughs = normalizeDougs(pizza.dough);
 
-      commit(SET_DOUGHS, doughs);
+      commit(SET_DOUGHS, cacheDoughs);
     },
 
     changeDough({ commit }, activeDoughId) {
       commit(CHANGE_DOUGH, activeDoughId);
+    },
+
+    resetState({ commit }) {
+      commit(RESET_STATE, cacheDoughs);
     },
   },
 };

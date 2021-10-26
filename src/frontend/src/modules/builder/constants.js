@@ -4,7 +4,22 @@ import {
   INGREDIENT_DEC,
   INGREDIENT_DROP,
   INGREDIENT_INC,
-} from "@/store/modules/ingredients/mutation-types";
+} from "@/modules/builder/store/mutation-types";
+
+export const sizeClassMap = {
+  light: "small",
+  large: "big",
+};
+
+export const sauceClassMap = {
+  tomato: "tomato",
+  creamy: "creamy",
+};
+
+export const fillingClassCount = {
+  2: "second",
+  3: "third",
+};
 
 export const EventTypeMap = {
   [CountEvent.INC]: {

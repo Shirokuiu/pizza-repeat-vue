@@ -4,6 +4,7 @@
     class="button"
     :class="{ 'button--disabled': isDisabled }"
     :disabled="isDisabled"
+    @click="onBtnClick"
   >
     {{ description }}
   </button>
@@ -21,6 +22,12 @@ export default {
     isDisabled: {
       type: Boolean,
       default: false,
+    },
+  },
+
+  methods: {
+    onBtnClick() {
+      this.$emit("onBtnClick");
     },
   },
 };

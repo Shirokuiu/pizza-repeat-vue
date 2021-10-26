@@ -10,4 +10,5 @@ export const normalizeSizes = (sizes) =>
     id: index + 1,
     classMod: sizeClassMap[size.multiplier],
     isChecked: index === 1,
+    radioName: "diameter",
   }));

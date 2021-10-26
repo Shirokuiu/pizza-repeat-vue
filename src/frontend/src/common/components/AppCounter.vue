@@ -19,7 +19,10 @@
     />
     <button
       :disabled="isDisablePlus"
-      :class="{ 'counter__button--disabled': isDisablePlus }"
+      :class="[
+        isDisablePlus ? 'counter__button--disabled' : undefined,
+        color ? `counter__button--${color}` : undefined,
+      ]"
       @click="onCountEvt(CountEvent.INC, count)"
       type="button"
       class="counter__button counter__button--plus"
@@ -31,6 +34,11 @@
 
 <script>
 import { CountEvent } from "@/common/constants";
+
+const colorMods = {
+  none: undefined,
+  orange: "orange",
+};
 
 export default {
   name: "AppCounter",
@@ -47,6 +55,11 @@ export default {
     isDisableMinus: {
       type: Boolean,
       default: true,
+    },
+    color: {
+      type: String,
+      default: colorMods.none,
+      validation: (color) => colorMods[color],
     },
   },
 
