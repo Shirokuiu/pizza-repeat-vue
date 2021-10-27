@@ -1,12 +1,17 @@
 <template>
   <ul class="cart-list sheet">
-    <CartListItem v-for="pizza in pizzaItems" :key="pizza.id" :pizza="pizza" />
+    <CartListItem
+      v-for="pizza in pizzaItems"
+      :key="pizza.id"
+      :pizza="pizza"
+      @onCountChange="onCountChange($event, pizza.id)"
+    />
   </ul>
 </template>
 
 <script>
 import CartListItem from "@/modules/cart/components/CartPizzaListItem";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "CartList",
@@ -16,7 +21,15 @@ export default {
   },
 
   computed: {
-    ...mapState("Cart", ["pizzaItems"]),
+    ...mapState("Cart/CartPizzaList", ["pizzaItems"]),
+  },
+
+  methods: {
+    ...mapActions("Cart/CartPizzaList", ["countChange"]),
+
+    onCountChange(evtData, pizzaId) {
+      this.countChange({ evtData, pizzaId });
+    },
   },
 };
 </script>

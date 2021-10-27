@@ -41,7 +41,7 @@ export default {
   },
 
   computed: {
-    ...mapState("Cart", ["pizzaItems"]),
+    ...mapState("Cart/CartPizzaList", ["pizzaItems"]),
   },
 };
 </script>

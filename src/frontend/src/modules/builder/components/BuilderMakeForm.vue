@@ -63,7 +63,7 @@ export default {
 
   methods: {
     ...mapActions("Builder", ["makePizza"]),
-    ...mapActions("Ingredients", ["countChange"]),
+    ...mapActions("Builder/BuilderIngredients", ["countChange"]),
     ...mapActions("Builder/BuilderMakeForm", ["setPizzaName"]),
 
     drop(ingredient) {

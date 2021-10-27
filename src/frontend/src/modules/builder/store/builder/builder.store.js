@@ -1,7 +1,9 @@
-import BuilderDough from "@/modules/builder/store/builder-dough.store";
-import BuilderSize from "@/modules/builder/store/builder-size.store";
-import BuilderMakeForm from "@/modules/builder/store/builder-make-form.store";
-import BuilderIngredients from "@/modules/builder/store/builder-ingredients.store";
+import BuilderDough from "@/modules/builder/store/builder-dough/builder-dough.store";
+import BuilderSize from "@/modules/builder/store/builder-size/builder-size.store";
+import BuilderMakeForm from "@/modules/builder/store/builder-make-form/builder-make-form.store";
+import BuilderIngredients from "@/modules/builder/store/builder-ingredients/builder-ingredients.store";
+import { buildPizzaToCart } from "@/modules/builder/store/builder/helpers";
+
 export default {
   namespaced: true,
 
@@ -17,8 +19,12 @@ export default {
   },
 
   actions: {
-    makePizza({ dispatch }) {
-      dispatch("Cart/add", undefined, { root: true });
+    makePizza({ dispatch, rootState, rootGetters }) {
+      dispatch(
+        "Cart/CartPizzaList/add",
+        buildPizzaToCart(rootState, rootGetters),
+        { root: true }
+      );
       dispatch("Builder/BuilderDough/resetState", undefined, { root: true });
       dispatch("Builder/BuilderSize/resetState", undefined, { root: true });
       dispatch("Builder/BuilderIngredients/resetState", undefined, {

@@ -8,15 +8,15 @@ import {
   INGREDIENT_CHANGE,
   INGREDIENT_DROP,
   RESET_STATE,
-} from "@/modules/builder/store/mutation-types";
+} from "@/modules/builder/store/builder-ingredients/mutation-types";
 import pizza from "@/static/pizza.json";
 import {
   normalizeIngredients,
   normalizeSauces,
 } from "@/modules/builder/helpers";
-import { CountEvent } from "@/common/constants";
-import Count from "@/modules/builder/helpers/count";
-import { EventTypeMap } from "@/modules/builder/constants";
+import Count from "@/common/helpers/count";
+import { buildIngredientPrice } from "@/modules/builder/store/builder-ingredients/helpers";
+import { CommitDataMutation } from "@/modules/builder/store/builder-ingredients/constants";
 
 let cacheSauces = [];
 let cacheIngredients = [];
@@ -37,11 +37,7 @@ export default {
     },
 
     ingredientsPrice(state) {
-      return state.ingredients.length
-        ? state.ingredients
-            .map(({ totalPrice }) => totalPrice)
-            .reduce((a, b) => a + b)
-        : 0;
+      return buildIngredientPrice(state.ingredients);
     },
   },
 
@@ -100,7 +96,7 @@ export default {
       const ingredients = normalizeIngredients(pizza.ingredients);
       cacheIngredients = cloneDeep(ingredients);
 
-      commit(SET_INGREDIENTS, ingredients);
+      commit(SET_INGREDIENTS, cacheIngredients);
     },
 
     sauceChange({ commit }, activeSauceId) {
@@ -110,42 +106,15 @@ export default {
     countChange({ commit, state }, { evtData, ingredientId }) {
       const { evtType, value } = evtData;
 
-      const valueToInt = parseInt(value, 10);
-      const currentIngredientIdx = state.ingredients.findIndex(
-        ({ id }) => id === ingredientId
-      );
-
-      const valueToCommit =
-        evtType === CountEvent.INC ||
-        evtType === CountEvent.DEC ||
-        evtType === CountEvent.DROP
-          ? EventTypeMap[evtType].value(currentIngredientIdx)
-          : EventTypeMap[evtType].value({
-              id: currentIngredientIdx,
-              value: valueToInt,
-            });
-
-      if (evtType === CountEvent.DROP) {
-        if (
-          !Count.validateIncDecDrop(
-            valueToInt,
-            currentIngredientIdx,
-            state.ingredients
-          )
-        ) {
-          commit(EventTypeMap[evtType].evt, {
-            type: EventTypeMap[evtType].type,
-            value: valueToCommit,
-          });
+      Count.buildCommitMutation(
+        { arr: state.ingredients, arrId: ingredientId, evtType, value },
+        (commitData) => {
+          commit(
+            CommitDataMutation[commitData.mutationType],
+            commitData.payload
+          );
         }
-
-        return;
-      }
-
-      commit(EventTypeMap[evtType].evt, {
-        type: EventTypeMap[evtType].type,
-        value: valueToCommit,
-      });
+      );
     },
   },
 };

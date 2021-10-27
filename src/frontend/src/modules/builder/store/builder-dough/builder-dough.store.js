@@ -4,7 +4,7 @@ import {
   RESET_STATE,
   SET_DOUGHS,
   CHANGE_DOUGH,
-} from "@/modules/builder/store/mutation-types";
+} from "@/modules/builder/store/builder-dough/mutation-types";
 
 let cacheDoughs = [];
 

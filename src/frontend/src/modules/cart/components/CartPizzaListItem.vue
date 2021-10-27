@@ -9,21 +9,19 @@
         alt="Капричоза"
       />
       <div class="product__text">
-        <h2>Капричоза</h2>
+        <h2>{{ pizza.pizzaName }}</h2>
         <ul>
-          <li>30 см, на тонком тесте</li>
-          <li>Соус: томатный</li>
-          <li>Начинка: грибы, лук, ветчина, пармезан, ананас</li>
+          <li>{{ pizza.description.size }}, {{ pizza.description.dough }}</li>
+          <li>Соус: {{ pizza.description.sauce }}</li>
+          <li>Начинка: {{ pizza.description.ingredients }}</li>
         </ul>
       </div>
     </div>
 
-    <!--    :is-disable-minus="disableMinus"-->
-    <!--    :is-disable-plus="disablePlus"-->
-    <!--    @onCountEvt="onCountChange($event)"-->
     <AppCounter
       :count="pizza.counter.value"
       :is-disable-minus="disableMinus"
+      @onCountEvt="onCountChange($event)"
       color="orange"
       class="cart-list__counter"
     />
@@ -58,6 +56,12 @@ export default {
   computed: {
     disableMinus() {
       return this.pizza.counter.maxDec >= this.pizza.counter.value;
+    },
+  },
+
+  methods: {
+    onCountChange(countEvt) {
+      this.$emit("onCountChange", countEvt);
     },
   },
 };

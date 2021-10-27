@@ -2,7 +2,7 @@ import {
   RESET_STATE,
   CHANGE_SIZE,
   SET_SIZES,
-} from "@/modules/builder/store/mutation-types";
+} from "@/modules/builder/store/builder-size/mutation-types";
 import { normalizeSizes } from "@/modules/builder/helpers";
 import pizza from "@/static/pizza.json";
 
