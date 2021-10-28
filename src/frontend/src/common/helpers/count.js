@@ -1,4 +1,3 @@
-import Vue from "vue";
 import { CountEvent } from "@/common/constants";
 
 const MutationType = {
@@ -40,7 +39,7 @@ export default class Count {
   }
 
   static incDec(countEvent, currentIdx, arr) {
-    const arrCopy = arr.slice();
+    const arrCopy = [...arr];
     const value =
       countEvent === CountEvent.INC
         ? ++arrCopy[currentIdx].counter.value
@@ -48,31 +47,31 @@ export default class Count {
 
     const totalPrice = arrCopy[currentIdx].price * value;
 
-    Vue.set(arrCopy, currentIdx, {
+    arrCopy[currentIdx] = {
       ...arrCopy[currentIdx],
       counter: {
         ...arrCopy[currentIdx].counter,
         value,
       },
       totalPrice,
-    });
+    };
 
     return arrCopy;
   }
 
   static change(currentIdx, valueToInt, arr) {
-    const copyArr = arr.slice();
+    const copyArr = [...arr];
     const isValueNan = isNaN(valueToInt);
 
     if (isValueNan) {
-      Vue.set(copyArr, currentIdx, {
+      copyArr[currentIdx] = {
         ...copyArr[currentIdx],
         counter: {
           ...copyArr[currentIdx].counter,
           value: 0,
         },
         totalPrice: 0,
-      });
+      };
 
       return copyArr;
     }
@@ -83,14 +82,14 @@ export default class Count {
       ? copyArr[currentIdx].price * arr[currentIdx].counter.value
       : copyArr[currentIdx].price * valueToInt;
 
-    Vue.set(copyArr, currentIdx, {
+    copyArr[currentIdx] = {
       ...copyArr[currentIdx],
       counter: {
         ...copyArr[currentIdx].counter,
         value,
       },
       totalPrice,
-    });
+    };
 
     return copyArr;
   }
