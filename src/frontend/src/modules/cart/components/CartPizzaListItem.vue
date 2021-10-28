@@ -31,7 +31,9 @@
     </div>
 
     <div class="cart-list__button">
-      <button type="button" class="cart-list__edit">Изменить</button>
+      <button @click="onEditClick" type="button" class="cart-list__edit">
+        Изменить
+      </button>
     </div>
   </li>
 </template>
@@ -62,6 +64,10 @@ export default {
   methods: {
     onCountChange(countEvt) {
       this.$emit("onCountChange", countEvt);
+    },
+
+    onEditClick() {
+      this.$emit("onEdit", this.pizza.id);
     },
   },
 };

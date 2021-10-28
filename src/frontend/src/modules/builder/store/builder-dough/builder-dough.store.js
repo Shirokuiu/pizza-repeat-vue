@@ -45,6 +45,10 @@ export default {
       commit(SET_DOUGHS, cacheDoughs);
     },
 
+    setDoughs({ commit }, doughs) {
+      commit(SET_DOUGHS, doughs);
+    },
+
     changeDough({ commit }, activeDoughId) {
       commit(CHANGE_DOUGH, activeDoughId);
     },

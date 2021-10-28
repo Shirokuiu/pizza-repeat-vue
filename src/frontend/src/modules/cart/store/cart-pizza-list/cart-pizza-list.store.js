@@ -3,9 +3,14 @@ import {
   DEC,
   INC,
   ADD,
+  UPDATE,
 } from "@/modules/cart/store/cart-pizza-list/mutation-types";
 import Count from "@/common/helpers/count";
-import { buildCartPizza } from "@/modules/cart/store/cart-pizza-list/helpers";
+import {
+  buildCartPizza,
+  updateCartPizza,
+} from "@/modules/cart/store/cart-pizza-list/helpers";
+import router from "@/router";
 
 const initialState = () => ({
   pizzaItems: [],
@@ -19,6 +24,10 @@ export default {
   mutations: {
     [ADD](state, payload) {
       state.pizzaItems = [...state.pizzaItems, payload];
+    },
+
+    [UPDATE](state, payload) {
+      state.pizzaItems = payload;
     },
 
     [INC](state, { type, value }) {
@@ -41,6 +50,22 @@ export default {
       commit(ADD, buildCartPizza(pizzaItems));
     },
 
+    update({ commit, state }, updatedPizzaData) {
+      const copyArr = [...state.pizzaItems];
+      const index = copyArr.findIndex(
+        ({ id }) => id === updatedPizzaData.pizzaId
+      );
+
+      copyArr[index] = {
+        ...updateCartPizza({
+          ...copyArr[index],
+          ...updatedPizzaData.updatedPizza,
+        }),
+      };
+
+      commit(UPDATE, copyArr);
+    },
+
     countChange({ commit, state }, { evtData, pizzaId }) {
       const { evtType, value } = evtData;
 
@@ -50,6 +75,37 @@ export default {
           commit(commitData.mutationType, commitData.payload);
         }
       );
+    },
+
+    edit({ dispatch, state }, pizzaId) {
+      const index = state.pizzaItems.findIndex(({ id }) => id === pizzaId);
+      const currentPizzaItem = state.pizzaItems[index];
+
+      router.push("/").then(() => {
+        dispatch("Cart/setEditPizzaId", pizzaId, { root: true });
+        dispatch("Cart/toggleEdit", true, { root: true });
+        dispatch("Builder/BuilderDough/setDoughs", currentPizzaItem.doughs, {
+          root: true,
+        });
+        dispatch("Builder/BuilderSize/setSizes", currentPizzaItem.sizes, {
+          root: true,
+        });
+        dispatch(
+          "Builder/BuilderIngredients/setSauces",
+          currentPizzaItem.sauces,
+          { root: true }
+        );
+        dispatch(
+          "Builder/BuilderIngredients/setIngredients",
+          currentPizzaItem.ingredients,
+          { root: true }
+        );
+        dispatch(
+          "Builder/BuilderMakeForm/setPizzaName",
+          currentPizzaItem.pizzaName,
+          { root: true }
+        );
+      });
     },
   },
 };

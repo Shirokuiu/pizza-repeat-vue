@@ -89,6 +89,10 @@ export default {
       const sauces = normalizeSauces(pizza.sauces);
       cacheSauces = cloneDeep(sauces);
 
+      commit(SET_SAUCES, cacheSauces);
+    },
+
+    setSauces({ commit }, sauces) {
       commit(SET_SAUCES, sauces);
     },
 
@@ -97,6 +101,10 @@ export default {
       cacheIngredients = cloneDeep(ingredients);
 
       commit(SET_INGREDIENTS, cacheIngredients);
+    },
+
+    setIngredients({ commit }, ingredients) {
+      commit(SET_INGREDIENTS, ingredients);
     },
 
     sauceChange({ commit }, activeSauceId) {

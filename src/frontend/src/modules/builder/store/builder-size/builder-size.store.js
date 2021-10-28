@@ -45,6 +45,10 @@ export default {
       commit(SET_SIZES, cacheSizes);
     },
 
+    setSizes({ commit }, sizes) {
+      commit(SET_SIZES, sizes);
+    },
+
     changeSize({ commit }, id) {
       commit(CHANGE_SIZE, id);
     },

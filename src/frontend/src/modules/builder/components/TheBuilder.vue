@@ -19,6 +19,7 @@ import BuilderDough from "@/modules/builder/components/BuilderDough";
 import BuilderSize from "@/modules/builder/components/BuilderSize";
 import BuilderIngredients from "@/modules/builder/components/BuilderIngredients";
 import BuilderMakeForm from "@/modules/builder/components/BuilderMakeForm";
+import { mapActions } from "vuex";
 
 export default {
   name: "TheBuilder",
@@ -28,6 +29,15 @@ export default {
     BuilderSize,
     BuilderIngredients,
     BuilderMakeForm,
+  },
+
+  beforeDestroy() {
+    this.setEditPizzaId(undefined);
+    this.toggleEdit(false);
+  },
+
+  methods: {
+    ...mapActions("Cart", ["setEditPizzaId", "toggleEdit"]),
   },
 };
 </script>
