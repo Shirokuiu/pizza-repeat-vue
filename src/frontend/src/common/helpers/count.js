@@ -49,9 +49,9 @@ export default class Count {
     const totalPrice = arrCopy[currentIdx].price * value;
 
     Vue.set(arrCopy, currentIdx, {
-      ...arr[currentIdx],
+      ...arrCopy[currentIdx],
       counter: {
-        ...arr[currentIdx].counter,
+        ...arrCopy[currentIdx].counter,
         value,
       },
       totalPrice,

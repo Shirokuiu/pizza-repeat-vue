@@ -22,7 +22,7 @@ let cacheSauces = [];
 let cacheIngredients = [];
 
 const initialState = () => ({
-  sauces: cloneDeep(cacheSauces),
+  sauces: cacheSauces,
   ingredients: cloneDeep(cacheIngredients),
 });
 
@@ -86,8 +86,9 @@ export default {
     },
 
     fetchSauces({ commit }) {
-      const sauces = normalizeSauces(pizza.sauces);
-      cacheSauces = cloneDeep(sauces);
+      if (!cacheSauces.length) {
+        cacheSauces = normalizeSauces(pizza.sauces);
+      }
 
       commit(SET_SAUCES, cacheSauces);
     },
@@ -97,10 +98,11 @@ export default {
     },
 
     fetchIngredients({ commit }) {
-      const ingredients = normalizeIngredients(pizza.ingredients);
-      cacheIngredients = cloneDeep(ingredients);
+      if (!cacheIngredients.length) {
+        cacheIngredients = normalizeIngredients(pizza.ingredients);
+      }
 
-      commit(SET_INGREDIENTS, cacheIngredients);
+      commit(SET_INGREDIENTS, cloneDeep(cacheIngredients));
     },
 
     setIngredients({ commit }, ingredients) {
