@@ -1,5 +1,4 @@
 import { normalizeDougs } from "@/modules/builder/helpers";
-import pizza from "@/static/pizza.json";
 import {
   RESET_STATE,
   SET_DOUGHS,
@@ -39,8 +38,10 @@ export default {
   },
 
   actions: {
-    fetchDoughs({ commit }) {
-      cacheDoughs = normalizeDougs(pizza.dough);
+    async fetchDoughs({ commit }) {
+      if (!cacheDoughs.length) {
+        cacheDoughs = normalizeDougs(await this.$api.dough.get());
+      }
 
       commit(SET_DOUGHS, cacheDoughs);
     },

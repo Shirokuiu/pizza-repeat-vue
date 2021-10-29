@@ -4,4 +4,4 @@ const sizeClassMap = {
 };
 
 export const buildSizeClass = (doughs) =>
-  sizeClassMap[doughs.find(({ isChecked }) => isChecked).classMod];
+  sizeClassMap[doughs.find(({ isChecked }) => isChecked)?.classMod];

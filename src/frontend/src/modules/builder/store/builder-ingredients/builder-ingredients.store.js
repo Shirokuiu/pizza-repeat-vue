@@ -14,7 +14,7 @@ import {
   normalizeIngredients,
   normalizeSauces,
 } from "@/modules/builder/helpers";
-import Count from "@/common/helpers/count";
+import { Count } from "@/common/helpers/Count";
 import { buildIngredientPrice } from "@/modules/builder/store/builder-ingredients/helpers";
 import { CommitDataMutation } from "@/modules/builder/store/builder-ingredients/constants";
 

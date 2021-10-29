@@ -5,7 +5,7 @@ import {
   ADD,
   UPDATE,
 } from "@/modules/cart/store/cart-pizza-list/mutation-types";
-import Count from "@/common/helpers/count";
+import { Count } from "@/common/helpers";
 import {
   buildCartPizza,
   updateCartPizza,

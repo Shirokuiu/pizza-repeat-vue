@@ -30,7 +30,7 @@ const EventTypeMap = {
   },
 };
 
-export default class Count {
+export class Count {
   static validateIncDec(valueToInt, currentIngredientIdx, arr) {
     return (
       valueToInt > arr[currentIngredientIdx].counter.maxInc ||

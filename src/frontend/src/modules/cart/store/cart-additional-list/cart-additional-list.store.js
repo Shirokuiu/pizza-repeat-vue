@@ -1,7 +1,7 @@
 import misc from "@/static/misc.json";
 import { normalizeAdditionals } from "@/modules/cart/store/cart-additional-list/helpers";
 import { SET_ADDITIONALS } from "@/modules/cart/store/cart-additional-list/mutation-types";
-import Count from "@/common/helpers/count";
+import { Count } from "@/common/helpers";
 import {
   CHANGE,
   DEC,

@@ -4,4 +4,4 @@ const sauceClassMap = {
 };
 
 export const buildSauceClass = (sauces) =>
-  sauceClassMap[sauces.find(({ isChecked }) => isChecked).value];
+  sauceClassMap[sauces.find(({ isChecked }) => isChecked)?.value];
