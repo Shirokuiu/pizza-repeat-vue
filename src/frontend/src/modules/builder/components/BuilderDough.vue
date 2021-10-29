@@ -1,42 +1,35 @@
 <template>
-  <div class="content__dough">
-    <AppWidget title="Выберите тесто">
-      <div class="sheet__content dough">
-        <label
-          v-for="dough in dougs"
-          class="dough__input"
-          :class="`dough__input--${dough.classMod}`"
-          :key="dough.price"
-        >
-          <input
-            type="radio"
-            name="dought"
-            :value="dough.classMod"
-            class="visually-hidden"
-            :checked="dough.isChecked"
-          />
-          <b>{{ dough.name }}</b>
-          <span>{{ dough.description }}</span>
-        </label>
-      </div>
-    </AppWidget>
-  </div>
+  <AppDoughSelector
+    :doughs="doughs"
+    title="Выберите тесто"
+    @onDoughChange="onDoughChange"
+  />
 </template>
 
 <script>
-import AppWidget from "@/common/components/AppWidget";
+import AppDoughSelector from "@/common/components/AppDoughSelector";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "BuilderDough",
 
   components: {
-    AppWidget,
+    AppDoughSelector,
   },
 
-  props: {
-    dougs: {
-      type: Array,
-      default: () => [],
+  computed: {
+    ...mapState("Builder/BuilderDough", ["doughs"]),
+  },
+
+  created() {
+    this.fetchDoughs();
+  },
+
+  methods: {
+    ...mapActions("Builder/BuilderDough", ["fetchDoughs", "changeDough"]),
+
+    onDoughChange(id) {
+      this.changeDough(id);
     },
   },
 };

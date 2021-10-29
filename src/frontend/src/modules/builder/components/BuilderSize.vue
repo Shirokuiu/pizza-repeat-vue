@@ -1,41 +1,35 @@
 <template>
-  <div class="content__diameter">
-    <AppWidget title="Выберите размер">
-      <div class="sheet__content diameter">
-        <label
-          v-for="size in sizes"
-          :key="size.multiplier"
-          class="diameter__input"
-          :class="`diameter__input--${size.classMod}`"
-        >
-          <input
-            type="radio"
-            name="diameter"
-            :value="size.classMod"
-            class="visually-hidden"
-            :checked="size.isChecked"
-          />
-          <span>{{ size.name }}</span>
-        </label>
-      </div>
-    </AppWidget>
-  </div>
+  <AppSizeSelector
+    title="Выберите размер"
+    :sizes="sizes"
+    @onSizeChange="onSizeChange"
+  />
 </template>
 
 <script>
-import AppWidget from "@/common/components/AppWidget";
+import AppSizeSelector from "@/common/components/AppSizeSelector";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "BuilderSize",
 
   components: {
-    AppWidget,
+    AppSizeSelector,
   },
 
-  props: {
-    sizes: {
-      type: Array,
-      default: () => [],
+  computed: {
+    ...mapState("Builder/BuilderSize", ["sizes"]),
+  },
+
+  created() {
+    this.fetchSizes();
+  },
+
+  methods: {
+    ...mapActions("Builder/BuilderSize", ["fetchSizes", "changeSize"]),
+
+    onSizeChange(id) {
+      this.changeSize(id);
     },
   },
 };

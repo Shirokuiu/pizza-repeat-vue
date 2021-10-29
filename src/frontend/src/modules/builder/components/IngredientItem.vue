@@ -1,5 +1,5 @@
 <template>
-  <AppDrag :transfer-data="ingredient">
+  <AppDrag :transfer-data="ingredient" :draggable="!disablePlus">
     <li class="ingridients__item">
       <span class="filling" :class="`filling--${ingredient.classMod}`">{{
         ingredient.name
