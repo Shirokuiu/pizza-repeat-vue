@@ -26,7 +26,7 @@ export class DoughController {
     public doughRepository: DoughRepository,
   ) {}
 
-  // @post('/doughs')
+  // @post('/dough')
   // @response(200, {
   //   description: 'Dough model instance',
   //   content: {'application/json': {schema: getModelSchemaRef(Dough)}},
@@ -42,12 +42,12 @@ export class DoughController {
   //       },
   //     },
   //   })
-  //   doughs: Omit<Dough, 'id'>,
+  //   dough: Omit<Dough, 'id'>,
   // ): Promise<Dough> {
-  //   return this.doughRepository.create(doughs);
+  //   return this.doughRepository.create(dough);
   // }
 
-  // @get('/doughs/count')
+  // @get('/dough/count')
   // @response(200, {
   //   description: 'Dough model count',
   //   content: {'application/json': {schema: CountSchema}},
@@ -58,7 +58,7 @@ export class DoughController {
   //   return this.doughRepository.count(where);
   // }
 
-  @get('/doughs')
+  @get('/dough')
   @response(200, {
     description: 'Array of Dough model instances',
     content: {
@@ -74,7 +74,7 @@ export class DoughController {
     return this.doughRepository.find();
   }
 
-  // @patch('/doughs')
+  // @patch('/dough')
   // @response(200, {
   //   description: 'Dough PATCH success count',
   //   content: {'application/json': {schema: CountSchema}},
@@ -87,13 +87,13 @@ export class DoughController {
   //       },
   //     },
   //   })
-  //   doughs: Dough,
+  //   dough: Dough,
   //   @param.where(Dough) where?: Where<Dough>,
   // ): Promise<Count> {
-  //   return this.doughRepository.updateAll(doughs, where);
+  //   return this.doughRepository.updateAll(dough, where);
   // }
   //
-  // @get('/doughs/{id}')
+  // @get('/dough/{id}')
   // @response(200, {
   //   description: 'Dough model instance',
   //   content: {
@@ -109,7 +109,7 @@ export class DoughController {
   //   return this.doughRepository.findById(id, filter);
   // }
   //
-  // @patch('/doughs/{id}')
+  // @patch('/dough/{id}')
   // @response(204, {
   //   description: 'Dough PATCH success',
   // })
@@ -122,23 +122,23 @@ export class DoughController {
   //       },
   //     },
   //   })
-  //   doughs: Dough,
+  //   dough: Dough,
   // ): Promise<void> {
-  //   await this.doughRepository.updateById(id, doughs);
+  //   await this.doughRepository.updateById(id, dough);
   // }
   //
-  // @put('/doughs/{id}')
+  // @put('/dough/{id}')
   // @response(204, {
   //   description: 'Dough PUT success',
   // })
   // async replaceById(
   //   @param.path.number('id') id: number,
-  //   @requestBody() doughs: Dough,
+  //   @requestBody() dough: Dough,
   // ): Promise<void> {
-  //   await this.doughRepository.replaceById(id, doughs);
+  //   await this.doughRepository.replaceById(id, dough);
   // }
   //
-  // @del('/doughs/{id}')
+  // @del('/dough/{id}')
   // @response(204, {
   //   description: 'Dough DELETE success',
   // })

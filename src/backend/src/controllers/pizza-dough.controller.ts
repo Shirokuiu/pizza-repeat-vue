@@ -18,7 +18,7 @@ export class PizzaDoughController {
     public pizzaRepository: PizzaRepository,
   ) {}
 
-  @get('/pizzas/{id}/doughs', {
+  @get('/pizzas/{id}/dough', {
     responses: {
       '200': {
         description: 'Dough belonging to Pizza',
