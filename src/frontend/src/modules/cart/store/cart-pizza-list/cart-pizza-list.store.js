@@ -21,6 +21,18 @@ export default {
 
   state: initialState(),
 
+  getters: {
+    totalPrice(state) {
+      if (state.pizzaItems.length) {
+        return state.pizzaItems
+          .map(({ totalPrice }) => totalPrice)
+          .reduce((a, b) => a + b);
+      }
+
+      return 0;
+    },
+  },
+
   mutations: {
     [ADD](state, payload) {
       state.pizzaItems = [...state.pizzaItems, payload];

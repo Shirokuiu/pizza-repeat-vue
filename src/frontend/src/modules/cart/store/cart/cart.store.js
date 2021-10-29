@@ -1,4 +1,5 @@
 import CartPizzaList from "@/modules/cart/store/cart-pizza-list/cart-pizza-list.store";
+import CartAdditionalList from "@/modules/cart/store/cart-additional-list/cart-additional-list.store";
 import {
   SET_EDIT_PIZZA_ID,
   TOGGLE_EDIT,
@@ -13,14 +14,11 @@ export default {
   },
 
   getters: {
-    totalPrice(state, getters, rootState) {
-      if (rootState.Cart.CartPizzaList.pizzaItems.length) {
-        return rootState.Cart.CartPizzaList.pizzaItems
-          .map(({ totalPrice }) => totalPrice)
-          .reduce((a, b) => a + b);
-      }
-
-      return 0;
+    totalPrice(state, getters, rootState, rootGetters) {
+      return (
+        rootGetters["Cart/CartPizzaList/totalPrice"] +
+        rootGetters["Cart/CartAdditionalList/totalPrice"]
+      );
     },
   },
 
@@ -46,5 +44,6 @@ export default {
 
   modules: {
     CartPizzaList,
+    CartAdditionalList,
   },
 };
