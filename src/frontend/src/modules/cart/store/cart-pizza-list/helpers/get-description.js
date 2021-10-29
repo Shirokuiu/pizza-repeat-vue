@@ -29,11 +29,9 @@ const getSauceDescription = (sauces) =>
 const getSizeDescription = (sizes) =>
   sizeMap[sizes.find(({ isChecked }) => isChecked).multiplier];
 
-export const getDescription = ({ doughs, ingredients, sauces, sizes }) => {
-  return {
-    dough: getDoughDescription(doughs),
-    ingredients: getIngredientsDescription(ingredients),
-    sauce: getSauceDescription(sauces),
-    size: getSizeDescription(sizes),
-  };
-};
+export const getDescription = ({ doughs, ingredients, sauces, sizes }) => ({
+  dough: getDoughDescription(doughs),
+  ingredients: getIngredientsDescription(ingredients),
+  sauce: getSauceDescription(sauces),
+  size: getSizeDescription(sizes),
+});

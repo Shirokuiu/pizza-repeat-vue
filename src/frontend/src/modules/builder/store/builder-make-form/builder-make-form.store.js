@@ -18,10 +18,10 @@ export default {
   getters: {
     sizeClass(state, getters, rootState) {
       const { Builder } = rootState;
-      const { BuilderDough, BuilderIngredients } = Builder;
+      const { BuilderDough, BuilderSauce } = Builder;
 
       const sizeClass = buildSizeClass(BuilderDough.doughs);
-      const sauceClass = buildSauceClass(BuilderIngredients.sauces);
+      const sauceClass = buildSauceClass(BuilderSauce.sauces);
 
       return `${sizeClass}-${sauceClass}`;
     },

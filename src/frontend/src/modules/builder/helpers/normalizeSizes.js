@@ -7,7 +7,6 @@ const sizeClassMap = {
 export const normalizeSizes = (sizes) =>
   sizes.map((size, index) => ({
     ...size,
-    id: index + 1,
     classMod: sizeClassMap[size.multiplier],
     isChecked: index === 1,
     radioName: "diameter",

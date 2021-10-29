@@ -102,11 +102,9 @@ export default {
         dispatch("Builder/BuilderSize/setSizes", currentPizzaItem.sizes, {
           root: true,
         });
-        dispatch(
-          "Builder/BuilderIngredients/setSauces",
-          currentPizzaItem.sauces,
-          { root: true }
-        );
+        dispatch("Builder/BuilderSauce/setSauces", currentPizzaItem.sauces, {
+          root: true,
+        });
         dispatch(
           "Builder/BuilderIngredients/setIngredients",
           currentPizzaItem.ingredients,
