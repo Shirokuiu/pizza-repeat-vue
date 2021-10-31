@@ -7,7 +7,6 @@ import {
   INGREDIENT_DROP,
   RESET_STATE,
 } from "@/modules/builder/store/builder-ingredients/mutation-types";
-import pizza from "@/static/pizza.json";
 import { normalizeIngredients } from "@/modules/builder/helpers";
 import { Count } from "@/common/helpers/Count";
 import { buildIngredientPrice } from "@/modules/builder/store/builder-ingredients/helpers";
@@ -63,9 +62,11 @@ export default {
       commit(RESET_STATE);
     },
 
-    fetchIngredients({ commit }) {
+    async fetchIngredients({ commit }) {
       if (!cacheIngredients.length) {
-        cacheIngredients = normalizeIngredients(pizza.ingredients);
+        cacheIngredients = normalizeIngredients(
+          await this.$api.ingredients.get()
+        );
       }
 
       commit(SET_INGREDIENTS, cloneDeep(cacheIngredients));

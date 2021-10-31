@@ -66,9 +66,8 @@ const ingredientClassMap = [
 ];
 
 export const normalizeIngredients = (ingredients) =>
-  ingredients.map((ingredient, index) => ({
+  ingredients.map((ingredient) => ({
     ...ingredient,
-    id: index + 1,
     classMod: ingredientClassMap.find(({ name }) => name === ingredient.name)
       .value,
     counter: {

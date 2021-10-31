@@ -1,5 +1,4 @@
 import { normalizeSauces } from "@/modules/builder/store/builder-sauce/helpers";
-import pizza from "@/static/pizza.json";
 import {
   SET_SAUCES,
   SAUCE_CHANGE,
@@ -45,9 +44,9 @@ export default {
       commit(RESET_STATE);
     },
 
-    fetchSauces({ commit }) {
+    async fetchSauces({ commit }) {
       if (!cacheSauces.length) {
-        cacheSauces = normalizeSauces(pizza.sauces);
+        cacheSauces = normalizeSauces(await this.$api.sauces.get());
       }
 
       commit(SET_SAUCES, cacheSauces);

@@ -1,6 +1,6 @@
 import { axios } from "@/plugins";
 
-export class SizeService {
+export class SizesService {
   #resources;
 
   constructor(resources) {

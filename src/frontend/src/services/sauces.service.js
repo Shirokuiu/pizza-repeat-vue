@@ -1,6 +1,6 @@
 import { axios } from "@/plugins";
 
-export class DoughService {
+export class SaucesService {
   #resources;
 
   constructor(resources) {
