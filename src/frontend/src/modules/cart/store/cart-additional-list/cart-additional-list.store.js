@@ -1,4 +1,3 @@
-import misc from "@/static/misc.json";
 import { normalizeAdditionals } from "@/modules/cart/store/cart-additional-list/helpers";
 import { SET_ADDITIONALS } from "@/modules/cart/store/cart-additional-list/mutation-types";
 import { Count } from "@/common/helpers";
@@ -52,9 +51,9 @@ export default {
   },
 
   actions: {
-    fetchAdditionals({ commit }) {
+    async fetchAdditionals({ commit }) {
       if (!cacheAdditionals.length) {
-        cacheAdditionals = normalizeAdditionals(misc);
+        cacheAdditionals = normalizeAdditionals(await this.$api.misc.get());
 
         commit(SET_ADDITIONALS, cacheAdditionals);
       }
