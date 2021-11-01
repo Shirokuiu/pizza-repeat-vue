@@ -1,15 +1,15 @@
 const ID_TOKEN_KEY = "token";
 
 export class JWT {
-  getToken() {
+  static getToken() {
     return window.localStorage.getItem(ID_TOKEN_KEY);
   }
 
-  saveToken(token) {
+  static saveToken(token) {
     window.localStorage.setItem(ID_TOKEN_KEY, token);
   }
 
-  destroyToken() {
+  static destroyToken() {
     window.localStorage.removeItem(ID_TOKEN_KEY);
   }
 }

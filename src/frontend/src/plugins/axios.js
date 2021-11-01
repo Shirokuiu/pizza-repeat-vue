@@ -11,7 +11,7 @@ axios.interceptors.response.use(
 
     console.error(e?.response?.data?.error?.message || defaultMessage);
 
-    return Promise.reject(e);
+    return Promise.reject(e?.response);
   }
 );
 

@@ -4,6 +4,7 @@ import {
   SaucesService,
   IngredientsService,
   MiscService,
+  AuthService,
 } from "@/services";
 
 const Resources = {
@@ -12,6 +13,7 @@ const Resources = {
   SAUCES: "sauces",
   INGREDIENTS: "ingredients",
   MISC: "misc",
+  AUTH: "auth",
 };
 
 export const createResources = () => ({
@@ -20,4 +22,5 @@ export const createResources = () => ({
   [Resources.SAUCES]: new SaucesService(Resources.SAUCES),
   [Resources.INGREDIENTS]: new IngredientsService(Resources.INGREDIENTS),
   [Resources.MISC]: new MiscService(Resources.MISC),
+  [Resources.AUTH]: new AuthService(Resources.AUTH),
 });

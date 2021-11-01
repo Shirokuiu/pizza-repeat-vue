@@ -7,11 +7,21 @@
 
 <script>
 import TheHeader from "@/modules/header/components/TheHeader";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
+
   components: {
     TheHeader,
+  },
+
+  created() {
+    this.checkIsAuth();
+  },
+
+  methods: {
+    ...mapActions("Auth", ["checkIsAuth"]),
   },
 };
 </script>

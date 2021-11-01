@@ -1,6 +1,6 @@
 <template>
   <div class="sign-form">
-    <a href="#" class="close close--white">
+    <a @click="onCLoseClick" class="close close--white">
       <span class="visually-hidden">Закрыть форму авторизации</span>
     </a>
     <div class="sign-form__title">
@@ -12,6 +12,7 @@
 
 <script>
 import LoginForm from "@/modules/login/components/LoginForm";
+import router from "@/router";
 
 export default {
   name: "Login",
@@ -20,10 +21,10 @@ export default {
     LoginForm,
   },
 
-  data() {
-    return {
-      email: "test",
-    };
+  methods: {
+    onCLoseClick() {
+      router.back();
+    },
   },
 };
 </script>
