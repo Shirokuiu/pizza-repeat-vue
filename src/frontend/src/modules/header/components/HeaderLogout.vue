@@ -1,6 +1,6 @@
 <template>
   <div class="header__user">
-    <a href="user-data.html">
+    <a v-if="user" href="user-data.html">
       <picture>
         <source
           type="image/webp"
@@ -17,17 +17,21 @@
           height="32"
         />
       </picture>
-      <span>Василий Ложкин</span>
+      <span>{{ user.name }}</span>
     </a>
     <a @click.prevent="onLogout" class="header__logout"><span>Выйти</span></a>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "HeaderLogout",
+
+  computed: {
+    ...mapState("Auth", ["user"]),
+  },
 
   methods: {
     ...mapActions("Auth", ["logout"]),
