@@ -22,7 +22,7 @@ export default [
     component: () => import("../views/Orders"),
   },
   {
-    path: "/profile",
+    path: "/login",
     name: "Profile",
     component: () => import("../views/Profile"),
   },
