@@ -17,7 +17,7 @@
         </template>
       </div>
     </main>
-    <CartFooter v-if="pizzaItems.length" />
+    <CartFooter v-if="pizzaItems.length" @onSubmit="onSubmit" />
   </form>
 </template>
 
@@ -27,7 +27,7 @@ import CartList from "@/modules/cart/components/CartPizzaList";
 import CartAdditionalList from "@/modules/cart/components/CartAdditionalList";
 import CartMakeOrder from "@/modules/cart/components/CartMakeOrder";
 import CartFooter from "@/modules/cart/components/CartFooter";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "TheCart",
@@ -42,6 +42,14 @@ export default {
 
   computed: {
     ...mapState("Cart/CartPizzaList", ["pizzaItems"]),
+  },
+
+  methods: {
+    ...mapActions("Cart", ["makeOrder"]),
+
+    onSubmit() {
+      this.makeOrder();
+    },
   },
 };
 </script>

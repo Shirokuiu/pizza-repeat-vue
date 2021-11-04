@@ -1,5 +1,6 @@
 import CartPizzaList from "@/modules/cart/store/cart-pizza-list/cart-pizza-list.store";
 import CartAdditionalList from "@/modules/cart/store/cart-additional-list/cart-additional-list.store";
+import CartMakeOrder from "@/modules/cart/store/cart-make-order/cart-make-order.store";
 import {
   SET_EDIT_PIZZA_ID,
   TOGGLE_EDIT,
@@ -40,10 +41,15 @@ export default {
     toggleEdit({ commit }, isEdit) {
       commit(TOGGLE_EDIT, isEdit);
     },
+
+    makeOrder({ dispatch }) {
+      dispatch("CartMakeOrder/submit");
+    },
   },
 
   modules: {
     CartPizzaList,
     CartAdditionalList,
+    CartMakeOrder,
   },
 };

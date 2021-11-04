@@ -8,7 +8,7 @@ export const normalizeAdditionals = (additionals) =>
       counter: {
         value: 0,
         maxInc: undefined,
-        maxDec: 1,
+        maxDec: 0,
       },
       totalPrice: 0,
     };

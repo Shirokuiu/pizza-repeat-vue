@@ -13,7 +13,9 @@
     </div>
 
     <div class="footer__submit">
-      <button type="submit" class="button">Оформить заказ</button>
+      <button @click="onSubmitClick" type="button" class="button">
+        Оформить заказ
+      </button>
     </div>
   </section>
 </template>
@@ -26,6 +28,12 @@ export default {
 
   computed: {
     ...mapGetters("Cart", ["totalPrice"]),
+  },
+
+  methods: {
+    onSubmitClick() {
+      this.$emit("onSubmit");
+    },
   },
 };
 </script>
