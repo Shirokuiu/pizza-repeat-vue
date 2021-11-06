@@ -5,3 +5,5 @@ export * from "./sizes.service";
 export * from "./ingredients.service";
 export * from "./misc.service";
 export * from "./auth.service";
+export * from "./orders.service";
+export * from "./address.service";

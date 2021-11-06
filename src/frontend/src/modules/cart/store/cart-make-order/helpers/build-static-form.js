@@ -7,7 +7,7 @@ export const buildStaticForm = () => [
     form: {
       addressName: undefined,
       address: {
-        tel: "",
+        phone: "",
       },
       validationRule: undefined,
     },
@@ -15,11 +15,10 @@ export const buildStaticForm = () => [
   {
     id: -2,
     name: "Новый адрес",
-    addressName: "Новый адрес",
     form: {
       addressName: "Новый адрес",
       address: {
-        tel: "",
+        phone: "",
         street: "",
         building: "",
         flat: "",

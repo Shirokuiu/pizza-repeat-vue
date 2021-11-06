@@ -1,6 +1,6 @@
 <template>
   <div class="cart__form">
-    <div class="cart-form">
+    <div v-if="currentFormAddress" class="cart-form">
       <label class="cart-form__select">
         <span class="cart-form__label">Получение заказа:</span>
 
@@ -14,7 +14,7 @@
       </label>
 
       <AppInput
-        v-model="tel"
+        v-model="phone"
         name="tel"
         label="Контактный телефон:"
         placeholder="+7 999-999-99-99"
@@ -22,9 +22,7 @@
       />
 
       <div v-if="isAddressShow" class="cart-form__address">
-        <span class="cart-form__label">{{
-          currentFormAddress.addressName
-        }}</span>
+        <span class="cart-form__label">{{ currentFormAddress.name }}</span>
 
         <div class="cart-form__input">
           <AppInput
@@ -93,13 +91,13 @@ export default {
       return this.currentFormAddress.form.address.street?.length >= 0;
     },
 
-    tel: {
+    phone: {
       get() {
-        return this.currentFormAddress.form.address.tel;
+        return this.currentFormAddress.form.address.phone;
       },
 
       set(value) {
-        this.addressUpdate({ key: "tel", value });
+        this.addressUpdate({ key: "phone", value });
       },
     },
 

@@ -4,6 +4,7 @@ import {
   INC,
   ADD,
   UPDATE,
+  RESET_STATE,
 } from "@/modules/cart/store/cart-pizza-list/mutation-types";
 import { Count } from "@/common/helpers";
 import {
@@ -34,6 +35,11 @@ export default {
   },
 
   mutations: {
+    // eslint-disable-next-line no-unused-vars
+    [RESET_STATE](state) {
+      state = Object.assign(state, initialState());
+    },
+
     [ADD](state, payload) {
       state.pizzaItems = [...state.pizzaItems, payload];
     },
@@ -58,6 +64,10 @@ export default {
   },
 
   actions: {
+    resetState({ commit }) {
+      commit(RESET_STATE);
+    },
+
     add({ commit }, pizzaItems) {
       commit(ADD, buildCartPizza(pizzaItems));
     },
