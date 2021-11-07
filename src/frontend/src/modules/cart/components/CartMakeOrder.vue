@@ -74,12 +74,6 @@ export default {
     AppInput,
   },
 
-  props: {
-    onSubmit: {
-      type: Function,
-    },
-  },
-
   computed: {
     ...mapGetters("Cart/CartMakeOrder", [
       "currentFormAddress",

@@ -1,6 +1,6 @@
 <template>
   <div class="header__user">
-    <a v-if="user" href="user-data.html">
+    <router-link v-if="user" to="/user/profile">
       <picture>
         <source
           type="image/webp"
@@ -18,7 +18,7 @@
         />
       </picture>
       <span>{{ user.name }}</span>
-    </a>
+    </router-link>
     <a @click.prevent="onLogout" class="header__logout"><span>Выйти</span></a>
   </div>
 </template>

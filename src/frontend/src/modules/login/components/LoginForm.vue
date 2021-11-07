@@ -24,7 +24,7 @@
         name="pass"
         placeholder="***********"
       />
-      <span v-if="!$v.email.required && $v.email.$dirty"
+      <span v-if="!$v.password.required && $v.password.$dirty"
         >Поле обязательно для заполнения</span
       >
       <span v-if="errorFromBack.hasError">{{ errorFromBack.text }}</span>
