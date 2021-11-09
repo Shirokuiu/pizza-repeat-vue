@@ -1,7 +1,12 @@
 <template>
   <div>
-    <ProfileAddressItem v-if="false">
-      <ProfileAddressForm>
+    <ProfileAddressItem
+      v-for="address in addresses"
+      :key="address.id"
+      :address="address"
+      @onEdit="edit"
+    >
+      <ProfileAddressForm :form="currentAddress">
         <AppBtn description="Удалить" class="button--transparent"></AppBtn>
         <AppBtn description="Сохранить" type="submit"></AppBtn>
       </ProfileAddressForm>
@@ -12,7 +17,7 @@
 <script>
 import ProfileAddressItem from "@/modules/profile/components/ProfileAddressItem";
 import ProfileAddressForm from "@/modules/profile/components/ProfileAddressForm";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import AppBtn from "@/common/components/AppBtn";
 
 export default {
@@ -26,6 +31,7 @@ export default {
 
   computed: {
     ...mapState("Profile/ProfileAddressList", ["addresses"]),
+    ...mapGetters("Profile/ProfileAddressList", ["currentAddress"]),
   },
 
   created() {
@@ -33,7 +39,14 @@ export default {
   },
 
   methods: {
-    ...mapActions("Profile/ProfileAddressList", ["fetchAddresses"]),
+    ...mapActions("Profile/ProfileAddressList", [
+      "fetchAddresses",
+      "setCurrentAddressId",
+    ]),
+
+    edit(id) {
+      this.setCurrentAddressId(id);
+    },
   },
 };
 </script>

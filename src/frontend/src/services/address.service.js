@@ -14,6 +14,8 @@ export class AddressService {
   }
 
   async post(body) {
-    await axios.post(this.#resources, body);
+    const { data } = await axios.post(this.#resources, body);
+
+    return data;
   }
 }

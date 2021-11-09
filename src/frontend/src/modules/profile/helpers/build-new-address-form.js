@@ -36,7 +36,7 @@ export const buildNewAddressForm = () => ({
   flat: {
     name: "flat",
     value: "",
-    placeholder: "Квартира",
+    placeholder: "Введите № квартиры",
     label: "Квартира",
   },
   comment: {

@@ -5,7 +5,7 @@
         <div class="address-form__header">
           <b>Адрес №1. Тест</b>
           <div class="address-form__edit">
-            <button type="button" class="icon">
+            <button @click="onEditClick" type="button" class="icon">
               <span class="visually-hidden">Изменить адрес</span>
             </button>
           </div>
@@ -14,12 +14,31 @@
         <small>Позвоните, пожалуйста, от проходной</small>
       </div>
     </div>
-    <slot></slot>
+    <slot v-if="isEdit"></slot>
   </div>
 </template>
 
 <script>
 export default {
   name: "ProfileAddressItem",
+
+  props: {
+    address: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  data() {
+    return {
+      isEdit: false,
+    };
+  },
+
+  methods: {
+    onEditClick() {
+      this.$emit("onEdit", this.address.id);
+    },
+  },
 };
 </script>

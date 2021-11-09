@@ -7,12 +7,15 @@ export default {
 
   actions: {
     async addNewAddress({ dispatch, rootState }) {
-      // eslint-disable-next-line no-unused-vars
       const form = await dispatch("ProfileAddressForm/submit");
       const userId = rootState.Auth.user.id;
 
-      await this.$api.addresses.post({ ...buildAddressForBack(form), userId });
+      const newAddress = await this.$api.addresses.post({
+        ...buildAddressForBack(form),
+        userId,
+      });
 
+      dispatch("ProfileAddressList/addAddress", newAddress);
       dispatch("ProfileAddressForm/resetState");
 
       return new Promise((resolve) => {
