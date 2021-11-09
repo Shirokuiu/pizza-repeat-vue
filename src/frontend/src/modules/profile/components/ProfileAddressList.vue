@@ -76,9 +76,9 @@ export default {
       this.updateForm({ key, value });
     },
 
-    edit({ id, needClose }) {
+    edit(id) {
       this.setCurrentAddressId(id);
-      this.editAddress({ id, needClose });
+      this.editAddress(id);
     },
 
     deleteAddress(id) {

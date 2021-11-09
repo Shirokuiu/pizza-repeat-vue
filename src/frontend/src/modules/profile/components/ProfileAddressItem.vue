@@ -44,9 +44,7 @@ export default {
 
   methods: {
     onEditClick() {
-      this.$emit("onEdit", { id: this.address.id, needClose: this.needClose });
-
-      this.needClose = !this.needClose;
+      this.$emit("onEdit", this.address.id);
     },
   },
 };

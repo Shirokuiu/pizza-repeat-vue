@@ -8,6 +8,9 @@ import {
 import { buildFormAddresses } from "@/modules/profile/store/profile-address-list/helpers/build-form-addresses";
 import ProfileAddressForm from "@/modules/profile/store/profile-address-form/profile-address-form.store";
 
+//NOTE: Для того чтобы переключать режимы редактирования на одной кнопке
+let savedOldAddressId;
+
 export default {
   namespaced: true,
 
@@ -67,7 +70,11 @@ export default {
       commit(SET_CURRENT_ADDRESS_ID, id);
     },
 
-    edit({ commit }, { id, needClose }) {
+    edit({ commit }, id) {
+      //NOTE: Для того чтобы переключать режимы редактирования на одной кнопке
+      const needClose = savedOldAddressId === id;
+      savedOldAddressId = savedOldAddressId === id ? undefined : id;
+
       commit(EDIT, { id, needClose });
     },
 
