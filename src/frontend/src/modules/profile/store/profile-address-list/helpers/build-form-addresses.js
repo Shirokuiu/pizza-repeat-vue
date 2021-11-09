@@ -41,7 +41,7 @@ export const buildFormAddresses = (addresses) => {
           errorText: "Обязательно для заполнения",
         };
 
-        return { ...obj, validationRule, id: address.id };
+        return { ...obj, validationRule, id: address.id, isEdit: false };
       }, {});
   });
 };

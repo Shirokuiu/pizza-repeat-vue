@@ -14,7 +14,7 @@
         <small>Позвоните, пожалуйста, от проходной</small>
       </div>
     </div>
-    <slot v-if="isEdit"></slot>
+    <slot></slot>
   </div>
 </template>
 
@@ -31,13 +31,15 @@ export default {
 
   data() {
     return {
-      isEdit: false,
+      needClose: false,
     };
   },
 
   methods: {
     onEditClick() {
-      this.$emit("onEdit", this.address.id);
+      this.$emit("onEdit", { id: this.address.id, needClose: this.needClose });
+
+      this.needClose = !this.needClose;
     },
   },
 };

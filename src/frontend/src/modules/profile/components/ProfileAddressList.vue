@@ -6,7 +6,12 @@
       :address="address"
       @onEdit="edit"
     >
-      <ProfileAddressForm :form="currentAddress">
+      <ProfileAddressForm
+        v-if="address.isEdit"
+        :form="currentAddress"
+        @init="initForm($event)"
+        @updateValue="updateValue($event)"
+      >
         <AppBtn description="Удалить" class="button--transparent"></AppBtn>
         <AppBtn description="Сохранить" type="submit"></AppBtn>
       </ProfileAddressForm>
@@ -34,18 +39,39 @@ export default {
     ...mapGetters("Profile/ProfileAddressList", ["currentAddress"]),
   },
 
+  watch: {
+    currentAddress(newAddress) {
+      this.setForm(newAddress);
+    },
+  },
+
   created() {
     this.fetchAddresses();
   },
 
   methods: {
-    ...mapActions("Profile/ProfileAddressList", [
-      "fetchAddresses",
-      "setCurrentAddressId",
+    ...mapActions("Profile/ProfileAddressList", {
+      fetchAddresses: "fetchAddresses",
+      setCurrentAddressId: "setCurrentAddressId",
+      editAddress: "edit",
+    }),
+    ...mapActions("Profile/ProfileAddressList/ProfileAddressForm", [
+      "setForm",
+      "setValidator",
+      "updateForm",
     ]),
 
-    edit(id) {
+    initForm(validator) {
+      this.setValidator(validator);
+    },
+
+    updateValue({ key, value }) {
+      this.updateForm({ key, value });
+    },
+
+    edit({ id, needClose }) {
       this.setCurrentAddressId(id);
+      this.editAddress({ id, needClose });
     },
   },
 };
