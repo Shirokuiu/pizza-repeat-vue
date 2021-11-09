@@ -2,7 +2,7 @@
   <div class="layout__address">
     <form class="address-form address-form--opened sheet">
       <div class="address-form__header">
-        <b>Адрес №1</b>
+        <b>Адрес №{{ addressNumber }}</b>
       </div>
 
       <div class="address-form__wrapper">
@@ -78,6 +78,11 @@ export default {
     form: {
       type: Object,
       required: true,
+    },
+
+    addressNumber: {
+      type: Number,
+      default: 1,
     },
   },
 

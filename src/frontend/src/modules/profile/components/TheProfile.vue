@@ -11,6 +11,7 @@
     <ProfileAddressForm
       v-if="isFormShow"
       :form="form"
+      :address-number="addresses.length + 1"
       @init="initForm($event)"
       @updateValue="updateValue($event)"
     >
@@ -59,6 +60,7 @@ export default {
 
   computed: {
     ...mapState("Profile/ProfileAddressForm", ["form"]),
+    ...mapState("Profile/ProfileAddressList", ["addresses"]),
   },
 
   beforeCreate() {

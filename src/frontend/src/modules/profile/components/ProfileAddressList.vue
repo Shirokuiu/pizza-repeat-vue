@@ -1,14 +1,16 @@
 <template>
   <div>
     <ProfileAddressItem
-      v-for="address in addresses"
+      v-for="(address, idx) in addresses"
       :key="address.id"
       :address="address"
+      :address-number="idx + 1"
       @onEdit="edit"
     >
       <ProfileAddressForm
         v-if="address.isEdit"
         :form="currentAddress"
+        :address-number="idx + 1"
         @init="initForm($event)"
         @updateValue="updateValue($event)"
       >
