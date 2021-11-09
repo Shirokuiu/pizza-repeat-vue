@@ -18,4 +18,8 @@ export class AddressService {
 
     return data;
   }
+
+  async deleteAddress(id) {
+    await axios.delete(`${this.#resources}/${id}`);
+  }
 }

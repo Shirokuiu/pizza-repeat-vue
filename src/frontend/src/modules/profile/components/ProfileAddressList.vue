@@ -14,8 +14,12 @@
         @init="initForm($event)"
         @updateValue="updateValue($event)"
       >
-        <AppBtn description="Удалить" class="button--transparent"></AppBtn>
-        <AppBtn description="Сохранить" type="submit"></AppBtn>
+        <AppBtn
+          description="Удалить"
+          @onBtnClick="deleteAddress(address.id)"
+          class="button--transparent"
+        ></AppBtn>
+        <AppBtn description="Сохранить" type="button"></AppBtn>
       </ProfileAddressForm>
     </ProfileAddressItem>
   </div>
@@ -56,6 +60,7 @@ export default {
       fetchAddresses: "fetchAddresses",
       setCurrentAddressId: "setCurrentAddressId",
       editAddress: "edit",
+      removeAddress: "deleteAddress",
     }),
     ...mapActions("Profile/ProfileAddressList/ProfileAddressForm", [
       "setForm",
@@ -74,6 +79,10 @@ export default {
     edit({ id, needClose }) {
       this.setCurrentAddressId(id);
       this.editAddress({ id, needClose });
+    },
+
+    deleteAddress(id) {
+      this.removeAddress(id);
     },
   },
 };

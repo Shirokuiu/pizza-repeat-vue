@@ -3,6 +3,7 @@ import {
   SET_ADDRESSES,
   SET_CURRENT_ADDRESS_ID,
   EDIT,
+  DELETE_ADDRESS,
 } from "@/modules/profile/store/profile-address-list/mutation-types";
 import { buildFormAddresses } from "@/modules/profile/store/profile-address-list/helpers/build-form-addresses";
 import ProfileAddressForm from "@/modules/profile/store/profile-address-form/profile-address-form.store";
@@ -40,6 +41,15 @@ export default {
         isEdit: needClose ? false : address.id === id,
       }));
     },
+
+    [DELETE_ADDRESS](state, id) {
+      state.addresses = state.addresses
+        .map((address) => ({
+          ...address,
+          isEdit: false,
+        }))
+        .filter((address) => address.id !== id);
+    },
   },
 
   actions: {
@@ -59,6 +69,12 @@ export default {
 
     edit({ commit }, { id, needClose }) {
       commit(EDIT, { id, needClose });
+    },
+
+    async deleteAddress({ commit }, id) {
+      await this.$api.addresses.deleteAddress(id);
+
+      commit(DELETE_ADDRESS, id);
     },
   },
 
