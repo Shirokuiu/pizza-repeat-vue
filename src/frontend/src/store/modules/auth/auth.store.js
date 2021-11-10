@@ -62,7 +62,7 @@ export default {
         return Promise.resolve();
       } catch (e) {
         JWT.destroyToken();
-        this.$api.setAuthHeader();
+        this.$api.auth.setAuthHeader();
         dispatch("logout");
         commit(GET_ME, undefined);
       }
