@@ -1,5 +1,5 @@
 export const SET_ADDRESSES = "SET_ADDRESSES";
 export const SET_CURRENT_ADDRESS_ID = "SET_CURRENT_ADDRESS_ID";
 export const ADD_ADDRESS = "ADD_ADDRESS";
-export const EDIT = "EDIT";
+export const TOGGLE_EDIT = "TOGGLE_EDIT";
 export const DELETE_ADDRESS = "DELETE_ADDRESS";

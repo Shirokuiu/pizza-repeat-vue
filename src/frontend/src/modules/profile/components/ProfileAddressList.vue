@@ -5,7 +5,7 @@
       :key="address.id"
       :address="address"
       :address-number="idx + 1"
-      @onEdit="edit"
+      @onEdit="onToggleEdit"
     >
       <ProfileAddressForm
         v-if="address.isEdit"
@@ -16,7 +16,7 @@
       >
         <AppBtn
           description="Удалить"
-          @onBtnClick="deleteAddress(address.id)"
+          @onBtnClick="removeAddress(address.id)"
           class="button--transparent"
         ></AppBtn>
         <AppBtn description="Сохранить" type="button"></AppBtn>
@@ -56,12 +56,12 @@ export default {
   },
 
   methods: {
-    ...mapActions("Profile/ProfileAddressList", {
-      fetchAddresses: "fetchAddresses",
-      setCurrentAddressId: "setCurrentAddressId",
-      editAddress: "edit",
-      removeAddress: "deleteAddress",
-    }),
+    ...mapActions("Profile/ProfileAddressList", [
+      "fetchAddresses",
+      "setCurrentAddressId",
+      "toggleEdit",
+      "deleteAddress",
+    ]),
     ...mapActions("Profile/ProfileAddressList/ProfileAddressForm", [
       "setForm",
       "setValidator",
@@ -76,13 +76,13 @@ export default {
       this.updateForm({ key, value });
     },
 
-    edit(id) {
+    onToggleEdit(id) {
       this.setCurrentAddressId(id);
-      this.editAddress(id);
+      this.toggleEdit(id);
     },
 
-    deleteAddress(id) {
-      this.removeAddress(id);
+    removeAddress(id) {
+      this.deleteAddress(id);
     },
   },
 };

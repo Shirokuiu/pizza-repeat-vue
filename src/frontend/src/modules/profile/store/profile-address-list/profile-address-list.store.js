@@ -2,8 +2,8 @@ import {
   ADD_ADDRESS,
   SET_ADDRESSES,
   SET_CURRENT_ADDRESS_ID,
-  EDIT,
   DELETE_ADDRESS,
+  TOGGLE_EDIT,
 } from "@/modules/profile/store/profile-address-list/mutation-types";
 import { buildFormAddresses } from "@/modules/profile/store/profile-address-list/helpers/build-form-addresses";
 import ProfileAddressForm from "@/modules/profile/store/profile-address-form/profile-address-form.store";
@@ -38,7 +38,7 @@ export default {
       state.currentAddressId = id;
     },
 
-    [EDIT](state, { id, needClose }) {
+    [TOGGLE_EDIT](state, { id, needClose }) {
       state.addresses = state.addresses.map((address) => ({
         ...address,
         isEdit: needClose ? false : address.id === id,
@@ -70,12 +70,12 @@ export default {
       commit(SET_CURRENT_ADDRESS_ID, id);
     },
 
-    edit({ commit }, id) {
+    toggleEdit({ commit }, id) {
       //NOTE: Для того чтобы переключать режимы редактирования на одной кнопке
       const needClose = savedOldAddressId === id;
       savedOldAddressId = savedOldAddressId === id ? undefined : id;
 
-      commit(EDIT, { id, needClose });
+      commit(TOGGLE_EDIT, { id, needClose });
     },
 
     async deleteAddress({ commit }, id) {

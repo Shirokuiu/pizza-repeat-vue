@@ -35,7 +35,7 @@ export default {
     [UPDATE_FORM](state, { key, value }) {
       state.form[key].value = value;
 
-      state.validator[key].$touch();
+      state.validator[key]?.$touch();
     },
   },
 
