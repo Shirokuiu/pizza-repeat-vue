@@ -148,7 +148,6 @@ export default {
     },
 
     updateValue({ key, value }) {
-      this.$v[key]?.$touch();
       this.$emit("updateValue", { key, value });
     },
   },

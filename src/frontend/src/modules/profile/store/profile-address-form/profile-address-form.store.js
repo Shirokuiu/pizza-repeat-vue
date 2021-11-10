@@ -34,6 +34,8 @@ export default {
 
     [UPDATE_FORM](state, { key, value }) {
       state.form[key].value = value;
+
+      state.validator[key].$touch();
     },
   },
 
@@ -47,15 +49,11 @@ export default {
     setForm({ commit }, form) {
       commit(SET_FORM, form);
 
-      initialState.form = form;
-
       cachedForm = cloneDeep(form);
     },
 
     setValidator({ commit }, validator) {
       commit(SET_VALIDATOR, validator);
-
-      initialState.validator = validator;
     },
 
     updateForm({ commit }, { key, value }) {
@@ -63,7 +61,7 @@ export default {
     },
 
     // eslint-disable-next-line no-unused-vars
-    submit({ state, commit }) {
+    submit({ state }) {
       state.validator.$touch();
 
       return new Promise((resolve) => {

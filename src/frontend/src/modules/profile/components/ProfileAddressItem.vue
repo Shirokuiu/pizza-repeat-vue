@@ -3,7 +3,7 @@
     <div class="layout__address">
       <div class="sheet address-form">
         <div class="address-form__header">
-          <b>Адрес №{{ addressNumber }}. {{ address.name.value }}</b>
+          <b>Адрес №{{ addressNumber }}. {{ copyAddress.name.value }}</b>
           <div class="address-form__edit">
             <button @click="onEditClick" type="button" class="icon">
               <span class="visually-hidden">Изменить адрес</span>
@@ -11,10 +11,11 @@
           </div>
         </div>
         <p>
-          {{ address.street.value }}, д. {{ address.building.value }}, оф.
-          {{ address.flat.value }}
+          {{ copyAddress.street.value }}, д. {{ copyAddress.building.value }},
+          оф.
+          {{ copyAddress.flat.value }}
         </p>
-        <small>{{ address.comment.value }}</small>
+        <small>{{ copyAddress.comment.value }}</small>
       </div>
     </div>
     <slot></slot>
@@ -22,6 +23,8 @@
 </template>
 
 <script>
+import { cloneDeep } from "lodash";
+
 export default {
   name: "ProfileAddressItem",
 
@@ -39,6 +42,7 @@ export default {
   data() {
     return {
       needClose: false,
+      copyAddress: cloneDeep(this.address),
     };
   },
 

@@ -46,8 +46,8 @@ export default {
   },
 
   watch: {
-    currentAddress(newAddress) {
-      this.setForm(newAddress);
+    currentAddress(newVal) {
+      this.setForm(newVal);
     },
   },
 
