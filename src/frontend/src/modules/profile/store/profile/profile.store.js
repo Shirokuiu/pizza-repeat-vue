@@ -1,22 +1,37 @@
 import ProfileAddressList from "@/modules/profile/store/profile-address-list/profile-address-list.store";
-import ProfileAddressForm from "@/modules/profile/store/profile-address-form/profile-address-form.store";
-import { buildAddressForBack } from "@/modules/profile/helpers";
+import { SET_ADDRESS_FORM } from "@/modules/profile/store/profile/mutation-types";
+import { buildNewAddressForm } from "@/modules/profile/helpers";
+// import { buildAddressForBack } from "@/modules/profile/helpers";
 
 export default {
   namespaced: true,
 
+  state: {
+    addressForm: {},
+  },
+
+  mutations: {
+    [SET_ADDRESS_FORM](state, form) {
+      state.addressForm = form;
+    },
+  },
+
   actions: {
-    async addNewAddress({ dispatch, rootState }) {
-      const form = await dispatch("ProfileAddressForm/submit");
+    buildAddressForm({ commit }) {
+      commit(SET_ADDRESS_FORM, buildNewAddressForm());
+    },
+
+    async addNewAddress({ dispatch, rootState }, formData) {
       const userId = rootState.Auth.user.id;
 
+      // console.log("ok");
+
       const newAddress = await this.$api.addresses.post({
-        ...buildAddressForBack(form),
+        ...formData,
         userId,
       });
 
       dispatch("ProfileAddressList/addAddress", newAddress);
-      dispatch("ProfileAddressForm/resetState");
 
       return new Promise((resolve) => {
         resolve();
@@ -26,6 +41,5 @@ export default {
 
   modules: {
     ProfileAddressList,
-    ProfileAddressForm,
   },
 };

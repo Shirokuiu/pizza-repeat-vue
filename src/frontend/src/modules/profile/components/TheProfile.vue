@@ -10,17 +10,11 @@
 
     <ProfileAddressForm
       v-if="isFormShow"
-      :form="form"
-      :address-number="addresses.length + 1"
-      @init="initForm($event)"
-      @updateValue="updateValue($event)"
+      :form="addressForm"
+      :actions="[BtnActions.Cancel, BtnActions.Save]"
+      @action="onActionForm"
     >
-      <AppBtn
-        description="Отменить"
-        class="button--transparent"
-        @onBtnClick="closeForm"
-      ></AppBtn>
-      <AppBtn description="Сохранить" @onBtnClick="submitForm"></AppBtn>
+      <b>Адрес №{{ addresses.length + 1 }}</b>
     </ProfileAddressForm>
 
     <div class="layout__button">
@@ -39,8 +33,8 @@ import AppBtn from "@/common/components/AppBtn";
 import Profile from "@/modules/profile/store/profile/profile.store";
 import ProfileAddressList from "@/modules/profile/components/ProfileAddressList";
 import ProfileAddressForm from "@/modules/profile/components/ProfileAddressForm";
-import { buildNewAddressForm } from "@/modules/profile/helpers";
 import { mapActions, mapState } from "vuex";
+import { BtnActions } from "@/modules/profile/constants";
 
 export default {
   name: "TheProfile",
@@ -48,27 +42,28 @@ export default {
   components: {
     ProfileUser,
     AppBtn,
-    ProfileAddressList,
     ProfileAddressForm,
+    ProfileAddressList,
   },
 
   data() {
     return {
       isFormShow: false,
+      BtnActions,
     };
   },
 
   computed: {
-    ...mapState("Profile/ProfileAddressForm", ["form"]),
+    ...mapState("Profile", ["addressForm"]),
     ...mapState("Profile/ProfileAddressList", ["addresses"]),
+  },
+
+  created() {
+    this.buildAddressForm();
   },
 
   beforeCreate() {
     this.$store.registerModule("Profile", Profile);
-  },
-
-  created() {
-    this.setForm(buildNewAddressForm());
   },
 
   beforeDestroy() {
@@ -76,26 +71,19 @@ export default {
   },
 
   methods: {
-    ...mapActions("Profile/ProfileAddressForm", [
-      "setForm",
-      "setValidator",
-      "updateForm",
-      "resetState",
-    ]),
-    ...mapActions("Profile", ["addNewAddress"]),
+    ...mapActions("Profile", ["addNewAddress", "buildAddressForm"]),
 
-    initForm(validator) {
-      this.setValidator(validator);
-    },
-
-    updateValue({ key, value }) {
-      this.updateForm({ key, value });
-    },
-
-    submitForm() {
-      this.addNewAddress().then(() => {
-        this.closeForm();
-      });
+    onActionForm({ action, data }) {
+      switch (action) {
+        case BtnActions.Save:
+          this.addNewAddress(data).then(() => {
+            this.closeForm();
+          });
+          break;
+        case BtnActions.Cancel:
+          this.closeForm();
+          break;
+      }
     },
 
     openForm() {
@@ -103,7 +91,6 @@ export default {
     },
 
     closeForm() {
-      this.resetState();
       this.isFormShow = false;
     },
   },

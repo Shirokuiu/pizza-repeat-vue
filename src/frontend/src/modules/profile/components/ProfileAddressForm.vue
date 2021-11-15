@@ -2,7 +2,7 @@
   <div class="layout__address">
     <form class="address-form address-form--opened sheet">
       <div class="address-form__header">
-        <b>Адрес №{{ addressNumber }}</b>
+        <slot></slot>
       </div>
 
       <div class="address-form__wrapper">
@@ -41,7 +41,7 @@
         </div>
         <div class="address-form__input address-form__input--size--small">
           <AppInput
-            v-model="flat"
+            v-model="formValues.flat"
             :name="form.flat.name"
             :label="form.flat.label"
             :placeholder="form.flat.placeholder"
@@ -49,106 +49,135 @@
         </div>
         <div class="address-form__input">
           <AppInput
-            v-model="comment"
-            :name="form.comment.name"
-            :label="form.comment.label"
-            :placeholder="form.comment.placeholder"
+            v-model="formValues.comment"
+            :name="form.flat.name"
+            :label="form.flat.label"
+            :placeholder="form.flat.placeholder"
           />
         </div>
       </div>
 
       <div class="address-form__buttons">
-        <slot></slot>
+        <AppBtn
+          v-for="btn in buttons"
+          :key="btn.id"
+          :class="{ 'button--transparent': !btn.isForward }"
+          :description="btn.name"
+          @onBtnClick="onBtnClick(btn.actionType)"
+        />
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import AppBtn from "@/common/components/AppBtn";
 import AppInput from "@/common/components/AppInput";
+import { BtnActions, btns } from "@/modules/profile/constants";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "ProfileAddressForm",
 
-  components: {
-    AppInput,
-  },
+  components: { AppBtn, AppInput },
 
   props: {
     form: {
       type: Object,
-      required: true,
+      default: () => {},
     },
 
-    addressNumber: {
-      type: Number,
-      default: 1,
+    actions: {
+      type: Array,
+      default: () => [],
     },
+  },
+
+  data() {
+    return {
+      formValues: { ...this.buildDataValues(this.form) },
+      BtnActions,
+    };
   },
 
   computed: {
+    buttons() {
+      return btns.filter(({ actionType }) => this.actions.includes(actionType));
+    },
+
     name: {
       get() {
-        return this.form.name.value;
+        return this.formValues.name;
       },
 
       set(value) {
-        this.updateValue({ key: "name", value });
+        this.formValues.name = value;
+        this.$v.name.$touch();
       },
     },
+
     street: {
       get() {
-        return this.form.street.value;
+        return this.formValues.street;
       },
 
       set(value) {
-        this.updateValue({ key: "street", value });
+        this.formValues.street = value;
+        this.$v.street.$touch();
       },
     },
+
     building: {
       get() {
-        return this.form.building.value;
+        return this.formValues.building;
       },
 
       set(value) {
-        this.updateValue({ key: "building", value });
+        this.formValues.building = value;
+        this.$v.building.$touch();
       },
     },
-    flat: {
-      get() {
-        return this.form.flat.value;
-      },
-
-      set(value) {
-        this.updateValue({ key: "flat", value });
-      },
-    },
-    comment: {
-      get() {
-        return this.form.comment.value;
-      },
-
-      set(value) {
-        this.updateValue({ key: "comment", value });
-      },
-    },
-  },
-
-  created() {
-    this.init(this.$v);
   },
 
   validations() {
-    return this.form.validationRule;
+    return { ...this.buildValidations(this.form) };
   },
 
   methods: {
-    init(validator) {
-      this.$emit("init", validator);
+    onBtnClick(action) {
+      switch (action) {
+        case BtnActions.Save:
+          this.$v.$touch();
+
+          if (!this.$v.$invalid) {
+            this.$emit("action", { action, data: this.formValues });
+          }
+          return;
+      }
+
+      this.$emit("action", { action });
     },
 
-    updateValue({ key, value }) {
-      this.$emit("updateValue", { key, value });
+    buildDataValues(form) {
+      return Object.keys({ ...form })
+        .filter((it) => !["id", "isEdit"].includes(it))
+        .reduce((obj, v) => {
+          obj[v] = form[v].value;
+
+          return obj;
+        }, {});
+    },
+
+    buildValidations(form) {
+      return Object.keys({ ...form })
+        .filter((item) => form[item].isRequired)
+        .reduce((obj, v) => {
+          obj[v] = {
+            required,
+          };
+
+          return obj;
+        }, {});
     },
   },
 };

@@ -6,7 +6,6 @@ import {
   TOGGLE_EDIT,
 } from "@/modules/profile/store/profile-address-list/mutation-types";
 import { buildFormAddresses } from "@/modules/profile/store/profile-address-list/helpers/build-form-addresses";
-import ProfileAddressForm from "@/modules/profile/store/profile-address-form/profile-address-form.store";
 
 //NOTE: Для того чтобы переключать режимы редактирования на одной кнопке
 let savedOldAddressId;
@@ -83,9 +82,5 @@ export default {
 
       commit(DELETE_ADDRESS, id);
     },
-  },
-
-  modules: {
-    ProfileAddressForm,
   },
 };

@@ -1,5 +1,3 @@
-import { required } from "vuelidate/lib/validators";
-
 const LabelMap = {
   name: "Название адреса*",
   street: "Улица*",
@@ -17,21 +15,9 @@ const PlaceholderMap = {
 };
 
 export const buildFormAddresses = (addresses) => {
-  const validationRule = {
-    name: {
-      required,
-    },
-    street: {
-      required,
-    },
-    building: {
-      required,
-    },
-  };
-
   return addresses.map((address) => {
     return Object.keys(address)
-      .filter((it) => !["id", "validationRule", "userId"].includes(it))
+      .filter((it) => !["id", "userId"].includes(it))
       .reduce((obj, v) => {
         obj[v] = {
           name: v,
@@ -39,9 +25,10 @@ export const buildFormAddresses = (addresses) => {
           placeholder: PlaceholderMap[v],
           label: LabelMap[v],
           errorText: "Обязательно для заполнения",
+          isRequired: ["name", "street", "building"].includes(v),
         };
 
-        return { ...obj, validationRule, id: address.id, isEdit: false };
+        return { ...obj, id: address.id, isEdit: false };
       }, {});
   });
 };

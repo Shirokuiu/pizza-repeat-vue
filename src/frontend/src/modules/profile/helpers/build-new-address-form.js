@@ -1,23 +1,11 @@
-import { required } from "vuelidate/lib/validators";
-
 export const buildNewAddressForm = () => ({
-  validationRule: {
-    name: {
-      required,
-    },
-    street: {
-      required,
-    },
-    building: {
-      required,
-    },
-  },
   name: {
     name: "name",
     value: "",
     placeholder: "Введите название адреса",
     label: "Название адреса*",
     errorText: "Обязательно для заполнения",
+    isRequired: true,
   },
   street: {
     name: "street",
@@ -25,6 +13,7 @@ export const buildNewAddressForm = () => ({
     placeholder: "Введите название улицы",
     label: "Улица*",
     errorText: "Обязательно для заполнения",
+    isRequired: true,
   },
   building: {
     name: "building",
@@ -32,17 +21,20 @@ export const buildNewAddressForm = () => ({
     placeholder: "Введите номер дома",
     label: "Дом*",
     errorText: "Обязательно для заполнения",
+    isRequired: true,
   },
   flat: {
     name: "flat",
     value: "",
     placeholder: "Введите № квартиры",
     label: "Квартира",
+    isRequired: false,
   },
   comment: {
     name: "comment",
     value: "",
     placeholder: "Введите комментарий",
     label: "Комментарий",
+    isRequired: false,
   },
 });

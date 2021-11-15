@@ -10,16 +10,10 @@
       <ProfileAddressForm
         v-if="address.isEdit"
         :form="currentAddress"
-        :address-number="idx + 1"
-        @init="initForm($event)"
-        @updateValue="updateValue($event)"
+        :actions="[BtnActions.Delete, BtnActions.Save]"
+        @action="onActionForm($event, address.id)"
       >
-        <AppBtn
-          description="Удалить"
-          @onBtnClick="removeAddress(address.id)"
-          class="button--transparent"
-        ></AppBtn>
-        <AppBtn description="Сохранить" type="button"></AppBtn>
+        <b>Адрес №{{ idx + 1 }}</b>
       </ProfileAddressForm>
     </ProfileAddressItem>
   </div>
@@ -27,9 +21,9 @@
 
 <script>
 import ProfileAddressItem from "@/modules/profile/components/ProfileAddressItem";
-import ProfileAddressForm from "@/modules/profile/components/ProfileAddressForm";
 import { mapActions, mapGetters, mapState } from "vuex";
-import AppBtn from "@/common/components/AppBtn";
+import ProfileAddressForm from "@/modules/profile/components/ProfileAddressForm";
+import { BtnActions } from "@/modules/profile/constants";
 
 export default {
   name: "ProfileAddressList",
@@ -37,18 +31,17 @@ export default {
   components: {
     ProfileAddressItem,
     ProfileAddressForm,
-    AppBtn,
+  },
+
+  data() {
+    return {
+      BtnActions,
+    };
   },
 
   computed: {
     ...mapState("Profile/ProfileAddressList", ["addresses"]),
     ...mapGetters("Profile/ProfileAddressList", ["currentAddress"]),
-  },
-
-  watch: {
-    currentAddress(newVal) {
-      this.setForm(newVal);
-    },
   },
 
   created() {
@@ -62,19 +55,6 @@ export default {
       "toggleEdit",
       "deleteAddress",
     ]),
-    ...mapActions("Profile/ProfileAddressList/ProfileAddressForm", [
-      "setForm",
-      "setValidator",
-      "updateForm",
-    ]),
-
-    initForm(validator) {
-      this.setValidator(validator);
-    },
-
-    updateValue({ key, value }) {
-      this.updateForm({ key, value });
-    },
 
     onToggleEdit(id) {
       this.setCurrentAddressId(id);
@@ -83,6 +63,14 @@ export default {
 
     removeAddress(id) {
       this.deleteAddress(id);
+    },
+
+    onActionForm({ action }, id) {
+      switch (action) {
+        case BtnActions.Delete:
+          this.removeAddress(id);
+          break;
+      }
     },
   },
 };
