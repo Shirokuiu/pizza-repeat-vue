@@ -16,6 +16,7 @@ export default {
     // eslint-disable-next-line no-unused-vars
     [LOGOUT](state) {
       state = Object.assign(state, initialState());
+      console.log("logout");
     },
 
     [GET_ME](state, user) {
@@ -58,13 +59,13 @@ export default {
         const user = await this.$api.auth.getMe();
 
         commit(GET_ME, user);
+        dispatch("setIsAuth", true);
 
         return Promise.resolve();
       } catch (e) {
         JWT.destroyToken();
         this.$api.auth.setAuthHeader();
         dispatch("logout");
-        commit(GET_ME, undefined);
       }
     },
 
@@ -76,7 +77,6 @@ export default {
       if (JWT.getToken()) {
         this.$api.auth.setAuthHeader();
         dispatch("getMe");
-        dispatch("setIsAuth", true);
       }
     },
   },
