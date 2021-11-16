@@ -113,7 +113,7 @@ export default {
 
       set(value) {
         this.addressUpdate({ key: "building", value });
-        this.$v.street.$touch();
+        this.$v.building.$touch();
       },
     },
 

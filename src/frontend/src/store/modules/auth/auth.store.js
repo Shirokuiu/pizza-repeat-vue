@@ -16,7 +16,6 @@ export default {
     // eslint-disable-next-line no-unused-vars
     [LOGOUT](state) {
       state = Object.assign(state, initialState());
-      console.log("logout");
     },
 
     [GET_ME](state, user) {
@@ -46,12 +45,19 @@ export default {
     },
 
     async logout({ commit }) {
-      await this.$api.auth.logout();
+      try {
+        await this.$api.auth.logout();
 
-      JWT.destroyToken();
-      this.$api.auth.setAuthHeader();
+        JWT.destroyToken();
+        this.$api.auth.setAuthHeader();
 
-      commit(LOGOUT);
+        commit(LOGOUT);
+
+        return Promise.resolve();
+      } catch (e) {
+        console.error(e);
+        return Promise.reject();
+      }
     },
 
     async getMe({ commit, dispatch }) {

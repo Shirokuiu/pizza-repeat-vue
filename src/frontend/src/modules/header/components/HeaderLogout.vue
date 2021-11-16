@@ -35,9 +35,16 @@ export default {
 
   methods: {
     ...mapActions("Auth", ["logout"]),
+    ...mapActions("Cart", ["resetState"]),
 
-    onLogout() {
-      this.logout();
+    async onLogout() {
+      try {
+        await this.logout();
+
+        this.resetState();
+      } catch (e) {
+        console.error(e);
+      }
     },
   },
 };

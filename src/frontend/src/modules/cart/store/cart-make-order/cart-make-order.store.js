@@ -38,8 +38,8 @@ export default {
       state = Object.assign(state, initialState());
     },
 
-    [INIT](state) {
-      state.forms = buildForm();
+    [INIT](state, data) {
+      state.forms = buildForm(data);
       state.currentId = DEFAULT_ADDRESS_ID;
     },
 
@@ -61,19 +61,19 @@ export default {
       commit(RESET_STATE);
     },
 
-    init({ commit, dispatch, rootState }, validator) {
-      commit(INIT);
-      commit(SET_VALIDATOR, validator);
+    async init({ commit, dispatch, rootState }, validator) {
+      let data;
 
       if (rootState.Auth.isAuth) {
-        dispatch("fetchAddresses");
-        // console.log(buildFormAddress());
-        ///
+        data = await dispatch("fetchAddresses");
       }
+
+      commit(INIT, data);
+      commit(SET_VALIDATOR, validator);
     },
 
     async fetchAddresses() {
-      await this.$api.addresses.get();
+      return await this.$api.addresses.get();
     },
 
     addressChange({ commit }, id) {
