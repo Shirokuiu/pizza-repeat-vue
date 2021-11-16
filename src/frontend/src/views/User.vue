@@ -21,12 +21,21 @@
 
 <script>
 import AppSidebar from "@/common/components/AppSidebar";
+import Profile from "@/modules/profile/store/profile/profile.store";
 
 export default {
   name: "User",
 
   components: {
     AppSidebar,
+  },
+
+  beforeCreate() {
+    this.$store.registerModule("Profile", Profile);
+  },
+
+  beforeDestroy() {
+    this.$store.unregisterModule("Profile");
   },
 };
 </script>

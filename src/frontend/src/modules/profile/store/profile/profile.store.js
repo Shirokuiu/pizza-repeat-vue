@@ -1,14 +1,13 @@
 import ProfileAddressList from "@/modules/profile/store/profile-address-list/profile-address-list.store";
 import { SET_ADDRESS_FORM } from "@/modules/profile/store/profile/mutation-types";
 import { buildNewAddressForm } from "@/modules/profile/helpers";
-// import { buildAddressForBack } from "@/modules/profile/helpers";
 
 export default {
   namespaced: true,
 
-  state: {
+  state: () => ({
     addressForm: {},
-  },
+  }),
 
   mutations: {
     [SET_ADDRESS_FORM](state, form) {
@@ -23,8 +22,6 @@ export default {
 
     async addNewAddress({ dispatch, rootState }, formData) {
       const userId = rootState.Auth.user.id;
-
-      // console.log("ok");
 
       const newAddress = await this.$api.addresses.post({
         ...formData,

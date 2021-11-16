@@ -30,7 +30,6 @@
 <script>
 import ProfileUser from "@/modules/profile/components/ProfileUser";
 import AppBtn from "@/common/components/AppBtn";
-import Profile from "@/modules/profile/store/profile/profile.store";
 import ProfileAddressList from "@/modules/profile/components/ProfileAddressList";
 import ProfileAddressForm from "@/modules/profile/components/ProfileAddressForm";
 import { mapActions, mapState } from "vuex";
@@ -60,14 +59,6 @@ export default {
 
   created() {
     this.buildAddressForm();
-  },
-
-  beforeCreate() {
-    this.$store.registerModule("Profile", Profile);
-  },
-
-  beforeDestroy() {
-    this.$store.unregisterModule("Profile");
   },
 
   methods: {

@@ -54,6 +54,7 @@ export default {
       "setCurrentAddressId",
       "toggleEdit",
       "deleteAddress",
+      "editAddress",
     ]),
 
     onToggleEdit(id) {
@@ -65,8 +66,11 @@ export default {
       this.deleteAddress(id);
     },
 
-    onActionForm({ action }, id) {
+    onActionForm({ action, data }, id) {
       switch (action) {
+        case BtnActions.Save:
+          this.editAddress(data);
+          break;
         case BtnActions.Delete:
           this.removeAddress(id);
           break;

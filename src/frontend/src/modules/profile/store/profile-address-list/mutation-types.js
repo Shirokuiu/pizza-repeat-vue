@@ -3,3 +3,4 @@ export const SET_CURRENT_ADDRESS_ID = "SET_CURRENT_ADDRESS_ID";
 export const ADD_ADDRESS = "ADD_ADDRESS";
 export const TOGGLE_EDIT = "TOGGLE_EDIT";
 export const DELETE_ADDRESS = "DELETE_ADDRESS";
+export const EDIT_ADDRESS = "EDIT_ADDRESS";

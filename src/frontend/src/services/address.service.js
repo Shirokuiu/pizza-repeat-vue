@@ -19,6 +19,12 @@ export class AddressService {
     return data;
   }
 
+  async edit(id, body) {
+    const { data } = await axios.put(`${this.#resources}/${id}`, body);
+
+    return data;
+  }
+
   async deleteAddress(id) {
     await axios.delete(`${this.#resources}/${id}`);
   }

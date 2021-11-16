@@ -26,6 +26,7 @@ export const buildFormAddresses = (addresses) => {
           label: LabelMap[v],
           errorText: "Обязательно для заполнения",
           isRequired: ["name", "street", "building"].includes(v),
+          isEdit: false,
         };
 
         return { ...obj, id: address.id, isEdit: false };

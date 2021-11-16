@@ -4,8 +4,12 @@ import {
   SET_CURRENT_ADDRESS_ID,
   DELETE_ADDRESS,
   TOGGLE_EDIT,
+  EDIT_ADDRESS,
 } from "@/modules/profile/store/profile-address-list/mutation-types";
-import { buildFormAddresses } from "@/modules/profile/store/profile-address-list/helpers/build-form-addresses";
+import {
+  patchFormValues,
+  buildFormAddresses,
+} from "@/modules/profile/store/profile-address-list/helpers";
 
 //NOTE: Для того чтобы переключать режимы редактирования на одной кнопке
 let savedOldAddressId;
@@ -13,10 +17,10 @@ let savedOldAddressId;
 export default {
   namespaced: true,
 
-  state: {
+  state: () => ({
     addresses: [],
     currentAddressId: undefined,
-  },
+  }),
 
   getters: {
     currentAddress(state) {
@@ -31,6 +35,20 @@ export default {
 
     [ADD_ADDRESS](state, newAddress) {
       state.addresses = [...state.addresses, ...newAddress];
+    },
+
+    [EDIT_ADDRESS](state, { id, editedAddress }) {
+      const idx = state.addresses.findIndex(
+        ({ id: addressId }) => addressId === id
+      );
+      const res = state.addresses.slice();
+
+      res[idx] = {
+        ...res[idx],
+        ...patchFormValues(editedAddress, res[idx]),
+      };
+
+      state.addresses = res;
     },
 
     [SET_CURRENT_ADDRESS_ID](state, id) {
@@ -63,6 +81,16 @@ export default {
 
     addAddress({ commit }, newAddress) {
       commit(ADD_ADDRESS, buildFormAddresses([newAddress]));
+    },
+
+    async editAddress({ commit, dispatch, getters, rootState }, editedAddress) {
+      const id = getters.currentAddress.id;
+      const userId = rootState.Auth.user.id;
+
+      await this.$api.addresses.edit(id, { ...editedAddress, userId });
+
+      commit(EDIT_ADDRESS, { id, editedAddress });
+      dispatch("toggleEdit", id);
     },
 
     setCurrentAddressId({ commit }, id) {
