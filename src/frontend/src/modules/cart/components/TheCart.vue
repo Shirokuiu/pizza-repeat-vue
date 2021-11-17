@@ -51,6 +51,7 @@ export default {
   computed: {
     ...mapState("Cart/CartPizzaList", ["pizzaItems"]),
     ...mapState("Cart", ["isSuccessPopupShow"]),
+    ...mapState("Auth", ["isAuth"]),
   },
 
   methods: {
@@ -62,6 +63,13 @@ export default {
 
     closeAndRedirect() {
       this.toggleSuccessPopup(false);
+
+      if (this.isAuth) {
+        router.push("user/orders");
+
+        return;
+      }
+
       router.push("/");
     },
 

@@ -21,6 +21,7 @@ export const buildStaticForm = () => [
         phone: "",
         street: "",
         building: "",
+        name: "Новый адрес",
         flat: "",
       },
       validationRule: {

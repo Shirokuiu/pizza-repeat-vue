@@ -13,7 +13,7 @@ const buildFormFromBack = (data) => {
       addressName: it.name,
       address: {
         ...Object.keys(it)
-          .filter((key) => !["id", "userId"].includes(key))
+          .filter((key) => !["userId"].includes(key))
           .reduce((obj, v) => {
             obj[v] = it[v];
 

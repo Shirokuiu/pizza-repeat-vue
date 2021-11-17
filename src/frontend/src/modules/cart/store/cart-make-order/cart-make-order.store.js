@@ -38,8 +38,8 @@ export default {
       state = Object.assign(state, initialState());
     },
 
-    [INIT](state, data) {
-      state.forms = buildForm(data);
+    [INIT](state, addressesFromBack) {
+      state.forms = buildForm(addressesFromBack);
       state.currentId = DEFAULT_ADDRESS_ID;
     },
 
@@ -62,13 +62,18 @@ export default {
     },
 
     async init({ commit, dispatch, rootState }, validator) {
-      let data;
+      let addressesFromBack;
 
       if (rootState.Auth.isAuth) {
-        data = await dispatch("fetchAddresses");
+        addressesFromBack = await dispatch("fetchAddresses");
+
+        addressesFromBack = addressesFromBack.map((address) => ({
+          ...address,
+          phone: rootState.Auth.user.phone,
+        }));
       }
 
-      commit(INIT, data);
+      commit(INIT, addressesFromBack);
       commit(SET_VALIDATOR, validator);
     },
 
