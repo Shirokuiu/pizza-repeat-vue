@@ -18,4 +18,10 @@ export class OrdersService {
 
     return data;
   }
+
+  async deleteOrder(id) {
+    const { data } = await axios.delete(`${this.#resources}/${id}`);
+
+    return data;
+  }
 }

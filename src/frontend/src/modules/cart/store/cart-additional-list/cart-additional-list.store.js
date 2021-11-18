@@ -1,5 +1,8 @@
 import { normalizeAdditionals } from "@/common/helpers";
-import { SET_ADDITIONALS } from "@/modules/cart/store/cart-additional-list/mutation-types";
+import {
+  SET_ADDITIONALS,
+  SET_NEED_FETCH,
+} from "@/modules/cart/store/cart-additional-list/mutation-types";
 import { Count } from "@/common/helpers";
 import {
   CHANGE,
@@ -12,6 +15,7 @@ let cacheAdditionals = [];
 
 const initialState = () => ({
   additionals: [],
+  needFetch: true,
 });
 
 export default {
@@ -42,6 +46,10 @@ export default {
       state.additionals = payload;
     },
 
+    [SET_NEED_FETCH](state, isNeedFetch) {
+      state.needFetch = isNeedFetch;
+    },
+
     [INC](state, { type, value }) {
       state.additionals = Count.incDec(type, value, state.additionals);
     },
@@ -62,12 +70,17 @@ export default {
       commit(RESET_STATE);
     },
 
-    async fetchAdditionals({ commit }) {
-      if (!cacheAdditionals.length) {
+    async fetchAdditionals({ commit, state }) {
+      if (state.needFetch && !cacheAdditionals.length) {
         cacheAdditionals = normalizeAdditionals(await this.$api.misc.get());
 
         commit(SET_ADDITIONALS, cacheAdditionals);
       }
+    },
+
+    repeatOrderAdditionals({ commit }, additionals) {
+      commit(SET_NEED_FETCH, false);
+      commit(SET_ADDITIONALS, additionals);
     },
 
     countChange({ commit, state }, { evtData, additionalId }) {

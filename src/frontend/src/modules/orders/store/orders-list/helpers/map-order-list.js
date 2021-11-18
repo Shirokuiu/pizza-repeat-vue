@@ -13,7 +13,7 @@ const calculateOrderPrice = (pizzas, misc) =>
 
 const mapMisc = (rootMisc, orderMisc) => {
   if (!orderMisc) {
-    return [];
+    return rootMisc;
   }
 
   return rootMisc.map((miscItem) => {

@@ -5,6 +5,7 @@ import {
   ADD,
   UPDATE,
   RESET_STATE,
+  SET,
 } from "@/modules/cart/store/cart-pizza-list/mutation-types";
 import { Count } from "@/common/helpers";
 import {
@@ -40,6 +41,10 @@ export default {
       state = Object.assign(state, initialState());
     },
 
+    [SET](state, pizzas) {
+      state.pizzaItems = pizzas;
+    },
+
     [ADD](state, payload) {
       state.pizzaItems = [...state.pizzaItems, payload];
     },
@@ -70,6 +75,12 @@ export default {
 
     add({ commit }, pizzaItems) {
       commit(ADD, buildCartPizza(pizzaItems));
+    },
+
+    repeatOrder({ commit }, pizzas) {
+      const pizzaItems = pizzas.map((pizza) => buildCartPizza(pizza));
+
+      commit(SET, pizzaItems);
     },
 
     update({ commit, state }, updatedPizzaData) {
