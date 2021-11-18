@@ -1,8 +1,4 @@
-import {
-  getIngredientsPrice,
-  getChecked,
-  buildPizzaDescription,
-} from "@/common/helpers";
+import { getIngredientsPrice, getChecked } from "@/common/helpers";
 
 const calculatePizzaPrice = ({ doughs, sizes, sauces, ingredients }) =>
   getChecked(sizes).multiplier * getChecked(doughs).price +
@@ -77,14 +73,9 @@ const mapPizzas = (pizzas, rootState) => {
 
     return {
       id: pizza.id,
+      quantity: pizza.quantity,
       pizzaName: pizza.name,
       price: calculatePizzaPrice({ doughs, sizes, sauces, ingredients }),
-      description: buildPizzaDescription({
-        doughs,
-        sizes,
-        sauces,
-        ingredients,
-      }),
       doughs,
       sizes,
       sauces,

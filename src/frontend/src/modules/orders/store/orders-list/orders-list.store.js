@@ -21,9 +21,7 @@ export default {
       const addresses = await this.$api.addresses.get();
       const misc = normalizeAdditionals(await this.$api.misc.get());
 
-      console.log(mapOrderList(orders, rootState, addresses, misc));
-
-      commit(SET_ORDERS, orders);
+      commit(SET_ORDERS, mapOrderList(orders, rootState, addresses, misc));
     },
   },
 };
