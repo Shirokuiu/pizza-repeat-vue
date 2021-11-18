@@ -16,7 +16,7 @@ export const buildCartPizza = ({
     maxInc: undefined,
     maxDec: 1,
   },
-  totalPrice: price,
+  totalPrice: price * quantity,
   pizzaName,
   description: buildPizzaDescription({ doughs, ingredients, sauces, sizes }),
   doughs,
