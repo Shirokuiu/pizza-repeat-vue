@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash";
-import { getDescription } from "@/modules/cart/store/cart-pizza-list/helpers";
+import { buildPizzaDescription } from "@/common/helpers";
 
 export const buildCartPizza = ({
   doughs,
@@ -17,7 +17,7 @@ export const buildCartPizza = ({
   },
   totalPrice: price,
   pizzaName,
-  description: getDescription({ doughs, ingredients, sauces, sizes }),
+  description: buildPizzaDescription({ doughs, ingredients, sauces, sizes }),
   doughs,
   sizes,
   sauces,

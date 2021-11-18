@@ -21,12 +21,8 @@ export default {
     ...mapState("Builder/BuilderSize", ["sizes"]),
   },
 
-  created() {
-    this.fetchSizes();
-  },
-
   methods: {
-    ...mapActions("Builder/BuilderSize", ["fetchSizes", "changeSize"]),
+    ...mapActions("Builder/BuilderSize", ["changeSize"]),
 
     onSizeChange(id) {
       this.changeSize(id);

@@ -22,6 +22,7 @@
 <script>
 import AppSidebar from "@/common/components/AppSidebar";
 import Profile from "@/modules/profile/store/profile/profile.store";
+import Orders from "@/modules/orders/store/orders/orders.store";
 
 export default {
   name: "User",
@@ -32,10 +33,12 @@ export default {
 
   beforeCreate() {
     this.$store.registerModule("Profile", Profile);
+    this.$store.registerModule("Orders", Orders);
   },
 
   beforeDestroy() {
     this.$store.unregisterModule("Profile");
+    this.$store.unregisterModule("Orders");
   },
 };
 </script>

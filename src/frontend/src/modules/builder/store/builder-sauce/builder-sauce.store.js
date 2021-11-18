@@ -4,6 +4,7 @@ import {
   SAUCE_CHANGE,
   RESET_STATE,
 } from "@/modules/builder/store/builder-sauce/mutation-types";
+import { getChecked } from "@/common/helpers";
 
 let cacheSauces = [];
 
@@ -18,7 +19,7 @@ export default {
 
   getters: {
     totalPrice(state) {
-      return state.sauces.find(({ isChecked }) => isChecked)?.price;
+      return getChecked(state.sauces).price;
     },
   },
 

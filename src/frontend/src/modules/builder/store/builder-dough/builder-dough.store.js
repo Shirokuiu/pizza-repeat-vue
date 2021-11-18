@@ -4,6 +4,7 @@ import {
   SET_DOUGHS,
   CHANGE_DOUGH,
 } from "@/modules/builder/store/builder-dough/mutation-types";
+import { getChecked } from "@/common/helpers";
 
 let cacheDoughs = [];
 
@@ -16,7 +17,7 @@ export default {
 
   getters: {
     totalPrice(state) {
-      return state.doughs.find(({ isChecked }) => isChecked)?.price;
+      return getChecked(state.doughs).price;
     },
   },
 

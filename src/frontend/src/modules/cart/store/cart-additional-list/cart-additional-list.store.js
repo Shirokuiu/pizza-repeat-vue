@@ -1,4 +1,4 @@
-import { normalizeAdditionals } from "@/modules/cart/store/cart-additional-list/helpers";
+import { normalizeAdditionals } from "@/common/helpers";
 import { SET_ADDITIONALS } from "@/modules/cart/store/cart-additional-list/mutation-types";
 import { Count } from "@/common/helpers";
 import {

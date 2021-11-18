@@ -9,7 +9,7 @@ import {
 } from "@/modules/builder/store/builder-ingredients/mutation-types";
 import { normalizeIngredients } from "@/modules/builder/helpers";
 import { Count } from "@/common/helpers/Count";
-import { buildIngredientPrice } from "@/modules/builder/store/builder-ingredients/helpers";
+import { getIngredientsPrice } from "@/common/helpers";
 import { CommitDataMutation } from "@/modules/builder/store/builder-ingredients/constants";
 
 let cacheIngredients = [];
@@ -25,7 +25,7 @@ export default {
 
   getters: {
     ingredientsPrice(state) {
-      return buildIngredientPrice(state.ingredients);
+      return getIngredientsPrice(state.ingredients);
     },
   },
 

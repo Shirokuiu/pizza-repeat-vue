@@ -21,12 +21,8 @@ export default {
     ...mapState("Builder/BuilderDough", ["doughs"]),
   },
 
-  created() {
-    this.fetchDoughs();
-  },
-
   methods: {
-    ...mapActions("Builder/BuilderDough", ["fetchDoughs", "changeDough"]),
+    ...mapActions("Builder/BuilderDough", ["changeDough"]),
 
     onDoughChange(id) {
       this.changeDough(id);

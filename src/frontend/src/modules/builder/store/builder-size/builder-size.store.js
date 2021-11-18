@@ -4,6 +4,7 @@ import {
   SET_SIZES,
 } from "@/modules/builder/store/builder-size/mutation-types";
 import { normalizeSizes } from "@/modules/builder/helpers";
+import { getChecked } from "@/common/helpers";
 
 let cacheSizes = [];
 
@@ -16,7 +17,7 @@ export default {
 
   getters: {
     currentMultiplier(state) {
-      return state.sizes.find(({ isChecked }) => isChecked)?.multiplier;
+      return getChecked(state.sizes).multiplier;
     },
   },
 

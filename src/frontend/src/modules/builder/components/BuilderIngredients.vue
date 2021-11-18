@@ -41,17 +41,9 @@ export default {
     ...mapState("Builder/BuilderSauce", ["sauces"]),
   },
 
-  created() {
-    this.fetchSauces();
-    this.fetchIngredients();
-  },
-
   methods: {
-    ...mapActions("Builder/BuilderIngredients", [
-      "fetchIngredients",
-      "countChange",
-    ]),
-    ...mapActions("Builder/BuilderSauce", ["fetchSauces", "sauceChange"]),
+    ...mapActions("Builder/BuilderIngredients", ["countChange"]),
+    ...mapActions("Builder/BuilderSauce", ["sauceChange"]),
 
     onSauceChange(id) {
       this.sauceChange(id);

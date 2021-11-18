@@ -69,6 +69,8 @@ export default {
     },
 
     add({ commit }, pizzaItems) {
+      console.log(pizzaItems);
+
       commit(ADD, buildCartPizza(pizzaItems));
     },
 
