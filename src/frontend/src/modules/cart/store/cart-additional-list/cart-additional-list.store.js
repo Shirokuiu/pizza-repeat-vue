@@ -1,21 +1,23 @@
-import misc from "@/static/misc.json";
-import { normalizeAdditionals } from "@/modules/cart/store/cart-additional-list/helpers";
+import { normalizeAdditionals } from "@/common/helpers";
 import { SET_ADDITIONALS } from "@/modules/cart/store/cart-additional-list/mutation-types";
-import Count from "@/common/helpers/count";
+import { Count } from "@/common/helpers";
 import {
   CHANGE,
   DEC,
   INC,
+  RESET_STATE,
 } from "@/modules/cart/store/cart-additional-list/mutation-types";
 
 let cacheAdditionals = [];
 
+const initialState = () => ({
+  additionals: [],
+});
+
 export default {
   namespaced: true,
 
-  state: {
-    additionals: [],
-  },
+  state: initialState(),
 
   getters: {
     totalPrice(state) {
@@ -30,14 +32,18 @@ export default {
   },
 
   mutations: {
+    // eslint-disable-next-line no-unused-vars
+    [RESET_STATE](state) {
+      state = Object.assign(state, initialState());
+      cacheAdditionals = [];
+    },
+
     [SET_ADDITIONALS](state, payload) {
       state.additionals = payload;
     },
 
     [INC](state, { type, value }) {
       state.additionals = Count.incDec(type, value, state.additionals);
-
-      console.log(state.additionals);
     },
 
     [DEC](state, { type, value }) {
@@ -52,9 +58,13 @@ export default {
   },
 
   actions: {
-    fetchAdditionals({ commit }) {
+    resetState({ commit }) {
+      commit(RESET_STATE);
+    },
+
+    async fetchAdditionals({ commit }) {
       if (!cacheAdditionals.length) {
-        cacheAdditionals = normalizeAdditionals(misc);
+        cacheAdditionals = normalizeAdditionals(await this.$api.misc.get());
 
         commit(SET_ADDITIONALS, cacheAdditionals);
       }

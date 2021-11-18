@@ -4,7 +4,7 @@ import {
   SET_SIZES,
 } from "@/modules/builder/store/builder-size/mutation-types";
 import { normalizeSizes } from "@/modules/builder/helpers";
-import pizza from "@/static/pizza.json";
+import { getChecked } from "@/common/helpers";
 
 let cacheSizes = [];
 
@@ -17,7 +17,7 @@ export default {
 
   getters: {
     currentMultiplier(state) {
-      return state.sizes.find(({ isChecked }) => isChecked)?.multiplier;
+      return getChecked(state.sizes).multiplier;
     },
   },
 
@@ -39,8 +39,10 @@ export default {
   },
 
   actions: {
-    fetchSizes({ commit }) {
-      cacheSizes = normalizeSizes(pizza.sizes);
+    async fetchSizes({ commit }) {
+      if (!cacheSizes.length) {
+        cacheSizes = normalizeSizes(await this.$api.sizes.get());
+      }
 
       commit(SET_SIZES, cacheSizes);
     },

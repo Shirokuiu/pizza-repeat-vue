@@ -5,7 +5,7 @@
         :src="`img/${additional.image}`"
         width="39"
         height="60"
-        alt="Coca-Cola 0,5 литра"
+        :alt="additional.name"
       />
       <span>{{ additional.name }}</span>
     </p>

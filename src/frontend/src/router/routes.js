@@ -17,13 +17,21 @@ export default [
     component: () => import("../views/Cart"),
   },
   {
-    path: "/orders",
-    name: "Orders",
-    component: () => import("../views/Orders"),
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: () => import("../views/Profile"),
+    path: "/user",
+    redirect: "/user/profile",
+    name: "User",
+    component: () => import("../views/User"),
+    children: [
+      {
+        path: "/user/orders",
+        name: "Orders",
+        component: () => import("../views/Orders"),
+      },
+      {
+        path: "/user/profile",
+        name: "Profile",
+        component: () => import("../views/Profile"),
+      },
+    ],
   },
 ];

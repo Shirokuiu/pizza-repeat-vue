@@ -12,7 +12,6 @@ const doughClassMap = [
 export const normalizeDougs = (doughs) =>
   doughs.map((dough, index) => ({
     ...dough,
-    id: index + 1,
     classMod: doughClassMap.find(({ name }) => name === dough.name).value,
     isChecked: index === 0,
     radioName: "dough",

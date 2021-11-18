@@ -1,43 +1,60 @@
 <template>
   <div class="cart__form">
-    <div class="cart-form">
+    <div v-if="currentFormAddress" class="cart-form">
       <label class="cart-form__select">
         <span class="cart-form__label">Получение заказа:</span>
 
-        <select name="test" class="select">
-          <option value="1">Заберу сам</option>
-          <option value="2">Новый адрес</option>
-          <option value="3">Дом</option>
-        </select>
+        <AppSelect
+          name="test"
+          :selected-id="currentFormAddress.id"
+          :options="forms"
+          key-option-name="name"
+          @onChange="onSelectChange"
+        />
       </label>
 
-      <label class="input input--big-label">
-        <span>Контактный телефон:</span>
-        <input type="text" name="tel" placeholder="+7 999-999-99-99" />
-      </label>
+      <AppInput
+        v-model="phone"
+        name="tel"
+        label="Контактный телефон:"
+        placeholder="+7 999-999-99-99"
+        class="input input--big-label"
+      />
 
-      <div class="cart-form__address">
-        <span class="cart-form__label">Новый адрес:</span>
+      <div v-if="isAddressShow" class="cart-form__address">
+        <span class="cart-form__label">{{ currentFormAddress.name }}</span>
 
         <div class="cart-form__input">
-          <label class="input">
-            <span>Улица*</span>
-            <input type="text" name="street" />
-          </label>
+          <AppInput
+            v-model="street"
+            name="street"
+            label="Улица*"
+            placeholder=""
+          />
+          <span v-if="!$v.street.required && $v.street.$dirty"
+            >Поле обязательно для заполнения</span
+          >
         </div>
 
         <div class="cart-form__input cart-form__input--small">
-          <label class="input">
-            <span>Дом*</span>
-            <input type="text" name="house" />
-          </label>
+          <AppInput
+            v-model="building"
+            name="house"
+            label="Дом*"
+            placeholder=""
+          />
+          <span v-if="!$v.building.required && $v.building.$dirty"
+            >Поле обязательно для заполнения</span
+          >
         </div>
 
         <div class="cart-form__input cart-form__input--small">
-          <label class="input">
-            <span>Квартира</span>
-            <input type="text" name="apartment" />
-          </label>
+          <AppInput
+            v-model="flat"
+            name="apartment"
+            label="Квартира"
+            placeholder=""
+          />
         </div>
       </div>
     </div>
@@ -45,7 +62,93 @@
 </template>
 
 <script>
+import AppSelect from "@/common/components/AppSelect";
+import { mapActions, mapGetters, mapState } from "vuex";
+import AppInput from "@/common/components/AppInput";
+
 export default {
   name: "CartMakeOrder",
+
+  components: {
+    AppSelect,
+    AppInput,
+  },
+
+  computed: {
+    ...mapGetters("Cart/CartMakeOrder", [
+      "currentFormAddress",
+      "currentValidationRule",
+    ]),
+    ...mapState("Cart/CartMakeOrder", ["forms"]),
+
+    isAddressShow() {
+      return this.currentFormAddress.form.address.street?.length >= 0;
+    },
+
+    phone: {
+      get() {
+        return this.currentFormAddress.form.address.phone;
+      },
+
+      set(value) {
+        this.addressUpdate({ key: "phone", value });
+      },
+    },
+
+    street: {
+      get() {
+        return this.currentFormAddress.form.address.street;
+      },
+
+      set(value) {
+        this.addressUpdate({ key: "street", value });
+        this.$v.street.$touch();
+      },
+    },
+
+    building: {
+      get() {
+        return this.currentFormAddress.form.address.building;
+      },
+
+      set(value) {
+        this.addressUpdate({ key: "building", value });
+        this.$v.building.$touch();
+      },
+    },
+
+    flat: {
+      get() {
+        return this.currentFormAddress.form.address.flat;
+      },
+
+      set(value) {
+        this.addressUpdate({ key: "flat", value });
+      },
+    },
+  },
+
+  validations() {
+    return this.currentValidationRule;
+  },
+
+  created() {
+    this.init(this.$v);
+  },
+
+  methods: {
+    ...mapActions("Cart/CartMakeOrder", [
+      "init",
+      "addressChange",
+      "addressUpdate",
+      "setValidator",
+    ]),
+
+    async onSelectChange(evt) {
+      await this.addressChange(evt.id);
+
+      this.setValidator(this.$v);
+    },
+  },
 };
 </script>

@@ -1,10 +1,10 @@
 import { normalizeDougs } from "@/modules/builder/helpers";
-import pizza from "@/static/pizza.json";
 import {
   RESET_STATE,
   SET_DOUGHS,
   CHANGE_DOUGH,
 } from "@/modules/builder/store/builder-dough/mutation-types";
+import { getChecked } from "@/common/helpers";
 
 let cacheDoughs = [];
 
@@ -17,7 +17,7 @@ export default {
 
   getters: {
     totalPrice(state) {
-      return state.doughs.find(({ isChecked }) => isChecked)?.price;
+      return getChecked(state.doughs).price;
     },
   },
 
@@ -39,8 +39,10 @@ export default {
   },
 
   actions: {
-    fetchDoughs({ commit }) {
-      cacheDoughs = normalizeDougs(pizza.dough);
+    async fetchDoughs({ commit }) {
+      if (!cacheDoughs.length) {
+        cacheDoughs = normalizeDougs(await this.$api.dough.get());
+      }
 
       commit(SET_DOUGHS, cacheDoughs);
     },

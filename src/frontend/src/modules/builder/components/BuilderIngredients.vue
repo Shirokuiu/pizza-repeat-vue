@@ -37,21 +37,13 @@ export default {
   },
 
   computed: {
-    ...mapState("Builder/BuilderIngredients", ["sauces", "ingredients"]),
-  },
-
-  created() {
-    this.fetchSauces();
-    this.fetchIngredients();
+    ...mapState("Builder/BuilderIngredients", ["ingredients"]),
+    ...mapState("Builder/BuilderSauce", ["sauces"]),
   },
 
   methods: {
-    ...mapActions("Builder/BuilderIngredients", [
-      "fetchIngredients",
-      "fetchSauces",
-      "sauceChange",
-      "countChange",
-    ]),
+    ...mapActions("Builder/BuilderIngredients", ["countChange"]),
+    ...mapActions("Builder/BuilderSauce", ["sauceChange"]),
 
     onSauceChange(id) {
       this.sauceChange(id);

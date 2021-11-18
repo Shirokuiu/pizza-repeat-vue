@@ -7,11 +7,29 @@
 
 <script>
 import TheHeader from "@/modules/header/components/TheHeader";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
+
   components: {
     TheHeader,
+  },
+
+  created() {
+    this.checkIsAuth();
+    this.fetchDoughs();
+    this.fetchSizes();
+    this.fetchSauces();
+    this.fetchIngredients();
+  },
+
+  methods: {
+    ...mapActions("Auth", ["checkIsAuth"]),
+    ...mapActions("Builder/BuilderDough", ["fetchDoughs"]),
+    ...mapActions("Builder/BuilderSize", ["fetchSizes"]),
+    ...mapActions("Builder/BuilderSauce", ["fetchSauces"]),
+    ...mapActions("Builder/BuilderIngredients", ["fetchIngredients"]),
   },
 };
 </script>

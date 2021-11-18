@@ -2,7 +2,11 @@ import BuilderDough from "@/modules/builder/store/builder-dough/builder-dough.st
 import BuilderSize from "@/modules/builder/store/builder-size/builder-size.store";
 import BuilderMakeForm from "@/modules/builder/store/builder-make-form/builder-make-form.store";
 import BuilderIngredients from "@/modules/builder/store/builder-ingredients/builder-ingredients.store";
-import { buildPizzaToCart } from "@/modules/builder/store/builder/helpers";
+import {
+  buildEditToCart,
+  buildPizzaToCart,
+} from "@/modules/builder/store/builder/helpers";
+import BuilderSauce from "@/modules/builder/store/builder-sauce/builder-sauce.store";
 
 import router from "@/router";
 
@@ -14,7 +18,7 @@ export default {
       return (
         rootGetters["Builder/BuilderSize/currentMultiplier"] *
           rootGetters["Builder/BuilderDough/totalPrice"] +
-        rootGetters["Builder/BuilderIngredients/saucePrice"] +
+        rootGetters["Builder/BuilderSauce/totalPrice"] +
         rootGetters["Builder/BuilderIngredients/ingredientsPrice"]
       );
     },
@@ -25,17 +29,7 @@ export default {
       if (rootState.Cart.isEdit) {
         dispatch(
           "Cart/CartPizzaList/update",
-          {
-            pizzaId: rootState.Cart.editPizzaId,
-            updatedPizza: {
-              doughs: rootState.Builder.BuilderDough.doughs,
-              sizes: rootState.Builder.BuilderSize.sizes,
-              sauces: rootState.Builder.BuilderIngredients.sauces,
-              ingredients: rootState.Builder.BuilderIngredients.ingredients,
-              pizzaName: rootState.Builder.BuilderMakeForm.pizzaName,
-              price: rootGetters["Builder/totalPrice"],
-            },
-          },
+          buildEditToCart(rootState, rootGetters),
           { root: true }
         );
         router.push("/cart");
@@ -49,6 +43,7 @@ export default {
 
       dispatch("Builder/BuilderDough/resetState", undefined, { root: true });
       dispatch("Builder/BuilderSize/resetState", undefined, { root: true });
+      dispatch("Builder/BuilderSauce/resetState", undefined, { root: true });
       dispatch("Builder/BuilderIngredients/resetState", undefined, {
         root: true,
       });
@@ -61,5 +56,6 @@ export default {
     BuilderSize,
     BuilderMakeForm,
     BuilderIngredients,
+    BuilderSauce,
   },
 };

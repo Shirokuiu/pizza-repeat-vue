@@ -13,20 +13,27 @@
     <div class="header__cart">
       <router-link to="/cart">{{ totalPrice }} ₽</router-link>
     </div>
-    <div class="header__user">
-      <a href="#" class="header__login"><span>Войти</span></a>
-    </div>
+    <HeaderLogin v-if="!isAuth" />
+    <HeaderLogout v-if="isAuth" />
   </header>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
+import HeaderLogin from "@/modules/header/components/HeaderLogin";
+import HeaderLogout from "@/modules/header/components/HeaderLogout";
 
 export default {
   name: "TheHeader",
 
+  components: {
+    HeaderLogin,
+    HeaderLogout,
+  },
+
   computed: {
     ...mapGetters("Cart", ["totalPrice"]),
+    ...mapState("Auth", ["isAuth"]),
   },
 };
 </script>
