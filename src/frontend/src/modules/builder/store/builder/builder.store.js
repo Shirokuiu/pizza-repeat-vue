@@ -25,6 +25,16 @@ export default {
   },
 
   actions: {
+    resetState({ dispatch }) {
+      dispatch("Builder/BuilderDough/resetState", undefined, { root: true });
+      dispatch("Builder/BuilderSize/resetState", undefined, { root: true });
+      dispatch("Builder/BuilderSauce/resetState", undefined, { root: true });
+      dispatch("Builder/BuilderIngredients/resetState", undefined, {
+        root: true,
+      });
+      dispatch("Builder/BuilderMakeForm/resetState", undefined, { root: true });
+    },
+
     makePizza({ dispatch, rootState, rootGetters }) {
       if (rootState.Cart.isEdit) {
         dispatch(
@@ -41,13 +51,7 @@ export default {
         );
       }
 
-      dispatch("Builder/BuilderDough/resetState", undefined, { root: true });
-      dispatch("Builder/BuilderSize/resetState", undefined, { root: true });
-      dispatch("Builder/BuilderSauce/resetState", undefined, { root: true });
-      dispatch("Builder/BuilderIngredients/resetState", undefined, {
-        root: true,
-      });
-      dispatch("Builder/BuilderMakeForm/resetState", undefined, { root: true });
+      dispatch("resetState");
     },
   },
 

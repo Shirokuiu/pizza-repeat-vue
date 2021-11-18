@@ -34,9 +34,11 @@ export default {
   beforeDestroy() {
     this.setEditPizzaId(undefined);
     this.toggleEdit(false);
+    this.resetState();
   },
 
   methods: {
+    ...mapActions("Builder", ["resetState"]),
     ...mapActions("Cart", ["setEditPizzaId", "toggleEdit"]),
   },
 };
