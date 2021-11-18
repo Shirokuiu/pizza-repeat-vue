@@ -7,7 +7,7 @@ const calculatePizzaPrice = ({ doughs, sizes, sauces, ingredients }) =>
 
 const calculateOrderPrice = (pizzas, misc) =>
   [
-    ...pizzas.map(({ price }) => price),
+    ...pizzas.map(({ totalPrice }) => totalPrice),
     ...misc.map(({ totalPrice }) => totalPrice),
   ].reduce((a, b) => a + b);
 
@@ -70,12 +70,14 @@ const mapPizzas = (pizzas, rootState) => {
     const sizes = mapIsChecked(rootSizes, pizza.sizeId);
     const sauces = mapIsChecked(rootSauces, pizza.sauceId);
     const ingredients = mapIngredients(rootIngredients, pizza.ingredients);
+    const price = calculatePizzaPrice({ doughs, sizes, sauces, ingredients });
 
     return {
       id: pizza.id,
       quantity: pizza.quantity,
       pizzaName: pizza.name,
-      price: calculatePizzaPrice({ doughs, sizes, sauces, ingredients }),
+      totalPrice: price * pizza.quantity,
+      price,
       doughs,
       sizes,
       sauces,
