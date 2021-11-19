@@ -9,7 +9,7 @@ const buildAddress = (rootGetters) => {
     rootGetters["Cart/CartMakeOrder/currentFormAddress"].form.address;
 
   const res = Object.keys(address)
-    .filter((it) => !["phone", "id"].includes(it))
+    .filter((it) => !["phone"].includes(it))
     .reduce((obj, v) => {
       obj[v] = address[v].value;
 
