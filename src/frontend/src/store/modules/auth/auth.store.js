@@ -1,11 +1,17 @@
-import { GET_ME, IS_AUTH, LOGOUT } from "@/store/modules/auth/mutation-types";
+import {
+  SET_USER,
+  TOGGLE_IS_AUTH,
+} from "src/store/modules/auth/mutation-types";
 import { JWT } from "@/services";
-import router from "@/router";
+import router from "src/router";
 
 const initialState = () => ({
   isAuth: false,
   user: undefined,
 });
+
+const UNAUTHORIZED = 401;
+const PROTECTED_ROUTE_NAMES = ["Orders", "Profile"];
 
 export default {
   namespaced: true,
@@ -13,76 +19,72 @@ export default {
   state: initialState(),
 
   mutations: {
-    // eslint-disable-next-line no-unused-vars
-    [LOGOUT](state) {
-      state = Object.assign(state, initialState());
-    },
-
-    [GET_ME](state, user) {
-      state.user = user;
-    },
-
-    [IS_AUTH](state, isAuth) {
+    [TOGGLE_IS_AUTH](state, isAuth) {
       state.isAuth = isAuth;
+    },
+
+    [SET_USER](state, currentUser) {
+      state.user = currentUser;
     },
   },
 
   actions: {
-    async login({ dispatch }, userForBack) {
-      try {
-        const data = await this.$api.auth.login(userForBack);
-
-        JWT.saveToken(data.token);
+    async checkAuth({ dispatch }) {
+      if (JWT.getToken()) {
         this.$api.auth.setAuthHeader();
+        dispatch("getMe");
+        dispatch("toggleIsAuth", true);
+      }
+    },
 
+    async login({ dispatch }, body) {
+      try {
+        const { token } = await this.$api.auth.login(body);
+
+        JWT.saveToken(token);
+        this.$api.auth.setAuthHeader();
+        dispatch("toggleIsAuth", true);
+        dispatch("getMe");
         router.push("/");
-        dispatch("getMe").then(() => {
-          dispatch("setIsAuth", true);
-        });
       } catch (e) {
         return Promise.reject(e);
       }
     },
 
-    async logout({ commit }) {
+    async logout({ dispatch, commit }) {
       try {
         await this.$api.auth.logout();
-
         JWT.destroyToken();
         this.$api.auth.setAuthHeader();
+        dispatch("toggleIsAuth", false);
+        commit(SET_USER, undefined);
 
-        commit(LOGOUT);
-
-        return Promise.resolve();
+        if (PROTECTED_ROUTE_NAMES.includes(router.history.current.name)) {
+          router.push("/");
+        }
       } catch (e) {
-        console.error(e);
-        return Promise.reject();
+        return Promise.reject(e);
       }
+    },
+
+    async toggleIsAuth({ commit }, isAuth) {
+      commit(TOGGLE_IS_AUTH, isAuth);
     },
 
     async getMe({ commit, dispatch }) {
       try {
-        const user = await this.$api.auth.getMe();
+        const currentUser = await this.$api.auth.getMe();
 
-        commit(GET_ME, user);
-        dispatch("setIsAuth", true);
-
-        return Promise.resolve();
+        commit(SET_USER, currentUser);
       } catch (e) {
-        JWT.destroyToken();
-        this.$api.auth.setAuthHeader();
-        dispatch("logout");
-      }
-    },
+        const { response } = e;
 
-    setIsAuth({ commit }, isAuth) {
-      commit(IS_AUTH, isAuth);
-    },
-
-    checkIsAuth({ dispatch }) {
-      if (JWT.getToken()) {
-        this.$api.auth.setAuthHeader();
-        dispatch("getMe");
+        if (response.status === UNAUTHORIZED) {
+          JWT.destroyToken();
+          this.$api.auth.setAuthHeader();
+          dispatch("toggleIsAuth", false);
+          commit(SET_USER, undefined);
+        }
       }
     },
   },

@@ -20,11 +20,11 @@ export default {
   },
 
   created() {
-    this.fetchOrders();
+    this.init();
   },
 
   methods: {
-    ...mapActions("Orders/OrdersList", ["fetchOrders"]),
+    ...mapActions("Orders/OrdersList", ["init"]),
   },
 };
 </script>

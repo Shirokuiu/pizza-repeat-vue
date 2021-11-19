@@ -1,3 +1,2 @@
-export const LOGOUT = "LOGOUT";
-export const GET_ME = "GET_ME";
-export const IS_AUTH = "IS_AUTH";
+export const TOGGLE_IS_AUTH = "TOGGLE_IS_AUTH";
+export const SET_USER = "SET_USER";

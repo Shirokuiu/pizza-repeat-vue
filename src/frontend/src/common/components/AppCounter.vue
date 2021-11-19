@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { CountEvent } from "@/common/constants";
+import { CountEvents } from "@/common/constants";
 
 const colorMods = {
   none: undefined,
@@ -65,7 +65,7 @@ export default {
 
   data() {
     return {
-      CountEvent: Object.freeze(CountEvent),
+      CountEvent: Object.freeze(CountEvents),
     };
   },
 

@@ -15,5 +15,6 @@ export const buildPizzaToCart = (rootState, rootGetters) => {
     ingredients: BuilderIngredients.ingredients,
     pizzaName: BuilderMakeForm.pizzaName,
     price: rootGetters["Builder/totalPrice"],
+    quantity: 1,
   };
 };

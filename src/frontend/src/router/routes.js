@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-unused-vars
+import { isAuth, isLogout } from "@/middlewares";
+
 export default [
   {
     path: "/",
@@ -8,6 +11,9 @@ export default [
         path: "/login",
         name: "LoginPopup",
         component: () => import("../views/Login"),
+        meta: {
+          middlewares: [isLogout],
+        },
       },
     ],
   },
@@ -26,11 +32,17 @@ export default [
         path: "/user/orders",
         name: "Orders",
         component: () => import("../views/Orders"),
+        meta: {
+          middlewares: [isAuth],
+        },
       },
       {
         path: "/user/profile",
         name: "Profile",
         component: () => import("../views/Profile"),
+        meta: {
+          middlewares: [isAuth],
+        },
       },
     ],
   },

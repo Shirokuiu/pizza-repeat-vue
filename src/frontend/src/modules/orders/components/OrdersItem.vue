@@ -10,10 +10,14 @@
       </div>
 
       <div class="order__button">
-        <button type="button" class="button button--border">Удалить</button>
+        <AppBtn
+          description="Удалить"
+          @onBtnClick="$emit('removeOrder', order.id)"
+          class="button--border"
+        />
       </div>
       <div class="order__button">
-        <button type="button" class="button">Повторить</button>
+        <AppBtn description="Повторить" @onBtnClick="$emit('repeatOrder')" />
       </div>
     </div>
 
@@ -28,6 +32,7 @@
 <script>
 import OrderProductList from "@/modules/orders/components/OrderProductList";
 import OrderAdditionalList from "@/modules/orders/components/OrderAdditionalList";
+import AppBtn from "@/common/components/AppBtn";
 
 const NO_ADDRESS_NAME = "Заберу сам";
 
@@ -37,6 +42,7 @@ export default {
   components: {
     OrderProductList,
     OrderAdditionalList,
+    AppBtn,
   },
 
   props: {

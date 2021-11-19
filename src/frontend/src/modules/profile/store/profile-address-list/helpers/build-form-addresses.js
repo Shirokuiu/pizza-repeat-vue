@@ -1,4 +1,4 @@
-const LabelMap = {
+const Labels = {
   name: "Название адреса*",
   street: "Улица*",
   building: "Дом*",
@@ -6,7 +6,7 @@ const LabelMap = {
   comment: "Комментарий",
 };
 
-const PlaceholderMap = {
+const Placeholders = {
   name: "Введите название адреса",
   street: "Введите название улицы",
   building: "Введите номер дома",
@@ -22,8 +22,8 @@ export const buildFormAddresses = (addresses) => {
         obj[v] = {
           name: v,
           value: address[v],
-          placeholder: PlaceholderMap[v],
-          label: LabelMap[v],
+          placeholder: Placeholders[v],
+          label: Labels[v],
           errorText: "Обязательно для заполнения",
           isRequired: ["name", "street", "building"].includes(v),
           isEdit: false,

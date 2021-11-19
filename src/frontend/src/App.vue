@@ -17,7 +17,6 @@ export default {
   },
 
   created() {
-    this.checkIsAuth();
     this.fetchDoughs();
     this.fetchSizes();
     this.fetchSauces();

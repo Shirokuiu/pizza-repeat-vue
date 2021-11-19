@@ -18,6 +18,7 @@
         name="tel"
         label="Контактный телефон:"
         placeholder="+7 999-999-99-99"
+        :is-disabled="currentFormAddress.form.address.phone.isDisabled"
         class="input input--big-label"
       />
 
@@ -30,6 +31,7 @@
             name="street"
             label="Улица*"
             placeholder=""
+            :is-disabled="currentFormAddress.form.address.street.isDisabled"
           />
           <span v-if="!$v.street.required && $v.street.$dirty"
             >Поле обязательно для заполнения</span
@@ -42,6 +44,7 @@
             name="house"
             label="Дом*"
             placeholder=""
+            :is-disabled="currentFormAddress.form.address.building.isDisabled"
           />
           <span v-if="!$v.building.required && $v.building.$dirty"
             >Поле обязательно для заполнения</span
@@ -54,6 +57,7 @@
             name="apartment"
             label="Квартира"
             placeholder=""
+            :is-disabled="currentFormAddress.form.address.flat.isDisabled"
           />
         </div>
       </div>
@@ -82,12 +86,12 @@ export default {
     ...mapState("Cart/CartMakeOrder", ["forms"]),
 
     isAddressShow() {
-      return this.currentFormAddress.form.address.street?.length >= 0;
+      return this.currentFormAddress.form.address.street?.value.length >= 0;
     },
 
     phone: {
       get() {
-        return this.currentFormAddress.form.address.phone;
+        return this.currentFormAddress.form.address.phone.value;
       },
 
       set(value) {
@@ -97,7 +101,7 @@ export default {
 
     street: {
       get() {
-        return this.currentFormAddress.form.address.street;
+        return this.currentFormAddress.form.address.street?.value;
       },
 
       set(value) {
@@ -108,7 +112,7 @@ export default {
 
     building: {
       get() {
-        return this.currentFormAddress.form.address.building;
+        return this.currentFormAddress.form.address.building?.value;
       },
 
       set(value) {
@@ -119,7 +123,7 @@ export default {
 
     flat: {
       get() {
-        return this.currentFormAddress.form.address.flat;
+        return this.currentFormAddress.form.address.flat?.value;
       },
 
       set(value) {

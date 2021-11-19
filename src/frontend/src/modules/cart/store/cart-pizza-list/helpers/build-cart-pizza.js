@@ -8,14 +8,15 @@ export const buildCartPizza = ({
   sauces,
   sizes,
   price,
+  quantity = 1,
 }) => ({
   id: parseInt(uniqueId(), 10),
   counter: {
-    value: 1,
+    value: quantity,
     maxInc: undefined,
     maxDec: 1,
   },
-  totalPrice: price,
+  totalPrice: price * quantity,
   pizzaName,
   description: buildPizzaDescription({ doughs, ingredients, sauces, sizes }),
   doughs,

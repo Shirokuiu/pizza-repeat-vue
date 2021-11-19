@@ -41,7 +41,7 @@
 import AppBtn from "@/common/components/AppBtn";
 import AppDrop from "@/common/components/AppDrop";
 import { mapGetters, mapActions, mapState } from "vuex";
-import { CountEvent } from "@/common/constants";
+import { CountEvents } from "@/common/constants";
 
 export default {
   name: "BuilderMakeForm",
@@ -69,7 +69,7 @@ export default {
     drop(ingredient) {
       const dropData = {
         evtData: {
-          evtType: CountEvent.DROP,
+          evtType: CountEvents.DROP,
           value: ingredient.counter.value,
         },
         ingredientId: ingredient.id,

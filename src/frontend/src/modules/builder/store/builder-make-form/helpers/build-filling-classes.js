@@ -1,4 +1,4 @@
-export const fillingClassCount = {
+const FillingClassCounts = {
   2: "second",
   3: "third",
 };
@@ -11,11 +11,13 @@ export const buildFillingClasses = (ingredients) =>
           `pizza__filling--${ingredient.classMod}`,
           `${
             ingredient.counter.value > 1
-              ? `pizza__filling--${fillingClassCount[ingredient.counter.value]}`
+              ? `pizza__filling--${
+                  FillingClassCounts[ingredient.counter.value]
+                }`
               : undefined
           }`,
         ]
-          .filter((it) => it !== "undefined")
+          .filter((it) => it)
           .join(" ");
       }
     })
