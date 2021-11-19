@@ -15,7 +15,7 @@ const buildFormFromBack = (data) => {
         ...Object.keys(it)
           .filter((key) => !["userId"].includes(key))
           .reduce((obj, v) => {
-            obj[v] = it[v];
+            obj[v] = { value: it[v], isDisabled: true };
 
             return obj;
           }, {}),

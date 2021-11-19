@@ -6,6 +6,7 @@
       :name="name"
       :value="value"
       :placeholder="placeholder"
+      :disabled="isDisabled"
       @input="onInput"
     />
   </label>
@@ -46,6 +47,11 @@ export default {
     placeholder: {
       type: String,
       default: "Введите значение",
+    },
+
+    isDisabled: {
+      type: Boolean,
+      default: false,
     },
   },
 

@@ -48,7 +48,7 @@ export default {
     },
 
     [ADDRESS_UPDATE](state, { key, value, currentIndex }) {
-      state.forms[currentIndex].form.address[key] = value;
+      state.forms[currentIndex].form.address[key].value = value;
     },
 
     [SET_VALIDATOR](state, validator) {
