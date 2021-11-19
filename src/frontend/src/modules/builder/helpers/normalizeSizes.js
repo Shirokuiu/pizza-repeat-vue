@@ -1,4 +1,4 @@
-const sizeClassMap = {
+const SizeClasses = {
   1: "small",
   2: "normal",
   3: "big",
@@ -7,7 +7,7 @@ const sizeClassMap = {
 export const normalizeSizes = (sizes) =>
   sizes.map((size, index) => ({
     ...size,
-    classMod: sizeClassMap[size.multiplier],
+    classMod: SizeClasses[size.multiplier],
     isChecked: index === 1,
     radioName: "diameter",
   }));

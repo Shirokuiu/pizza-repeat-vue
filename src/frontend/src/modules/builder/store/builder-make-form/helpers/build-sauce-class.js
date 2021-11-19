@@ -1,7 +1,7 @@
-const sauceClassMap = {
+const SauceClasses = {
   tomato: "tomato",
   creamy: "creamy",
 };
 
 export const buildSauceClass = (sauces) =>
-  sauceClassMap[sauces.find(({ isChecked }) => isChecked)?.value];
+  SauceClasses[sauces.find(({ isChecked }) => isChecked)?.value];

@@ -1,21 +1,21 @@
-const doughMap = {
+const Doughs = {
   light: "на тонком тесте",
   large: "на толстом тесте",
 };
 
-const sauceMap = {
+const Sauces = {
   tomato: "томатный",
   creamy: "сливочный",
 };
 
-const sizeMap = {
+const Sizes = {
   1: "23 см",
   2: "32 см",
   3: "45 см",
 };
 
 const getDoughDescription = (doughs) =>
-  doughMap[doughs.find(({ isChecked }) => isChecked).classMod];
+  Doughs[doughs.find(({ isChecked }) => isChecked).classMod];
 
 const getIngredientsDescription = (ingredients) =>
   ingredients
@@ -24,10 +24,10 @@ const getIngredientsDescription = (ingredients) =>
     .join(", ");
 
 const getSauceDescription = (sauces) =>
-  sauceMap[sauces.find(({ isChecked }) => isChecked).value];
+  Sauces[sauces.find(({ isChecked }) => isChecked).value];
 
 const getSizeDescription = (sizes) =>
-  sizeMap[sizes.find(({ isChecked }) => isChecked).multiplier];
+  Sizes[sizes.find(({ isChecked }) => isChecked).multiplier];
 
 export const buildPizzaDescription = ({
   doughs,

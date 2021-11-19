@@ -1,3 +1,5 @@
+import { getChecked } from "@/common/helpers";
+
 const getUserId = (rootState) => {
   return rootState.Auth.user ? rootState.Auth.user.id : null;
 };
@@ -7,9 +9,9 @@ const buildAddress = (rootGetters) => {
     rootGetters["Cart/CartMakeOrder/currentFormAddress"].form.address;
 
   const res = Object.keys(address)
-    .filter((it) => it !== "phone")
+    .filter((it) => !["phone", "id"].includes(it))
     .reduce((obj, v) => {
-      obj[v] = address[v];
+      obj[v] = address[v].value;
 
       return obj;
     }, {});
@@ -31,9 +33,9 @@ const buildPizzas = (rootState) =>
   rootState.Cart.CartPizzaList.pizzaItems.map(
     ({ pizzaName, sauces, doughs, sizes, counter, ingredients }) => ({
       name: pizzaName,
-      sauceId: sauces.find(({ isChecked }) => isChecked).id,
-      doughId: doughs.find(({ isChecked }) => isChecked).id,
-      sizeId: sizes.find(({ isChecked }) => isChecked).id,
+      sauceId: getChecked(sauces).id,
+      doughId: getChecked(doughs).id,
+      sizeId: getChecked(sizes).id,
       quantity: counter.value,
       ingredients: ingredients
         .filter(({ counter }) => counter.value !== 0)

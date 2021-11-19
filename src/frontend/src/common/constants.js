@@ -1,4 +1,4 @@
-export const CountEvent = {
+export const CountEvents = {
   INC: "inc",
   DEC: "dec",
   CHANGE: "change",

@@ -1,4 +1,4 @@
-const ingredientClassMap = [
+const IngredientClasses = [
   {
     name: "Грибы",
     value: "mushrooms",
@@ -68,7 +68,7 @@ const ingredientClassMap = [
 export const normalizeIngredients = (ingredients) =>
   ingredients.map((ingredient) => ({
     ...ingredient,
-    classMod: ingredientClassMap.find(({ name }) => name === ingredient.name)
+    classMod: IngredientClasses.find(({ name }) => name === ingredient.name)
       .value,
     counter: {
       value: 0,

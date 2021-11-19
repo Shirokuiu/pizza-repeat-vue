@@ -1,6 +1,6 @@
-import { CountEvent } from "@/common/constants";
+import { CountEvents } from "@/common/constants";
 
-const MutationType = {
+const MutationTypes = {
   INC: "INC",
   DEC: "DEC",
   CHANGE: "CHANGE",
@@ -8,24 +8,24 @@ const MutationType = {
 };
 
 const EventTypeMap = {
-  [CountEvent.INC]: {
-    mutationType: MutationType.INC,
-    evt: CountEvent.INC,
+  [CountEvents.INC]: {
+    mutationType: MutationTypes.INC,
+    evt: CountEvents.INC,
     value: (value) => value,
   },
-  [CountEvent.DEC]: {
-    mutationType: MutationType.DEC,
-    evt: CountEvent.DEC,
+  [CountEvents.DEC]: {
+    mutationType: MutationTypes.DEC,
+    evt: CountEvents.DEC,
     value: (value) => value,
   },
-  [CountEvent.CHANGE]: {
-    mutationType: MutationType.CHANGE,
-    evt: CountEvent.CHANGE,
+  [CountEvents.CHANGE]: {
+    mutationType: MutationTypes.CHANGE,
+    evt: CountEvents.CHANGE,
     value: (value) => value,
   },
-  [CountEvent.DROP]: {
-    mutationType: MutationType.DROP,
-    evt: CountEvent.INC,
+  [CountEvents.DROP]: {
+    mutationType: MutationTypes.DROP,
+    evt: CountEvents.INC,
     value: (value) => value,
   },
 };
@@ -41,7 +41,7 @@ export class Count {
   static incDec(countEvent, currentIdx, arr) {
     const arrCopy = [...arr];
     const value =
-      countEvent === CountEvent.INC
+      countEvent === CountEvents.INC
         ? ++arrCopy[currentIdx].counter.value
         : --arrCopy[currentIdx].counter.value;
 
@@ -104,16 +104,16 @@ export class Count {
     const currentArrIdx = arr.findIndex(({ id }) => id === arrId);
 
     const valueToCommit =
-      evtType === CountEvent.INC ||
-      evtType === CountEvent.DEC ||
-      evtType === CountEvent.DROP
+      evtType === CountEvents.INC ||
+      evtType === CountEvents.DEC ||
+      evtType === CountEvents.DROP
         ? EventTypeMap[evtType].value(currentArrIdx)
         : EventTypeMap[evtType].value({
             id: currentArrIdx,
             value: valueToInt,
           });
 
-    if (evtType === CountEvent.DROP) {
+    if (evtType === CountEvents.DROP) {
       if (!Count.validateIncDecDrop(valueToInt, currentArrIdx, arr)) {
         commitData = {
           mutationType: EventTypeMap[evtType].mutationType,
